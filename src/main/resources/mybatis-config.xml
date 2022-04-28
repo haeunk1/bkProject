@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-<!--        <typeAlias alias="BoardDto" type="com.bkProject.p1.domain.BoardDto"/>-->
+        <typeAlias alias="MemberDto" type="com.bkProject.p1.domain.MemberDto"/>
 <!--        <typeAlias alias="CommentDto" type="com.bkProject.p1.domain.CommentDto"/>-->
 <!--        <typeAlias alias="SearchCondition" type="com.bkProject.p1.domain.SearchCondition"/>-->
 
