@@ -19,7 +19,7 @@ public class MemberServiceImplTest {
     public void register() throws Exception{
         service.reset();
         System.out.println("reset() OK");
-        MemberDto memberDto = new MemberDto("aaaa","aaaa1","nameaaa","01011","aaa@aaa.aaa");
+        MemberDto memberDto = new MemberDto("aaaa","aaaa1","nameaaa","01011","aaa@aaa.aaa",1);
         service.register(memberDto);
 
 
@@ -28,7 +28,7 @@ public class MemberServiceImplTest {
     @Test
     public void idCountTest() throws Exception{
         service.reset();
-        MemberDto memberDto = new MemberDto("aaaa","aaaa1","nameaaa","01011","aaa@aaa.aaa");
+        MemberDto memberDto = new MemberDto("aaaa","aaaa1","nameaaa","01011","aaa@aaa.aaa",1);
         service.register(memberDto);
         MemberDto memberDto2 = new MemberDto();
         memberDto2.setId("aaaa");

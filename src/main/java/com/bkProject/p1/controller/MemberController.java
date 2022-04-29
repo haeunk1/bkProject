@@ -28,6 +28,10 @@ public class MemberController {
         //2.db저장
         System.out.println("memberDto = " + memberDto);
         System.out.println("memberDto.getId()" + memberDto.getId());
+        if(memberDto.getEmail()!="")
+            memberDto.setMaster_admin(1);
+
+        System.out.println("controller에서 dto="+memberDto);
         service.register(memberDto);
         return "redirect:/";
 

@@ -7,14 +7,29 @@ public class MemberDto {
     private String phone_number;
     private String email;
 
+    private int master_admin;
+
+    public Integer getMaster_admin() {
+        return master_admin;
+    }
+
+    public void setMaster_admin(Integer master_admin) {
+        this.master_admin = master_admin;
+        System.out.println("master_admin=="+master_admin);
+
+    }
+
     public MemberDto(){} //기본생성자
 
-    public MemberDto(String id, String pwd, String name, String phone_number, String email) {
+    public MemberDto(String id, String pwd, String name, String phone_number, String email, Integer master_admin) {
         this.id = id;
         this.pwd = pwd;
         this.name = name;
         this.phone_number = phone_number;
         this.email = email;
+        if(email!=""){
+            this.master_admin=1;
+        }
     }
     public String getId() {
         return id;
@@ -46,9 +61,16 @@ public class MemberDto {
     public void setEmail(String email) {
         this.email = email;
     }
+
     @Override
     public String toString() {
-        return "memberDto [id=" + id + ", pwd=" + pwd + ", name=" + name + ", phone_number=" + phone_number + ", email=" + email + "]";
+        return "MemberDto{" +
+                "id='" + id + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", name='" + name + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                ", email='" + email + '\'' +
+                ", master_admin=" + master_admin +
+                '}';
     }
-
 }

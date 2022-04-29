@@ -14,8 +14,8 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public int insert(MemberDto memberDto) throws Exception {
-
         return session.insert(namespace+"insert",memberDto);
+
     }
 
     @Override

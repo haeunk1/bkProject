@@ -6,8 +6,8 @@
 <mapper namespace="com.bkProject.p1.dao.MemberMapper">
 <!--    <mapper namespace="com.bkProject.p1.dao.MemberDao">-->
     <insert id="insert" parameterType="MemberDto">
-        insert into member_info
-        values (#{id}, #{pwd}, #{name}, #{phone_number}, #{email});
+        insert into member_info(id, pwd, name, phone_number, email,master_admin)
+        values (#{id}, #{pwd}, #{name}, #{phone_number}, #{email}, #{master_admin});
     </insert>
 
     <delete id="deleteAll">
@@ -18,4 +18,7 @@
         select count(*) from member_info where id=#{id};
     </select>
 
+    <select id="memberLogin" parameterType="map" resultType="MemberDto">
+        select id,name,phone_number,email,master_admin from member_info where id=#{id} and pwd=#{pwd};
+    </select>
 </mapper>

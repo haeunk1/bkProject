@@ -95,22 +95,33 @@
 
         .final_id_ck{
             display: none;
-            font-size: 5px;
+            font-size: 10px;
+            color : blue;
         }
         .final_pwd_ck{
             display: none;
+            font-size: 10px;
+            color : blue;
         }
         .final_pwd2_ck{
             display: none;
+            font-size: 10px;
+            color : blue;
         }
         .final_name_ck{
             display: none;
+            font-size: 10px;
+            color : blue;
         }
         .final_phone_number_ck{
             display: none;
+            font-size: 10px;
+            color : blue;
         }
         .final_email_ck{
             display: none;
+            font-size: 10px;
+            color : blue;
         }
     </style>
 
