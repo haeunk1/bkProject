@@ -39,7 +39,8 @@ public class MemberController {
         //HttpServletRequest는 로그인 성공 시 session에 회원정보를 저장하기 위해
         //RedirectAttributes는 로그인 실패 시 리다이렉트 된 로그인페이지에 실패 메시지를 전송하기 위해
         HttpSession session=request.getSession();//헤더에 있는 session객체를 참조
-        session.setAttribute("id",memberDto.getId());//저장
+        System.out.println("memberDto = "+memberDto);
+        session.setAttribute("memberDto",memberDto);
 
         //아이디, 비밀번호 일치할 때
         if(rememberId){

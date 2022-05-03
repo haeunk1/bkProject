@@ -60,7 +60,7 @@
 <%--    <link rel="stylesheet" href="/css/member/login.css">--%>
 </head>
 <body>
-<form action="<c:url value='/member/login'/>" method="post" onsubmit="return formCheck(this);">
+<form action="<c:url value='/member/login'/>" method="post" ><%--onsubmit="return formCheck(this);"--%>
     <h3 id="title">로그인</h3>
 <%--    <div id="msg">
         <c:if test="${not empty param.msg}">
@@ -81,7 +81,7 @@
         <a href="/member/join">회원가입</a>
     </div>
     <script>
-        function formCheck(frm) {
+/*        function formCheck(frm) {
             let msg ='';
 
             if(frm.id.value.length==0) {
@@ -94,7 +94,7 @@
                 return false;
             }
             return true;
-        }
+        }*/
 
         function setMessage(msg, element){
             document.getElementById("msg").innerHTML = ` ${'${msg}'}`;
