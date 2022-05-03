@@ -5,6 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Repository
 public class MemberDaoImpl implements MemberDao {
     @Autowired
@@ -25,6 +28,13 @@ public class MemberDaoImpl implements MemberDao {
     }
     public int idCount(MemberDto memberDto) throws Exception{
         return session.selectOne(namespace+"idCount",memberDto);
+    }
+
+    public MemberDto idPwdCheck(String id, String pwd) throws Exception{
+        HashMap map = new HashMap();
+        map.put("id",id);
+        map.put("pwd",pwd);
+        return session.selectOne(namespace+"memberLogin",map);
     }
 
 }

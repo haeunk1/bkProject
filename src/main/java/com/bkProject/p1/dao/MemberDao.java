@@ -8,4 +8,6 @@ public interface MemberDao {
     int deleteAll() throws Exception;
 
     int idCount(MemberDto memberDto) throws Exception;
+
+    MemberDto idPwdCheck(String id, String pwd) throws Exception;
 }

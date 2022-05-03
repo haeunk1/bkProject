@@ -6,6 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping("/member")
@@ -17,23 +25,63 @@ public class MemberController {
     public String loginGET() {
         return "/member/login";
     }
+    @PostMapping("/login")
+    public String loginPOST(HttpServletRequest request, HttpServletResponse response, String id, String pwd, boolean rememberId, Model m) throws Exception {
+
+        MemberDto memberDto = service.login(id,pwd);
+
+        if(memberDto==null){
+            //아이디, 비밀번호가 일치하지 않을 때
+            m.addAttribute("result",0);
+//            String msg = URLEncoder.encode("id또는 pwd를 잘못입력했습니다.");
+            return "redirect:/member/login";
+        }
+        //HttpServletRequest는 로그인 성공 시 session에 회원정보를 저장하기 위해
+        //RedirectAttributes는 로그인 실패 시 리다이렉트 된 로그인페이지에 실패 메시지를 전송하기 위해
+        HttpSession session=request.getSession();//헤더에 있는 session객체를 참조
+        session.setAttribute("id",memberDto.getId());//저장
+
+        //아이디, 비밀번호 일치할 때
+        if(rememberId){
+            Cookie cookie = new Cookie("id",id); //1. 쿠키를 생성
+            response.addCookie(cookie); //2. 응답에 저장
+        }else{
+            Cookie cookie = new Cookie("id",id);
+            cookie.setMaxAge(0);//쿠키삭제
+            response.addCookie(cookie);
+        }
+        //3. 홈으로 이동
+        return "redirect:/";
+
+
+
+
+    }
 
 
     @PostMapping("/join")
-    public String joinPost(MemberDto memberDto, Model m) throws Exception {
-        //1.유효성검사
-        if (!isValid(memberDto)) {
+    public String joinPost(MemberDto memberDto, Model m){
+        try {
+            //1.유효성검사
+            if (!isValid(memberDto)) {
+                return "redirect:/member/join";
+            }
+            //2.db저장
+//            System.out.println("memberDto = " + memberDto);
+//            System.out.println("memberDto.getId()" + memberDto.getId());
+            if(memberDto.getEmail()!="")
+                memberDto.setMaster_admin(1);
+            int rowCnt = service.register(memberDto);
+            if(rowCnt!=1) throw new Exception("Register faild");
+            m.addAttribute("msg","REG_OK");
+            System.out.println("m=="+m);
+            return "redirect:/";
+        } catch (Exception e) {
+            m.addAttribute(memberDto);
+            m.addAttribute("msg","REG_ERR");
             return "redirect:/member/join";
         }
-        //2.db저장
-        System.out.println("memberDto = " + memberDto);
-        System.out.println("memberDto.getId()" + memberDto.getId());
-        if(memberDto.getEmail()!="")
-            memberDto.setMaster_admin(1);
 
-        System.out.println("controller에서 dto="+memberDto);
-        service.register(memberDto);
-        return "redirect:/";
 
     }
 

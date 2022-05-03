@@ -23,4 +23,9 @@ public class MemberServiceImpl implements MemberService {
     public int idCheck(MemberDto memberDto) throws Exception{
         return memberDao.idCount(memberDto);
     }
+
+    public MemberDto login(String id, String pwd) throws Exception{
+
+        return memberDao.idPwdCheck(id,pwd);
+    }
 }

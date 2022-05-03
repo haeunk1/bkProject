@@ -8,4 +8,6 @@ public interface MemberService {
     int reset() throws Exception;
 
     int idCheck(MemberDto memberDto) throws Exception;
+
+    MemberDto login(String id, String pwd) throws Exception;
 }

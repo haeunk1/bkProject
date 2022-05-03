@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,7 +98,11 @@
 <%--    <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">--%>
 </head>
 <body>
-
+<script>
+    let msg = "${param.msg}";
+    if(msg=="REG_OK") alert("회원가입을 완료되었습니다.");
+    if(msg=="REG_ERR") alert("회원가입을 실패했습니다.");
+</script>
 <div class="wrapper">
     <div class="wrap">
         <div class="top_gnb_area">
@@ -110,8 +116,20 @@
                 <h1>Search area</h1>
             </div>
             <div class="login_area">
-                <div class="login_button"><a href="/member/login">로그인</a></div>
-                <span><a href="/member/join">회원가입</a></span>
+                <!--로그인 하지 않은 상태 -->
+                <c:if test = "${sessionScope.id==null}">
+                    <div class="login_button"><a href="/member/login">로그인</a></div>
+                    <span><a href="/member/join">회원가입</a></span>
+                </c:if>
+
+                <c:if test = "${sessionScope.id!=null}">
+                    <select class="search-option" name="option">
+                        <option value="A" ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ""}>제목+내용</option>
+                        <option value="T" ${ph.sc.option=='T' ? "selected" : ""}>제목만</option>
+                        <option value="W" ${ph.sc.option=='W' ? "selected" : ""}>작성자</option>
+                    </select>
+                </c:if>
+
             </div>
             <div class="clearfix"></div>
         </div>

@@ -49,23 +49,34 @@
         #msg {
             height: 30px;
         }
+        /* 로그인 실패시 경고글 */
+        .login_warn{
+            margin-top: 30px;
+            text-align: center;
+            color : red;
+        }
     </style>
 <%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />--%>
 <%--    <link rel="stylesheet" href="/css/member/login.css">--%>
 </head>
 <body>
-<form action="<c:url value='/login/login'/>" method="post" onsubmit="return formCheck(this);">
+<form action="<c:url value='/member/login'/>" method="post" onsubmit="return formCheck(this);">
     <h3 id="title">로그인</h3>
-    <div id="msg">
+<%--    <div id="msg">
         <c:if test="${not empty param.msg}">
             <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
         </c:if>
-    </div>
-    <input type="text" name="id" placeholder="이메일 입력" autofocus>
+    </div>--%>
+    <input type="text" name="id" placeholder="이메일 입력" value="${cookie.id.value}"autofocus>
     <input type="password" name="pwd" placeholder="비밀번호">
+
+    <c:if test="${param.result==0}">
+        <div class="login_warn">사용자 ID 또는 PASSWORD를 잘못 입력하였습니다.</div>
+    </c:if>
+
     <button>로그인</button>
     <div>
-        <label><input type="checkbox" name="rememberId"> 아이디 기억</label> |
+        <label><input type="checkbox" name="rememberId"  ${empty cookie.id.value ? "":"checked"}> 아이디 기억</label> |
         <a href="">비밀번호 찾기</a> |
         <a href="/member/join">회원가입</a>
     </div>
