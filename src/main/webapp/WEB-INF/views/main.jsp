@@ -123,10 +123,7 @@
                 </c:if>
 
                 <c:if test = "${sessionScope.id!=null}">
-                    <select class="search-option" name="option">
-                        <option value="A" ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ""}>제목+내용</option>
-                        <option value="T" ${ph.sc.option=='T' ? "selected" : ""}>제목만</option>
-                        <option value="W" ${ph.sc.option=='W' ? "selected" : ""}>작성자</option>
+                    <select class="member-option" name="option">
                     </select>
                 </c:if>
 
