@@ -1,6 +1,7 @@
 package com.bkProject.p1.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,7 +11,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
-    @RequestMapping("/")
+    @RequestMapping("/test")
+    public String test() {
+        return "test";
+    }
+    @RequestMapping("/main")
     public String main() {
         return "main";
     }
@@ -19,4 +24,6 @@ public class MainController {
         session.invalidate();
         return "redirect:/";
     }
+
+
 }

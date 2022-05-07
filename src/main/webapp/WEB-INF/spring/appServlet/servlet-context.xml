@@ -25,5 +25,10 @@
 
 	<view-controller path="/" view-name="main"/>
 <!--	<view-controller path="/member/join" view-name="member/join"/>-->
+	<beans:bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800" />
+		<beans:property name="maxInMemorySize" value="1000000" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
 
 </beans:beans>

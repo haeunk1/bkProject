@@ -8,56 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        * { box-sizing:border-box; }
-        a { text-decoration: none; }
-        form {
-            width:400px;
-            height:500px;
-            display : flex;
-            flex-direction: column;
-            align-items:center;
-            position : absolute;
-            top:50%;
-            left:50%;
-            transform: translate(-50%, -50%) ;
-            border: 1px solid rgb(89,117,196);
-            border-radius: 10px;
-        }
-        input[type='text'], input[type='password'] {
-            width: 300px;
-            height: 40px;
-            border : 1px solid rgb(89,117,196);
-            border-radius:5px;
-            padding: 0 10px;
-            margin-bottom: 10px;
-        }
-        button {
-            background-color: rgb(89,117,196);
-            color : white;
-            width:300px;
-            height:50px;
-            font-size: 17px;
-            border : none;
-            border-radius: 5px;
-            margin : 20px 0 30px 0;
-        }
-        #title {
-            font-size : 50px;
-            margin: 40px 0 30px 0;
-        }
-        #msg {
-            height: 30px;
-        }
-        /* 로그인 실패시 경고글 */
-        .login_warn{
-            margin-top: 30px;
-            text-align: center;
-            color : red;
-        }
-    </style>
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />--%>
-<%--    <link rel="stylesheet" href="/css/member/login.css">--%>
+    <link rel="stylesheet" href="/css/member/login.css">
 </head>
 <body>
 <form action="<c:url value='/member/login'/>" method="post" ><%--onsubmit="return formCheck(this);"--%>
@@ -67,7 +18,7 @@
             <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
         </c:if>
     </div>--%>
-    <input type="text" name="id" placeholder="이메일 입력" value="${cookie.id.value}"autofocus>
+    <input type="text" name="id" placeholder="아이디 입력" maxlength="10" value="${cookie.id.value}"autofocus>
     <input type="password" name="pwd" placeholder="비밀번호">
 
     <c:if test="${param.result==0}">

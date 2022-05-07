@@ -9,121 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/member/join.css">
-    <style>
-        form {
-            width:400px;
-            height:600px;
-            display : flex;
-            flex-direction: column;
-            align-items:center;
-            position : absolute;
-            top:50%;
-            left:50%;
-            transform: translate(-50%, -50%) ;
-            border: 1px solid rgb(89,117,196);
-            border-radius: 10px;
-        }
-        .input-field {
-            width: 300px;
-            height: 40px;
-            border : 1px solid rgb(89,117,196);
-            border-radius:5px;
-            padding: 0 10px;
-            margin-bottom: 10px;
-        }
-        label {
-            width:300px;
-            height:30px;
-            margin-top :4px;
-        }
-        button {
-            background-color: rgb(89,117,196);
-            color : white;
-            width:300px;
-            height:50px;
-            font-size: 17px;
-            border : none;
-            border-radius: 5px;
-            margin : 20px 0 30px 0;
-        }
-        .title {
-            font-size : 50px;
-            margin: 40px 0 30px 0;
-        }
-        .msg {
-            height: 30px;
-            text-align:center;
-            font-size:16px;
-            color:red;
-            margin-bottom: 20px;
-        }
-        .sns-chk {
-            margin-top : 5px;
-        }
-        .id_input_re_1{
-            color:green;
-            display:none;
-        }
-        .id_input_re_2{
-            color:red;
-            display:none;
-        }
-        .id_input_len{
-            color:red;
-            display:none;
-        }
-        .pwd2_input_re_1{
-            color:green;
-            display:none;
-        }
-        .pwd2_input_re_2{
-            color:red;
-            display:none;
-        }
-        .join_button_wrap{
-            margin-top: 40px;
-            text-align: center;
-        }
-        .join_button{
-            width: 100%;
-            height: 40px;
-            background-color: #6AAFE6;
-            font-size: 20px;
-            font-weight: 900;
-            color: white;
-        }
-
-        .final_id_ck{
-            display: none;
-            font-size: 10px;
-            color : blue;
-        }
-        .final_pwd_ck{
-            display: none;
-            font-size: 10px;
-            color : blue;
-        }
-        .final_pwd2_ck{
-            display: none;
-            font-size: 10px;
-            color : blue;
-        }
-        .final_name_ck{
-            display: none;
-            font-size: 10px;
-            color : blue;
-        }
-        .final_phone_number_ck{
-            display: none;
-            font-size: 10px;
-            color : blue;
-        }
-        .final_email_ck{
-            display: none;
-            font-size: 10px;
-            color : blue;
-        }
-    </style>
 
     <title>Register</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -161,7 +46,7 @@
     <label for="" id="emaillabel">이메일</label>
     <input class="input-field" type="text" id="email" name="email" placeholder="example@fastcampus.co.kr">--%>
     <label for="">아이디</label>
-    <input class="input-field" id="id_input" type="text" name="id" placeholder="3자리 이상 영대소문자와 숫자 조합">
+    <input class="input-field" id="id_input" type="text" name="id" maxlength="10" placeholder="3자리 이상 영대소문자와 숫자 조합">
     <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
     <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
     <span class="id_input_len">id의 길이는 3이상이어야 합니다.</span>
@@ -339,11 +224,11 @@
     function formCheck(frm) {
         let msg ='';
         if(frm.id.value.length<3) {
-            setMessage('id의 길이는 3이상이어야 합니다.', frm.id);
+            setMessage('id의 길이는 4이상이어야 합니다.', frm.id);
             return false;
         }
         if(frm.pwd.value.length<3) {
-            setMessage('pwd의 길이는 3이상이어야 합니다.', frm.pwd);
+            setMessage('pwd의 길이는 4이상이어야 합니다.', frm.pwd);
             return false;
         }
 

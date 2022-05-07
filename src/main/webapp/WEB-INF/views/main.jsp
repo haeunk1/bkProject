@@ -5,110 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <title>Welcome BookingSite</title>
-    <style>
-        *{
-            margin: 0;
-            padding:0;
-        }
-        /* 화면 전체 렙 */
-        .wrapper{
-            width: 100%;
-        }
-        /* content 랩 */
-        .wrap{
-            width : 1080px;
-            margin: auto;
-        }
-        /* 홈페이지 기능 네비 */
-        .top_gnb_area{
-            width: 100%;
-            height: 50px;
-            background-color: #a2a2ea;
-        }
-        /* 로고, 검색, 로그인 */
-        .top_area{
-            width: 100%;
-            height: 150px;
-            /* background-color: #f7f0b9; */
-        }
-        /* 로고 영역 */
-        .logo_area{
-            width: 25%;
-            height: 100%;
-            background-color: red;
-            float:left;
-        }
-        /* 검색 박스 영역 */
-        .search_area{
-            width: 50%;
-            height: 100%;
-            background-color: yellow;
-            float:left;
-        }
-        /* 로그인 버튼 영역 */
-        .login_area{
-            width: 25%;
-            height: 100%;
-            display: inline-block;
-            text-align: center;
-        }
-        .login_button{
-            height: 50%;
-            background-color: #D4DFE6;
-            margin-top: 30px;
-            line-height: 77px;
-            font-size: 40px;
-            font-weight: 900;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .login_area>span{
-            margin-top: 10px;
-            font-weight: 900;
-            display: inline-block;
-        }
-        .login_button{
-            height : 50%;
-            background-color: #D4DFE6;
-            margin-top:30px;
-        }
-
-        /* 제품 목록 네비 */
-        .navi_bar_area{
-            width: 100%;
-            height: 70px;
-            background-color: #7696fd;
-        }
-
-        /* 홈페이지 메인 제품 목록  */
-        .content_area{
-            width: 100%;
-            background-color: #97ef97;
-            height: 1000px;
-        }
-
-        /* float 속성 해제 */
-        .clearfix{
-            clear: both;
-        }
-        .navi_bar_area{
-            background-color: rgb(253, 253, 250);
-            width: 100%;
-            height: 110px;
-            border: 1px solid #ddd;
-            margin-top : 10px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .new_register{
-            display: none;
-        }
-    </style>
-<%--    <link rel="stylesheet" href="/css/main.css">--%>
+    <link rel="stylesheet" href="/css/main.css">
 <%--    <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">--%>
 </head>
 <body>
@@ -119,9 +19,6 @@
 </script>
 <div class="wrapper">
     <div class="wrap">
-        <div class="top_gnb_area">
-            <h1>gnb area</h1>
-        </div>
         <div class="top_area">
             <div class="logo_area">
                 <h1>logo area</h1>
@@ -160,6 +57,9 @@
             </div>
             <div class="clearfix"></div>
         </div>
+
+
+
         <div class="navi_bar_area">
             <div class="arrange">
                 <select class="arrange-option" name="option">
@@ -168,8 +68,15 @@
                     <option value="V">조회수</option>
                 </select>
             </div>
-
             <div class="search">
+
+                <select class="search-option" name="option">
+                    <option>검색조건</option>
+                    <option value="location">위치</option>
+                    <option value="title">제목</option>
+                    <option value="category">카테고리</option>
+                </select>
+
                 <input type="text" name="keyword" class="search-input" type="text" placeholder="검색어를 입력해주세요">
                 <input type="submit" class="search-button" value="검색">
             </div>
@@ -179,7 +86,27 @@
             </div>
         </div>
         <div class="content_area">
-            <h1>content area</h1>
+            <div class="space_list">
+                <c:forEach var="postDto" items="${list}">
+                    <tr>
+                        <td class="img"></td>
+                        <td class="title"></td>
+                        <td class="location"></td>
+                        <td class="category"></td>
+                        <td class="price"></td>
+                        <td class="like_cnt"></td>
+                        <td class="view_cnt"></td>
+                        <td class="comment_cnt"></td>
+
+                    </tr>
+                </c:forEach>
+            </div>
+            <div>
+                <div class="page_handler">
+                    1,2,3,4,5,6...
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
