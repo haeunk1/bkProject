@@ -37,10 +37,10 @@
                     <c:if test ="${memberDto.master_admin==1}">
                         <select class="admin-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option value="">공간등록&수정</option>
+                            <option value="/post/form">공간등록&수정</option>
                             <option value="">예약리스트</option>
                             <option value="">통계&정산</option>
-                            <option value="/logout">로그아웃</option>
+                            <option value="/member/logout">로그아웃</option>
                         </select>
                     </c:if>
                     <c:if test ="${memberDto.master_admin==0}">
@@ -48,7 +48,7 @@
                             <option>${memberDto.name}</option>
                             <option>예약현황</option>
                             <option>찜리스트</option>
-                            <option value="/logout">로그아웃</option>
+                            <option value="/member/logout">로그아웃</option>
                         </select>
                     </c:if>
 

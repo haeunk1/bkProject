@@ -26,25 +26,6 @@
             <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
         </c:if>
     </div>
-<%--    <label for="">아이디</label>
-    <input class="input-field" type="text" name="id" placeholder="8~12자리의 영대소문자와 숫자 조합">
-    <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
-    <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
-    <label for="">비밀번호</label>
-    <input class="input-field" type="text" name="pwd" placeholder="8~12자리의 영대소문자와 숫자 조합">
-    <label for="">비밀번호 확인</label>
-    <input class="input-field" type="text" name="pwd2" placeholder="다시한번 입력해주세요.">
-    <label for="">이름</label>
-    <input class="input-field" type="text" name="name" placeholder="홍길동">
-    <label for="">연락처</label>
-    <input class="input-field" type="text" name="phone_number" placeholder="'-'없이 입력">
-
-    <div>
-        <label><input type="checkbox" id="masterCheck" onclick="toggle1()"/>관리자로 가입하십니까?</label>
-    </div>
-
-    <label for="" id="emaillabel">이메일</label>
-    <input class="input-field" type="text" id="email" name="email" placeholder="example@fastcampus.co.kr">--%>
     <label for="">아이디</label>
     <input class="input-field" id="id_input" type="text" name="id" maxlength="10" placeholder="3자리 이상 영대소문자와 숫자 조합">
     <span class="id_input_re_1">사용 가능한 아이디입니다.</span>

@@ -13,11 +13,6 @@
 <body>
 <form action="<c:url value='/member/login'/>" method="post" ><%--onsubmit="return formCheck(this);"--%>
     <h3 id="title">로그인</h3>
-<%--    <div id="msg">
-        <c:if test="${not empty param.msg}">
-            <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>
-        </c:if>
-    </div>--%>
     <input type="text" name="id" placeholder="아이디 입력" maxlength="10" value="${cookie.id.value}"autofocus>
     <input type="password" name="pwd" placeholder="비밀번호">
 
@@ -32,21 +27,6 @@
         <a href="/member/join">회원가입</a>
     </div>
     <script>
-/*        function formCheck(frm) {
-            let msg ='';
-
-            if(frm.id.value.length==0) {
-                setMessage('id를 입력해주세요.', frm.id);
-                return false;
-            }
-
-            if(frm.pwd.value.length==0) {
-                setMessage('password를 입력해주세요.', frm.pwd);
-                return false;
-            }
-            return true;
-        }*/
-
         function setMessage(msg, element){
             document.getElementById("msg").innerHTML = ` ${'${msg}'}`;
 

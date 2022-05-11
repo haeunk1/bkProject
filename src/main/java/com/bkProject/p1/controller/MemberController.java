@@ -21,10 +21,12 @@ public class MemberController {
     @Autowired
     MemberService service;
 
+    ////////////////////////////로그인 로그아웃/////////////////////////////////
     @GetMapping("/login")
     public String loginGET() {
         return "/member/login";
     }
+
     @PostMapping("/login")
     public String loginPOST(HttpServletRequest request, HttpServletResponse response, String id, String pwd, boolean rememberId, Model m) throws Exception {
 
@@ -33,14 +35,13 @@ public class MemberController {
         if(memberDto==null){
             //아이디, 비밀번호가 일치하지 않을 때
             m.addAttribute("result",0);
-//            String msg = URLEncoder.encode("id또는 pwd를 잘못입력했습니다.");
             return "redirect:/member/login";
         }
         //HttpServletRequest는 로그인 성공 시 session에 회원정보를 저장하기 위해
         //RedirectAttributes는 로그인 실패 시 리다이렉트 된 로그인페이지에 실패 메시지를 전송하기 위해
         HttpSession session=request.getSession();//헤더에 있는 session객체를 참조
-        System.out.println("memberDto = "+memberDto);
         session.setAttribute("memberDto",memberDto);
+        session.setAttribute("master_admin",memberDto.getMaster_admin());
 
         //아이디, 비밀번호 일치할 때
         if(rememberId){
@@ -53,13 +54,14 @@ public class MemberController {
         }
         //3. 홈으로 이동
         return "redirect:/";
-
-
-
-
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
     }
 
-
+    ////////////////////////////회원가입/////////////////////////////////
     @PostMapping("/join")
     public String joinPost(MemberDto memberDto, Model m){
         try {
@@ -82,8 +84,6 @@ public class MemberController {
             m.addAttribute("msg","REG_ERR");
             return "redirect:/member/join";
         }
-
-
     }
 
     private boolean isValid(MemberDto memberDto) {

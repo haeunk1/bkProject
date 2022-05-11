@@ -5,18 +5,12 @@
 }
 /* 화면 전체 렙 */
 .wrapper{
-    width: 1900px;
+    width: 100%;
 }
 /* content 랩 */
 .wrap{
     width : 1080px;
     margin: auto;
-}
-/* 홈페이지 기능 네비 */
-.top_gnb_area{
-    width: 100%;
-    height: 50px;
-    background-color: #a2a2ea;
 }
 /* 로고, 검색, 로그인 */
 .top_area{
@@ -83,4 +77,18 @@
 /* float 속성 해제 */
 .clearfix{
     clear: both;
+}
+.navi_bar_area{
+    background-color: rgb(253, 253, 250);
+    width: 100%;
+    height: 110px;
+    border: 1px solid #ddd;
+    margin-top : 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.new_register{
+    display: none;
 }

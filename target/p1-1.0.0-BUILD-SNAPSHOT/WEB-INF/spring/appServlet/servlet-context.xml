@@ -26,4 +26,7 @@
 	<view-controller path="/" view-name="main"/>
 <!--	<view-controller path="/member/join" view-name="member/join"/>-->
 
+	<!-- 업로드 관련 빈 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
+
 </beans:beans>
