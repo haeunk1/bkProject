@@ -18,8 +18,7 @@ public class MemberDaoImplTest {
 
     @Test
     public void insertTest() throws Exception{
-        memberDao.deleteAll();
-        MemberDto memberDto =new MemberDto("asf","1234","data","01011111111","aaa@aaa.com",0);
+        MemberDto memberDto =new MemberDto("asf112","1234","data","01011111111","aaa@aaa.com",0);
         memberDao.insert(memberDto);
     }
 

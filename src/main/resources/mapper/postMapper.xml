@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bkProject.p1.dao.PostMapper">
+    <!--<mapper namespace="com.bkProject.p1.dao.PostMapper">-->
+    <!--
+    <insert id="insert" parameterType="MemberDto">
+        insert into post(title,main_content, detail_content, hourly_cost, hours_oper,area_info,writer)
+        values (#{title},  #{main_content}, #{detail_content}, #{hourly_cost},#{hours_oper},#{area_info},#{writer});
+    </insert>
+-->
+    <insert id="insert" parameterType="PostDto">
+        insert into post(title, category, main_content, detail_content, hourly_cost, area_info, writer,start_time,end_time)
+        values (#{title}, #{category}, #{main_content}, #{detail_content},  #{hourly_cost}, #{area_info}, #{writer}, #{start_time}, #{end_time});
+    </insert>
+
+
+    <delete id="deleteAll">
+        delete from post;
+    </delete>
+</mapper>

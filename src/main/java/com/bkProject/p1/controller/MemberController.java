@@ -77,7 +77,7 @@ public class MemberController {
             int rowCnt = service.register(memberDto);
             if(rowCnt!=1) throw new Exception("Register faild");
             m.addAttribute("msg","REG_OK");
-            System.out.println("m=="+m);
+
             return "redirect:/";
         } catch (Exception e) {
             m.addAttribute(memberDto);

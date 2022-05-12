@@ -16,6 +16,7 @@
     let msg = "${param.msg}";
     if(msg=="REG_OK") alert("회원가입을 완료되었습니다.");
     if(msg=="REG_ERR") alert("회원가입을 실패했습니다.");
+    if(msg=="postOK") alert("게시글이 등록되었습니다.")
 </script>
 <div class="wrapper">
     <div class="wrap">
