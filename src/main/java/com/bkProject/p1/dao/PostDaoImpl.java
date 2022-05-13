@@ -1,5 +1,6 @@
 package com.bkProject.p1.dao;
 
+import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.PostDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class PostDaoImpl implements PostDao {
 
     public int deleteAll() throws Exception{
         return session.delete(namespace+"deleteAll");
+    }
+
+    public int imgInsert(AttachImageDto attachImageDto) throws Exception{
+        return session.insert(namespace+"imgInsert",attachImageDto);
     }
 
 }

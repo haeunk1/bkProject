@@ -124,8 +124,10 @@ public class PostImageController {//관리자만 사용 가능한 영역
             }
             list.add(attachImageDto);
         }
+        System.out.println("list="+list);
         ResponseEntity<List<AttachImageDto>> result = new ResponseEntity<List<AttachImageDto>>(list, HttpStatus.OK);
         //Http바디에 추가될 데이터는 List<AttachImageDto>이고, 상태코드가 200인 ReseponseEntity객체 생성
         return result;
+        //AttachImageDto형식으로 리스트 추가됨
     }
 }

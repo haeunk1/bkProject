@@ -16,7 +16,7 @@
     let msg = "${param.msg}";
     if(msg=="REG_OK") alert("회원가입을 완료되었습니다.");
     if(msg=="REG_ERR") alert("회원가입을 실패했습니다.");
-    if(msg=="postOK") alert("게시글이 등록되었습니다.")
+    if(msg=="postOK") alert("게시글이 등록되었습니다.");
 </script>
 <div class="wrapper">
     <div class="wrap">
@@ -38,7 +38,7 @@
                     <c:if test ="${memberDto.master_admin==1}">
                         <select class="admin-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option value="/post/form">공간등록&수정</option>
+                            <option value="/test">공간등록&수정</option>
                             <option value="">예약리스트</option>
                             <option value="">통계&정산</option>
                             <option value="/member/logout">로그아웃</option>

@@ -4,23 +4,16 @@ public class AttachImageDto {
     private String uploadPath; //경로
     private String uuid;
     private String fileName;
-    private int postId; //postid
+    private int pno; //postid
 
     public AttachImageDto(){}
-    public AttachImageDto(String uploadPath, String uuid, String fileName, int postId) {
-        this.uploadPath = uploadPath;
-        this.uuid = uuid;
-        this.fileName = fileName;
-        this.postId = postId;
-    }
-
     @Override
     public String toString() {
         return "AttachImageDto{" +
                 "uploadPath='" + uploadPath + '\'' +
                 ", uuid='" + uuid + '\'' +
                 ", fileName='" + fileName + '\'' +
-                ", postId=" + postId +
+                ", pno=" + pno +
                 '}';
     }
 
@@ -48,11 +41,11 @@ public class AttachImageDto {
         this.fileName = fileName;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getPno() {
+        return pno;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPno(int pno) {
+        this.pno = pno;
     }
 }

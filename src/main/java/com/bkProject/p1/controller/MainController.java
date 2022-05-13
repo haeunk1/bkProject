@@ -17,10 +17,6 @@ import java.nio.file.Files;
 
 @Controller
 public class MainController {
-    @RequestMapping("/test")
-    public String test() {
-        return "test";
-    }
     @RequestMapping("/main")
     public String main() {
         return "main";

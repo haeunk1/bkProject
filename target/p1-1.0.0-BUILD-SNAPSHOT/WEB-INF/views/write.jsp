@@ -128,11 +128,6 @@
             return true;
         }
         $("#writeBtn").on("click", function(){
-            var chk_arr=[]
-            $("input[name=checkbox]:checked").each(function(){
-                var chk=$(this).val();
-                chk_arr.push(chk);
-            })
 
             let form = $("#form");
             form.attr("action", "<c:url value='/post/write'/>");

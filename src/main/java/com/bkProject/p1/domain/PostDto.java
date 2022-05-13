@@ -1,5 +1,7 @@
 package com.bkProject.p1.domain;
 
+import java.util.List;
+
 public class PostDto {
 
     private int pno;
@@ -12,11 +14,11 @@ public class PostDto {
     private String hourly_cost;
     private String category;
 
-    private String hours_oper;//운영시간
     private String writer; //memberController에서 id session주입해야함(지금은 memberDto로 되어있음)
     private int like_cnt=0;
     private int view_cnt=0;
     private int comment_cnt=0;
+    private List<AttachImageDto> imageList; //이미지정보 리스트
 
     public PostDto(){}
     public PostDto(String title, String main_content, String detail_content, String start_time, String end_time, String area_info, String hourly_cost, String category) {
@@ -29,8 +31,8 @@ public class PostDto {
         this.hourly_cost = hourly_cost;
         this.category = category;
 
-        this.hours_oper=start_time+"~"+end_time;
     }
+
 
     @Override
     public String toString() {
@@ -44,12 +46,20 @@ public class PostDto {
                 ", area_info='" + area_info + '\'' +
                 ", hourly_cost='" + hourly_cost + '\'' +
                 ", category='" + category + '\'' +
-                ", hours_oper='" + hours_oper + '\'' +
                 ", writer='" + writer + '\'' +
                 ", like_cnt=" + like_cnt +
                 ", view_cnt=" + view_cnt +
                 ", comment_cnt=" + comment_cnt +
+                ", imageList=" + imageList +
                 '}';
+    }
+
+    public List<AttachImageDto> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<AttachImageDto> imageList) {
+        this.imageList = imageList;
     }
 
     public int getPno() {
@@ -124,13 +134,7 @@ public class PostDto {
         this.category = category;
     }
 
-    public String getHours_oper() {
-        return hours_oper;
-    }
 
-    public void setHours_oper(String hours_oper) {
-        this.hours_oper = hours_oper;
-    }
 
     public String getWriter() {
         return writer;
