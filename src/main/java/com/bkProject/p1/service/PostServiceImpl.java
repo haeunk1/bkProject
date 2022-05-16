@@ -6,6 +6,9 @@ import com.bkProject.p1.domain.PostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
@@ -22,5 +25,12 @@ public class PostServiceImpl implements PostService {
     public int imgPost(AttachImageDto attachImageDto) throws Exception{
         return postDao.imgInsert(attachImageDto);
     }
+
+    public List<PostDto> getPage(Map map) throws Exception{
+        return postDao.selectPage(map);
+    }
+
+    public int getCount() throws Exception{
+        return postDao.count();
+    }
 }
-//서비스 단계에서 post정보와 이미지정보를 db에 등록하는 작업 할것

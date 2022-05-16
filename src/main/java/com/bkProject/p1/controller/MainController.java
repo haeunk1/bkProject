@@ -1,5 +1,9 @@
 package com.bkProject.p1.controller;
 
+import com.bkProject.p1.domain.PageHandler;
+import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +18,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
-    @RequestMapping("/main")
-    public String main() {
+    @Autowired
+    PostService postService;
+    @GetMapping("/main")
+    public String main(Integer page,Integer pageSize, Model m) throws Exception{
+        if(page==null || pageSize==null){
+            page=1;
+            pageSize=10;
+        }
+        int totalCnt = postService.getCount();
+        m.addAttribute("totalCnt",totalCnt);
+
+        PageHandler ph=new PageHandler(totalCnt, page);
+        m.addAttribute("ph",ph);
+
+        Map map=new HashMap();
+        map.put("offset",(page-1)*pageSize);
+        map.put("pageSize",pageSize);
+        List<PostDto> list = postService.getPage(map);
+
+        m.addAttribute("list",list);
         return "main";
+    }
+    @RequestMapping("/mainTest")
+    public String mainTest() {
+        return "mainTest";
     }
 
     //이미지는 모든 사용자가 접근가능해야 하기 때문에 일단 MainController에 작성

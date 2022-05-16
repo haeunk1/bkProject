@@ -26,6 +26,12 @@ public class postDaoImplTest {
 
     }
     @Test
+    public void count() throws Exception{
+        int count = postDao.count();
+        System.out.println("count="+count);
+    }
+
+    @Test
     public void deleteAll() throws Exception {
         postDao.deleteAll();
     }

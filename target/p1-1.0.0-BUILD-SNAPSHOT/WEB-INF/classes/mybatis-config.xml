@@ -5,7 +5,8 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="MemberDto" type="com.bkProject.p1.domain.MemberDto"/>
-<!--        <typeAlias alias="CommentDto" type="com.bkProject.p1.domain.CommentDto"/>-->
+        <typeAlias alias="PostDto" type="com.bkProject.p1.domain.PostDto"/>
+        <typeAlias alias="AttachImageDto" type="com.bkProject.p1.domain.AttachImageDto"/>
 <!--        <typeAlias alias="SearchCondition" type="com.bkProject.p1.domain.SearchCondition"/>-->
 
     </typeAliases>

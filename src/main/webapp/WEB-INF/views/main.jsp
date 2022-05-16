@@ -90,22 +90,36 @@
             <div class="space_list">
                 <c:forEach var="postDto" items="${list}">
                     <tr>
-                        <td class="img"></td>
-                        <td class="title"></td>
-                        <td class="location"></td>
-                        <td class="category"></td>
-                        <td class="price"></td>
-                        <td class="like_cnt"></td>
-                        <td class="view_cnt"></td>
-                        <td class="comment_cnt"></td>
-
+                        <br>
+                        <td class="title">${postDto.title}</td>
+                        <td class="category">${postDto.category}</td>
+                        <td class="hourly_cost">${postDto.hourly_cost}</td>
+                        <td class="area_info">${postDto.area_info}</td>
+                        <td class="like_cnt">${postDto.like_cnt}</td>
+                        <td class="view_cnt">${postDto.view_cnt}</td>
                     </tr>
                 </c:forEach>
             </div>
-            <div>
-                <div class="page_handler">
-                    1,2,3,4,5,6...
-                </div>
+
+            <div class="page_handler">
+
+                <c:if test="${totalCnt eq null || totalCnt eq 0}">
+                    <div> 게시물이 없습니다.</div>
+                </c:if>
+                <c:if test="${totalCnt ne 0}">
+                    <c:if test="${ph.showPrev}">
+                        <a class="page" href="<c:url value="/main?page=${ph.beginPage-1}&pageSize=${ph.pageSize}"/>">&lt;</a>
+                    </c:if>
+                    <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                        <a class="page ${i==ph.page? "paging-active" : ""}" href="<c:url value="/main?page=${i}&pageSize=${ph.pageSize}"/>">${i}</a>
+                    </c:forEach>
+                    <c:if test="${ph.showNext}">
+                        <a class="page" href="<c:url value="/main?page=${ph.endPage+1}&pageSize=${ph.pageSize}"/>">&gt;</a>
+                    </c:if>
+
+                </c:if>
+
+
 
             </div>
         </div>
