@@ -35,4 +35,12 @@ public class PostDaoImpl implements PostDao {
     public int count() throws Exception{
         return session.selectOne(namespace+"count");
     }
+
+    public List<AttachImageDto> getImageList(int pno) throws Exception{
+        return session.selectList(namespace+"getImageList",pno);
+    }
+
+    public PostDto getPost(int pno) throws Exception{
+        return session.selectOne(namespace+"selectPost",pno);
+    }
 }

@@ -17,15 +17,18 @@
 
 
     <delete id="deleteAll">
-        /*set foreign_key_checks=1;
-        set foreign_key_checks=0;
-        delete from post_img;*/
+        /*set foreign_key_checks=0;
+        delete from post_img;
         delete from post;
+        set foreign_key_checks=1;*/
     </delete>
 
     <insert id="imgInsert">
         insert into post_img(pno,fileName,uploadPath,uuid) values(#{pno},#{fileName},#{uploadPath},#{uuid})
     </insert>
+    <select id="getImageList" resultType="AttachImageDto" parameterType="int">
+        select * from post_img where pno = #{pno};
+    </select>
 
     <select id="selectPage" parameterType="map" resultType="PostDto">
         select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
@@ -41,5 +44,9 @@
 
     <select id="count" resultType="int">
         select count(*) from post;
+    </select>
+
+    <select id="selectPost" resultType="PostDto" parameterType="int">
+        select * from post where pno=#{pno};
     </select>
 </mapper>

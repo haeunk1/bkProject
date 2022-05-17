@@ -33,4 +33,11 @@ public class PostServiceImpl implements PostService {
     public int getCount() throws Exception{
         return postDao.count();
     }
+
+    public List<AttachImageDto> getImageList(int pno) throws Exception{
+        return postDao.getImageList(pno);
+    }
+    public PostDto getPost(int pno) throws Exception{
+        return postDao.getPost(pno);
+    }
 }

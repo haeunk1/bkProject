@@ -53,12 +53,12 @@ public class MemberController {
             response.addCookie(cookie);
         }
         //3. 홈으로 이동
-        return "redirect:/";
+        return "redirect:/main";
     }
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "redirect:/";
+        return "redirect:/main";
     }
 
     ////////////////////////////회원가입/////////////////////////////////
@@ -78,7 +78,7 @@ public class MemberController {
             if(rowCnt!=1) throw new Exception("Register faild");
             m.addAttribute("msg","REG_OK");
 
-            return "redirect:/";
+            return "redirect:/main";
         } catch (Exception e) {
             m.addAttribute(memberDto);
             m.addAttribute("msg","REG_ERR");

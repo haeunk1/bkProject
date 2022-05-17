@@ -1,12 +1,15 @@
 package com.bkProject.p1.controller;
 
+import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.MemberDto;
 import com.bkProject.p1.domain.PostDto;
 import com.bkProject.p1.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,11 +27,10 @@ public class PostController {
     private static final String CURR_IMAGE_REPO_PATH = "C://spring//image_rep";
 
     @GetMapping("/form")
-    public String form(HttpServletRequest request, Model m) {
+    public String form(HttpServletRequest request) {
         if (!adminLoginCheck(request)) {
             return "redirect:/member/login";
         }
-        m.addAttribute("mode", "new");
         return "write";
     }
 
@@ -39,23 +41,31 @@ public class PostController {
         return memberDto != null && memberDto.getMaster_admin() == 1;
     }
 
-    //상품등록
-   // @PostMapping("/write")
-    @RequestMapping(value="/write", method = {RequestMethod.GET, RequestMethod.POST})
-    public String write(PostDto postDto, HttpSession session,RedirectAttributes rttr) throws Exception {
+    @Transactional
+    @PostMapping("/write")
+    public String testt(PostDto postDto, HttpServletRequest request, RedirectAttributes rttr){
+        //test를 위해 login 생략
+        /*HttpSession session= request.getSession();
+        MemberDto memberDto = (MemberDto)session.getAttribute("memberDto");
+        postDto.setWriter(memberDto.getId());*/
+        postDto.setWriter("임시 관리자");
+        try {
+            postService.post(postDto);
 
-        String memberDto = (String)session.getAttribute("memberDto");
-//        writer=memberDto.
-//        postDto.setWriter(writer);
-        System.out.println("memberDto = "+memberDto);
+            //if(postDto.getImageList()==null || postDto.getImageList().size()<=0) return;
 
-        System.out.println("전달 성공");
-        System.out.println("postDto="+postDto);
-        postService.post(postDto);
-        rttr.addAttribute("msg","postOK");
-        return "redirect:/";
+            for(AttachImageDto attach:postDto.getImageList()){
 
+                attach.setPno(postDto.getPno());
+                postService.imgPost(attach);
+            }
 
+            rttr.addAttribute("msg","postOK");
+            return "redirect:/main";
+        } catch (Exception e) {
+            rttr.addAttribute("msg","postERR");
+            return "redirect:/post/form";//폼으로 다시 돌아감
+        }
 
     }
 

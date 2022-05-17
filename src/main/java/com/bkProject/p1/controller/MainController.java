@@ -1,5 +1,6 @@
 package com.bkProject.p1.controller;
 
+import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.PageHandler;
 import com.bkProject.p1.domain.PostDto;
 import com.bkProject.p1.service.PostService;
@@ -13,9 +14,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -46,9 +44,10 @@ public class MainController {
         m.addAttribute("list",list);
         return "main";
     }
-    @RequestMapping("/mainTest")
+
+    @RequestMapping("/detail")
     public String mainTest() {
-        return "mainTest";
+        return "detail";
     }
 
     //이미지는 모든 사용자가 접근가능해야 하기 때문에 일단 MainController에 작성
@@ -56,6 +55,7 @@ public class MainController {
     public ResponseEntity<byte[]> getImage(String fileName){//ResponseEntity객체를 통해 body에 byte[]데이터를 보내기 때문에
         File file = new File("C:\\upload\\"+fileName);
         ResponseEntity<byte[]> result = null;
+        System.out.println("fileName="+fileName);
 
         try {
             HttpHeaders header = new HttpHeaders();//ResponseEntity에 Response의 header와 관련된 설정 객체를 추가해주기 위해
@@ -67,8 +67,17 @@ public class MainController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        System.out.println("result="+result);
         return result;
+    }
 
+    @GetMapping("/getImageList")
+    public ResponseEntity<List<AttachImageDto>> getImageList(int pno){
+        try {
+            return new ResponseEntity<List<AttachImageDto>>(postService.getImageList(pno),HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

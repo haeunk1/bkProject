@@ -55,7 +55,7 @@ public class TestController {
             }
 
             rttr.addAttribute("msg","postOK");
-            return "redirect:/";
+            return "redirect:/main";
         } catch (Exception e) {
             rttr.addAttribute("msg","postERR");
             return "redirect:/test";//폼으로 다시 돌아감

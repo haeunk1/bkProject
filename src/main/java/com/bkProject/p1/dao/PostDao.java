@@ -13,6 +13,10 @@ public interface PostDao {
     int imgInsert(AttachImageDto attachImageDto) throws Exception;
     List<PostDto> selectPage(Map map) throws Exception;
 
+    List<AttachImageDto> getImageList(int pno) throws Exception;
+
     int count() throws Exception;
+
+    PostDto getPost(int pno) throws Exception;
 }
 

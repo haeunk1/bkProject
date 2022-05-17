@@ -69,7 +69,7 @@
     var pwd2Check = false;            // 비번 확인
     var pwdeqCheck = false;        // 비번 확인 일치 확인
     var nameCheck = false;            // 이름
-    var phoneCheck = false         // 휴대전화 번호 확인
+    var phoneCheck = false;         // 휴대전화 번호 확인
     var mailCheck = false;            // 이메일
 
     $(document).ready(function(){

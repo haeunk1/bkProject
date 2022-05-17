@@ -18,4 +18,7 @@ public interface PostService {
     List<PostDto> getPage(Map map) throws Exception;
 
     int getCount() throws Exception;
+
+    List<AttachImageDto> getImageList(int pno) throws Exception;
+    PostDto getPost(int pno) throws Exception;
 }

@@ -8,8 +8,143 @@
 
     <meta charset="UTF-8">
     <title>Welcome BookingSite</title>
-    <link rel="stylesheet" href="/css/main.css">
-<%--    <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">--%>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        /* 화면 전체 렙 */
+        .wrapper{
+            width: 100%;
+        }
+        /* content 랩 */
+        .wrap{
+            width : 1080px;
+            margin: auto;
+        }
+        /* 로고, 검색, 로그인 */
+        .top_area{
+            width: 100%;
+            height: 150px;
+            /* background-color: #f7f0b9; */
+        }
+        /* 로고 영역 */
+        .logo_area{
+            width: 25%;
+            height: 100%;
+            background-color: red;
+            float:left;
+        }
+        /* 검색 박스 영역 */
+        .search_area{
+            width: 50%;
+            height: 100%;
+            background-color: yellow;
+            float:left;
+        }
+        /* 로그인 버튼 영역 */
+        .login_area{
+            width: 25%;
+            height: 100%;
+            display: inline-block;
+            text-align: center;
+        }
+        .login_button{
+            height: 50%;
+            background-color: #D4DFE6;
+            margin-top: 30px;
+            line-height: 77px;
+            font-size: 40px;
+            font-weight: 900;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .login_area>span{
+            margin-top: 10px;
+            font-weight: 900;
+            display: inline-block;
+        }
+        .login_button{
+            height : 50%;
+            background-color: #D4DFE6;
+            margin-top:30px;
+        }
+
+        /* 제품 목록 네비 */
+        .navi_bar_area{
+            width: 100%;
+            height: 70px;
+            background-color: #7696fd;
+        }
+
+        /* 홈페이지 메인 제품 목록  */
+        /* float 속성 해제 */
+
+        .clearfix{
+            clear: both;
+        }
+        .navi_bar_area{
+            background-color: rgb(253, 253, 250);
+            width: 100%;
+            height: 110px;
+            border: 1px solid #ddd;
+            margin-top : 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .new_register{
+            display: none;
+        }
+        .content_area{
+            width: 100%;
+            background-color: #97ef97;
+            height: 3000px;
+
+        }
+        /*.post>div{
+            margin:50px;
+        }*/
+
+        .space_list{
+
+            margin:10px 20px 10px 20px;
+            border-radius: 15px;
+            background-color: pink;
+            height: 80%;
+
+        }
+
+        .parent{
+            border-radius: 15px;
+            border: 5px solid green;
+            padding: 10px;
+            background-color: white;
+            width: 97%;
+            height: 200px;
+            display:grid;
+            grid-template-columns:10fr 0.5fr 10fr;
+            margin-bottom: 10px;
+
+        }
+        .child{
+            flex:1;
+            background: #2E9AFE;
+        }
+
+        #result_card img{
+            max-width: 100%;
+            height: auto;
+            display: block;
+            padding: 5px;
+            margin-top: 10px;
+            margin: auto;
+        }
+
+
+
+    </style>
 </head>
 <body>
 <script>
@@ -38,7 +173,7 @@
                     <c:if test ="${memberDto.master_admin==1}">
                         <select class="admin-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option value="/test">공간등록&수정</option>
+                            <option value="/post/form">공간등록&수정</option>
                             <option value="">예약리스트</option>
                             <option value="">통계&정산</option>
                             <option value="/member/logout">로그아웃</option>
@@ -88,17 +223,46 @@
         </div>
         <div class="content_area">
             <div class="space_list">
-                <c:forEach var="postDto" items="${list}">
-                    <tr>
-                        <br>
-                        <td class="title">${postDto.title}</td>
-                        <td class="category">${postDto.category}</td>
-                        <td class="hourly_cost">${postDto.hourly_cost}</td>
-                        <td class="area_info">${postDto.area_info}</td>
-                        <td class="like_cnt">${postDto.like_cnt}</td>
-                        <td class="view_cnt">${postDto.view_cnt}</td>
-                    </tr>
-                </c:forEach>
+
+                <%--<c:forEach var="postDto" items="${list}">
+                    <div class="parent">
+                        <div class="child">
+                            <div id="uploadResult">
+
+                            </div>
+                        </div>
+                        <div class="blank"></div>
+                        <div class="child" style="background: #FA5858;">
+                            <br><td class="title">${postDto.title}</td>
+                            <br><td class="category">${postDto.category}</td>
+                            <br><td class="hourly_cost">${postDto.hourly_cost}</td>
+                            <br><td class="area_info">${postDto.area_info}</td>
+                            <br><td class="like_cnt">${postDto.like_cnt}</td>
+                            <br><td class="view_cnt">${postDto.view_cnt}</td>
+                        </div>
+                    </div>
+                </c:forEach>--%>
+                    <c:forEach var="postDto" items="${list}">
+                        <a href="/detail?pno=${postDto.pno}">
+                        <div class="parent">
+                            <div class="child">
+                                <div id="uploadResult">
+
+
+                                </div>
+                            </div>
+                            <div class="blank"></div>
+                            <div class="child" style="background: #FA5858;">
+                                <br><td class="title">${postDto.title}</td>
+                                <br><td class="category">${postDto.category}</td>
+                                <br><td class="hourly_cost">${postDto.hourly_cost}</td>
+                                <br><td class="area_info">${postDto.area_info}</td>
+                                <br><td class="like_cnt">${postDto.like_cnt}</td>
+                                <br><td class="view_cnt">${postDto.view_cnt}</td>
+                            </div>
+                        </div>
+                        </a>
+                    </c:forEach>
             </div>
 
             <div class="page_handler">
@@ -125,6 +289,36 @@
         </div>
     </div>
 </div>
+<script>
+    //메인화면 이미지 띄우기(보류)
+    $(document).ready(function(){
+        let pno='<c:out value="${postDto.pno}"/>';
+        console.log(pno);
+        let uploadResult=$("#uploadResult");
+        $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
+            if(arr.length===0){
+                let str="";
+                str+="<div id='result_card'>";
+                str+="<img src='/resources/img/noImg.png'>";
+                str+="</div>";
+                uploadResult.html(str);
+                return;
+            }
 
+            let str="";
+            let obj=arr[0];//서버로부터 전달받은 이미지 정보 객체 값
+
+            let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
+            str += "<div id='result_card'";
+            str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
+            str +=">";
+            str += "<img scr='/display?fileName=" + fileCallPath + "'>";
+            str += "/>";
+
+            uploadResult.html(str);
+        });
+
+    });
+</script>
 </body>
 </html>
