@@ -17,49 +17,8 @@ import java.util.List;
 
 @Controller
 public class TestController {
-    @Autowired
-    PostService postService;
     @GetMapping("/test")
-    public String test(HttpServletRequest request){
-        //test를 위해 login 생략
-        /*if(!adminLoginCheck(request)){
-            return "redirect:/member/login";
-        }*/
-
+    public String test(){
         return "test";
-    }
-    private boolean adminLoginCheck(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        MemberDto memberDto = (MemberDto) session.getAttribute("memberDto");
-
-        return memberDto != null && memberDto.getMaster_admin() == 1;
-    }
-
-    @Transactional
-    @PostMapping("/test")
-    public String testt(PostDto postDto, HttpServletRequest request, RedirectAttributes rttr){
-        //test를 위해 login 생략
-        /*HttpSession session= request.getSession();
-        MemberDto memberDto = (MemberDto)session.getAttribute("memberDto");
-        postDto.setWriter(memberDto.getId());*/
-        postDto.setWriter("임시 관리자");
-        try {
-            postService.post(postDto);
-
-            //if(postDto.getImageList()==null || postDto.getImageList().size()<=0) return;
-
-            for(AttachImageDto attach:postDto.getImageList()){
-
-                attach.setPno(postDto.getPno());
-                postService.imgPost(attach);
-            }
-
-            rttr.addAttribute("msg","postOK");
-            return "redirect:/main";
-        } catch (Exception e) {
-            rttr.addAttribute("msg","postERR");
-            return "redirect:/test";//폼으로 다시 돌아감
-        }
-
     }
 }

@@ -100,10 +100,8 @@ public class MemberController {
     public String memberIdCheckPOST(String memberId) throws Exception {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(memberId);
-        System.out.println("memberDto==" + memberDto);
 
         int result = service.idCheck(memberDto);
-        System.out.println(result);
 
         if (memberId.length() < 4) {
             return "lenCheck";

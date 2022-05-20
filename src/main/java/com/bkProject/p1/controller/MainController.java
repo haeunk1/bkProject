@@ -55,7 +55,6 @@ public class MainController {
     public ResponseEntity<byte[]> getImage(String fileName){//ResponseEntity객체를 통해 body에 byte[]데이터를 보내기 때문에
         File file = new File("C:\\upload\\"+fileName);
         ResponseEntity<byte[]> result = null;
-        System.out.println("fileName="+fileName);
 
         try {
             HttpHeaders header = new HttpHeaders();//ResponseEntity에 Response의 header와 관련된 설정 객체를 추가해주기 위해
@@ -67,7 +66,6 @@ public class MainController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println("result="+result);
         return result;
     }
 

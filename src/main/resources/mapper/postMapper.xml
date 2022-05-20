@@ -49,4 +49,5 @@
     <select id="selectPost" resultType="PostDto" parameterType="int">
         select * from post where pno=#{pno};
     </select>
+
 </mapper>
