@@ -10,7 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,26 +22,37 @@ public class PostServiceImplTest {
 PostService postService;
 
     @Test
+    public void postLikeTest() throws Exception{
+        int pno=696;
+        String id="asdf";
+
+        Map map2 = new HashMap();//likeCntUpdate
+        map2.put("pno",pno);
+        map2.put("action",1);
+        postService.likeCntUpdate(map2);
+    }
+
+    @Test
     public void ImageTest() throws Exception{
-        List<AttachImageDto> list= postService.getImageList(255);
+  /*      List<AttachImageDto> list= postService.getImageList(255);
         System.out.println("list=="+list);
         for(AttachImageDto dto:list){
             System.out.println("dto="+dto);
-        }
+        }*/
     }
     @Test
     public void getPost() throws Exception{
-        PostDto postDto = postService.getPost(255);
+        /*PostDto postDto = postService.getPost(255);
         List<AttachImageDto> list = postService.getImageList(255);
         System.out.println("postDtotest="+postDto);
         for(AttachImageDto attachImageDto:list){
             System.out.println(attachImageDto);
-        }
+        }*/
     }
     @Test
     public void post() throws Exception{
         //postService.reset();
-
+/*
         for(int i=1;i<=220;i++){
             PostDto postDto = new PostDto("제목"+i,"설명"+i,"상세설명"+i,"12:00","24:00","도봉구","12,000","[date', 'bbq', 'singing_room',' board_game']");
             postDto.setWriter("작성자"+i);
@@ -68,7 +81,7 @@ PostService postService;
                 attach.setPno(postDto.getPno());
                 postService.imgPost(attach);
             }
-        }
+        }*/
 
 
     }

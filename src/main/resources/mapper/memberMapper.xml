@@ -21,4 +21,8 @@
     <select id="memberLogin" parameterType="map" resultType="MemberDto">
         select id,name,phone_number,email,master_admin from member_info where id=#{id} and pwd=#{pwd};
     </select>
+
+    <select id="getMember" parameterType="String" resultType="MemberDto">
+        select * from member_info where id=#{id};
+    </select>
 </mapper>

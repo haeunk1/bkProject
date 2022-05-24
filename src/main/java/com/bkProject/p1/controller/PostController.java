@@ -44,11 +44,10 @@ public class PostController {
     @Transactional
     @PostMapping("/write")
     public String testt(PostDto postDto, HttpServletRequest request, RedirectAttributes rttr){
-        //test를 위해 login 생략
-        /*HttpSession session= request.getSession();
+        ///////////////////////////
+        HttpSession session= request.getSession();
         MemberDto memberDto = (MemberDto)session.getAttribute("memberDto");
-        postDto.setWriter(memberDto.getId());*/
-        postDto.setWriter("임시 관리자");
+        postDto.setWriter(memberDto.getId());
         try {
             postService.post(postDto);
 

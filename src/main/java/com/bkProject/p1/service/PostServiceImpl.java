@@ -38,6 +38,21 @@ public class PostServiceImpl implements PostService {
         return postDao.getImageList(pno);
     }
     public PostDto getPost(int pno) throws Exception{
+        postDao.increaseViewCnt(pno);
         return postDao.getPost(pno);
+    }
+
+    public int insertLike(Map map) throws Exception{
+        return postDao.insertLike(map);
+    }
+    public int deleteLike(Map map) throws Exception{
+        return postDao.deleteLike(map);
+    }
+
+    public int likeCntUpdate(Map map) throws Exception{
+        return postDao.likeCntUpdate(map);
+    }
+    public int likeCheck(Map map) throws Exception{
+        return postDao.likeCheck(map);
     }
 }

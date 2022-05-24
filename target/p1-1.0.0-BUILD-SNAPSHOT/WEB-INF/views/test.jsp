@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         form {
-            width:400px;
-            height:600px;
+            width:700px;
+            height:auto;
             display : flex;
             flex-direction: column;
             align-items:center;
@@ -32,13 +32,13 @@
             color : white;
             width:300px;
             height:50px;
-            font-size: 17px;
+            font-size: 25px;
             border : none;
             border-radius: 5px;
             margin : 20px 0 30px 0;
         }
         .title {
-            font-size : 50px;
+            font-size : 30px;
             margin: 40px 0 30px 0;
         .join_button_wrap{
             margin-top: 40px;
@@ -64,12 +64,30 @@
 </head>
 <body>
 <form  id="join_form">
-    <div class="title">회원가입</div>
-
-
+    <div class="title">[결제확인]</div>
+    <h1>${postDto.title}</h1>
+    <h2>${postDto.main_content}</h2>
+    <h3>★위치★</h3>
+    ${postDto.area_info}
+    <h3>★HOST정보★</h3>
+    ● nickName : ${memberDto.id}<br>
+    ● phoneNumber : ${memberDto.phone_number}<br>
+    ● e-mail : ${memberDto.email}
+    <hr>
+    <h3>★예약 정보★</h3>
+    ● 날짜 : ${scheduleDto.year}년 ${scheduleDto.month}월 ${scheduleDto.day}일<br>
+    ● 시간 :<br>
+    <c:forEach var="str" items="${list}">
+        >> ${str}<br>
+    </c:forEach>
+    ● 최종 비용 : ${totCost}<br>
+    <br>
+    <br>
     <div class="join_button_wrap">
-        <input type="button" class="join_button" value="가입하기">
+        <input type="button" class="join_button" value="결제">
     </div>
+    <br>
+    <br>
 </form>
 <script>
 

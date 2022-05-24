@@ -43,4 +43,24 @@ public class PostDaoImpl implements PostDao {
     public PostDto getPost(int pno) throws Exception{
         return session.selectOne(namespace+"selectPost",pno);
     }
+
+    public int increaseViewCnt(int pno) throws Exception{
+        return session.update(namespace+"increaseViewCnt",pno);
+    }
+
+    public int insertLike(Map map) throws Exception{
+        return session.insert(namespace+"insertLike",map);
+    }
+
+    public int deleteLike(Map map) throws Exception{
+        return session.delete(namespace+"deleteLike",map);
+    }
+
+    public int likeCntUpdate(Map map) throws Exception{
+        return session.update(namespace+"likeCntUpdate",map);
+    }
+
+    public int likeCheck(Map map) throws Exception{
+        return session.selectOne(namespace+"likeCheck",map);
+    }
 }

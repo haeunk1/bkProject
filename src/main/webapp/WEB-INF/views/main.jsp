@@ -223,27 +223,9 @@
         </div>
         <div class="content_area">
             <div class="space_list">
-
-                <%--<c:forEach var="postDto" items="${list}">
-                    <div class="parent">
-                        <div class="child">
-                            <div id="uploadResult">
-
-                            </div>
-                        </div>
-                        <div class="blank"></div>
-                        <div class="child" style="background: #FA5858;">
-                            <br><td class="title">${postDto.title}</td>
-                            <br><td class="category">${postDto.category}</td>
-                            <br><td class="hourly_cost">${postDto.hourly_cost}</td>
-                            <br><td class="area_info">${postDto.area_info}</td>
-                            <br><td class="like_cnt">${postDto.like_cnt}</td>
-                            <br><td class="view_cnt">${postDto.view_cnt}</td>
-                        </div>
-                    </div>
-                </c:forEach>--%>
-                    <c:forEach var="postDto" items="${list}">
-                        <a href="/detail?pno=${postDto.pno}">
+                <c:forEach var="postDto" items="${list}">
+                    <a href="detail?pno=${postDto.pno}">
+                            <%-- <a href="<c:url value = '/detail?pno=${postDto.pno}'/>">--%>
                         <div class="parent">
                             <div class="child">
                                 <div id="uploadResult">
@@ -255,14 +237,15 @@
                             <div class="child" style="background: #FA5858;">
                                 <br><td class="title">${postDto.title}</td>
                                 <br><td class="category">${postDto.category}</td>
-                                <br><td class="hourly_cost">${postDto.hourly_cost}</td>
-                                <br><td class="area_info">${postDto.area_info}</td>
-                                <br><td class="like_cnt">${postDto.like_cnt}</td>
-                                <br><td class="view_cnt">${postDto.view_cnt}</td>
+                                <br><td class="hourly_cost">시간당 금액 : ${postDto.hourly_cost}</td>
+                                <br><td class="area_info">위치 : ${postDto.area_info}</td>
+                                <br><td class="like_cnt">좋아요 : ${postDto.like_cnt}</td>
+                                <br><td class="view_cnt">조회수 : ${postDto.view_cnt}</td>
                             </div>
                         </div>
-                        </a>
-                    </c:forEach>
+                    </a>
+                </c:forEach>
+
             </div>
 
             <div class="page_handler">
@@ -291,7 +274,7 @@
 </div>
 <script>
     //메인화면 이미지 띄우기(보류)
-    $(document).ready(function(){
+    /*$(document).ready(function(){
         let pno='<c:out value="${postDto.pno}"/>';
         console.log(pno);
         let uploadResult=$("#uploadResult");
@@ -318,7 +301,7 @@
             uploadResult.html(str);
         });
 
-    });
+    });*/
 </script>
 </body>
 </html>

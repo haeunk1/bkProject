@@ -21,4 +21,9 @@ public interface PostService {
 
     List<AttachImageDto> getImageList(int pno) throws Exception;
     PostDto getPost(int pno) throws Exception;
+
+    int insertLike(Map map) throws Exception;
+    int deleteLike(Map map) throws Exception;
+    int likeCntUpdate(Map map) throws Exception;
+    int likeCheck(Map map) throws Exception;
 }

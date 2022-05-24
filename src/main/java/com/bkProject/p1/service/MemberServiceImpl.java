@@ -28,4 +28,8 @@ public class MemberServiceImpl implements MemberService {
 
         return memberDao.idPwdCheck(id,pwd);
     }
+
+    public MemberDto getMember(String id) throws Exception{
+        return memberDao.getMember(id);
+    }
 }

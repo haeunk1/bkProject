@@ -1,6 +1,7 @@
 package com.bkProject.p1.controller;
 
 import com.bkProject.p1.domain.AttachImageDto;
+import com.bkProject.p1.domain.MemberDto;
 import com.bkProject.p1.domain.PageHandler;
 import com.bkProject.p1.domain.PostDto;
 import com.bkProject.p1.service.PostService;
@@ -14,6 +15,8 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -25,7 +28,8 @@ public class MainController {
     @Autowired
     PostService postService;
     @GetMapping("/main")
-    public String main(Integer page,Integer pageSize, Model m) throws Exception{
+    public String main(Integer page, Integer pageSize, Model m) throws Exception{;
+
         if(page==null || pageSize==null){
             page=1;
             pageSize=10;
@@ -45,10 +49,6 @@ public class MainController {
         return "main";
     }
 
-    @RequestMapping("/detail")
-    public String mainTest() {
-        return "detail";
-    }
 
     //이미지는 모든 사용자가 접근가능해야 하기 때문에 일단 MainController에 작성
     @GetMapping("/display")

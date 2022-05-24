@@ -10,4 +10,6 @@ public interface MemberService {
     int idCheck(MemberDto memberDto) throws Exception;
 
     MemberDto login(String id, String pwd) throws Exception;
+
+    MemberDto getMember(String id) throws Exception;
 }

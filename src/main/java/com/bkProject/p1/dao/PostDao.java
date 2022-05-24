@@ -18,5 +18,12 @@ public interface PostDao {
     int count() throws Exception;
 
     PostDto getPost(int pno) throws Exception;
+
+    int increaseViewCnt(int pno) throws Exception;
+
+    int insertLike(Map map) throws Exception;
+    int deleteLike(Map map) throws Exception;
+    int likeCntUpdate(Map map) throws Exception;
+    int likeCheck(Map map) throws Exception;
 }
 

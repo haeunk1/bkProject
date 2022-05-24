@@ -37,4 +37,8 @@ public class MemberDaoImpl implements MemberDao {
         return session.selectOne(namespace+"memberLogin",map);
     }
 
+    public MemberDto getMember(String id) throws Exception{
+        return session.selectOne(namespace+"getMember",id);
+    }
+
 }

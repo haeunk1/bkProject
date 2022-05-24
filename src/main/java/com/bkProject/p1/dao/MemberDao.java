@@ -10,4 +10,6 @@ public interface MemberDao {
     int idCount(MemberDto memberDto) throws Exception;
 
     MemberDto idPwdCheck(String id, String pwd) throws Exception;
+
+    MemberDto getMember(String id) throws Exception;
 }
