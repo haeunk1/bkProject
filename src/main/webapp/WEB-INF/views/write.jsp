@@ -123,19 +123,19 @@
         <h3>카테고리</h3>
         <div class="category_area">
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="party">파티</label>
-                <label><input type="checkbox" name="category" value="date">데이트</label>
-                <label><input type="checkbox" name="category" value="station">역근처</label>
+                <label><input type="checkbox" name="category" value="파티">파티</label>
+                <label><input type="checkbox" name="category" value="데이트">데이트</label>
+                <label><input type="checkbox" name="category" value="역근처">역근처</label>
             </div>
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="studio">스튜디오</label>
-                <label><input type="checkbox" name="category" value="bbq">바베큐</label>
+                <label><input type="checkbox" name="category" value="스튜디오">스튜디오</label>
+                <label><input type="checkbox" name="category" value="바베큐">바베큐</label>
                 <label><input type="checkbox" name="category" value="singing_room">노래방</label>
             </div>
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="bridal_shower">브라이덜샤워</label>
-                <label><input type="checkbox" name="category" value="board_game">보드게임</label>
-                <label><input type="checkbox" name="category" value="board_game">영화</label>
+                <label><input type="checkbox" name="category" value="브라이덜샤워">브라이덜샤워</label>
+                <label><input type="checkbox" name="category" value="보드게임">보드게임</label>
+                <label><input type="checkbox" name="category" value="영화">영화</label>
             </div>
         </div>
         <br>

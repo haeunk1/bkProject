@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bkProject.p1.dao.PostMapper">
-    <!--<mapper namespace="com.bkProject.p1.dao.PostMapper">-->
 
+<!--  게시물 등록  -->
     <insert id="insert" parameterType="PostDto">
         <selectKey resultType="int" keyProperty="pno" order="AFTER">
             select LAST_INSERT_ID()
@@ -15,6 +15,85 @@
         values (#{title}, #{category}, #{main_content}, #{detail_content},  #{hourly_cost}, #{area_info}, #{writer}, #{start_time}, #{end_time},#{like_cnt},#{view_cnt}, #{comment_cnt});
     </insert>
 
+    <!--  해당 페이지 찾기  -->
+    <select id="selectPage" parameterType="map" resultType="PostDto">
+        select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
+        from post
+        ORDER BY pno DESC
+        LIMIT #{offset},#{pageSize};
+    </select>
+    <!--  검색조건 페이지 찾기  -->
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="PostDto">
+        select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
+        from post
+        where true
+        and title like concat('%',#{keyword},'%')
+        ORDER BY pno DESC
+            LIMIT #{offset},#{pageSize};
+    </select>
+    <!--  검색조건 페이지 개수 (페이징할 때 사용) -->
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        select count(*)
+        from post
+        where true
+          and title like concat('%',#{keyword},'%')
+    </select>
+
+    <sql id="searchCondition">
+        <choose>
+            <when test="option=='title'">
+                and title like concat('%',#{keyword},'%')
+            </when>
+            <when test="option=='location'">
+                and area_info like concat('%',#{keyword},'%')
+            </when>
+            <when test="option=='category'">
+                and category like concat('%',#{keyword},'%')
+            </when>
+            <otherwise>
+                and (title like concat('%',#{keyword},'%')
+                or area_info like concat('%',#{keyword},'%')
+                or category like concat('%',#{keyword},'%'))
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--  게시물 찾기  -->
+    <select id="selectPost" resultType="PostDto" parameterType="int">
+        select * from post where pno=#{pno};
+    </select>
+
+    <!--  조회수 증가  -->
+    <update id="increaseViewCnt" parameterType="int">
+        UPDATE post
+        SET   view_cnt = view_cnt + 1
+        WHERE pno = #{pno}
+    </update>
+
+    <!--  좋아요 추가  -->
+    <insert id="insertLike" parameterType="map">
+        insert into post_like (pno, id)
+        values (#{pno},#{id});
+    </insert>
+
+    <!--  좋아요 삭제  ...(게시물 삭제 / 회원탈퇴할 때 추가 작성필요)-->
+    <insert id="deleteLike" parameterType="map">
+        delete
+        from post_like
+        where pno=#{pno} and id=#{id};
+    </insert>
+
+    <!--  좋아요 증감  -->
+    <update id="likeCntUpdate" parameterType="map">
+        UPDATE post
+        SET   like_cnt = like_cnt + #{action}
+        WHERE pno = #{pno};
+    </update>
+
+<!--  좋아요 check  -->
+    <select id="likeCheck" resultType="int" parameterType="map">
+        select count(*) from post_like where pno=#{pno} and id=#{id};
+    </select>
 
     <delete id="deleteAll">
         /*set foreign_key_checks=0;
@@ -23,31 +102,21 @@
         set foreign_key_checks=1;*/
     </delete>
 
+    <!--  게시물의 이미지 등록  -->
     <insert id="imgInsert">
         insert into post_img(pno,fileName,uploadPath,uuid) values(#{pno},#{fileName},#{uploadPath},#{uuid})
     </insert>
+
+    <!--  게시물 이미지 얻기  -->
     <select id="getImageList" resultType="AttachImageDto" parameterType="int">
         select * from post_img where pno = #{pno};
     </select>
-
-    <select id="selectPage" parameterType="map" resultType="PostDto">
-        select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
-        from post
-        ORDER BY pno DESC
-        LIMIT #{offset},#{pageSize};
-    </select>
-
-<!--    <select id="selectAll"  resultType="PostDto">
-        select  title, category,hourly_cost, area_info, like_cnt, view_cnt
-        from post;
-    </select>-->
+    <!--    <select id="selectAll"  resultType="PostDto">
+    select  title, category,hourly_cost, area_info, like_cnt, view_cnt
+    from post;
+</select>-->
 
     <select id="count" resultType="int">
         select count(*) from post;
     </select>
-
-    <select id="selectPost" resultType="PostDto" parameterType="int">
-        select * from post where pno=#{pno};
-    </select>
-
 </mapper>

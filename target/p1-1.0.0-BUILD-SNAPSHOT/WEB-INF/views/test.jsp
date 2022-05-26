@@ -38,19 +38,21 @@
             margin : 20px 0 30px 0;
         }
         .title {
-            font-size : 30px;
+            font-size: 30px;
             margin: 40px 0 30px 0;
+        }
         .join_button_wrap{
             margin-top: 40px;
             text-align: center;
         }
-        .join_button{
+        .join_button {
             width: 100%;
             height: 40px;
             background-color: #6AAFE6;
             font-size: 20px;
             font-weight: 900;
             color: white;
+        }
     </style>
 
     <title>Register</title>

@@ -2,6 +2,7 @@ package com.bkProject.p1.dao;
 
 import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.domain.SearchCondition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ import static org.junit.Assert.*;
 public class postDaoImplTest {
     @Autowired
     PostDao postDao;
+
+    @Test
+    public void searchSelectPageTest() throws Exception{
+        SearchCondition sc = new SearchCondition(1,10,"제목 ","title");
+        int count= postDao.searchResultCnt(sc);
+        System.out.println("count="+count);
+    }
     @Test
     public void insert() throws Exception {
         PostDto postDto = new PostDto("제목3","설명3","상세설명","12:00","24:00","도봉구","12,000","[date', 'bbq', 'singing_room',' board_game']");
@@ -33,7 +41,7 @@ public class postDaoImplTest {
 
     @Test
     public void deleteAll() throws Exception {
-        postDao.deleteAll();
+       // postDao.deleteAll();
     }
     @Test
     public void imgInsert() throws Exception{

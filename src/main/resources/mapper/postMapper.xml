@@ -22,6 +22,41 @@
         ORDER BY pno DESC
         LIMIT #{offset},#{pageSize};
     </select>
+    <!--  검색조건 페이지 찾기  -->
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="PostDto">
+        select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
+        from post
+        where true
+        and title like concat('%',#{keyword},'%')
+        ORDER BY pno DESC
+            LIMIT #{offset},#{pageSize};
+    </select>
+    <!--  검색조건 페이지 개수 (페이징할 때 사용) -->
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        select count(*)
+        from post
+        where true
+          and title like concat('%',#{keyword},'%')
+    </select>
+
+    <sql id="searchCondition">
+        <choose>
+            <when test="option=='title'">
+                and title like concat('%',#{keyword},'%')
+            </when>
+            <when test="option=='location'">
+                and area_info like concat('%',#{keyword},'%')
+            </when>
+            <when test="option=='category'">
+                and category like concat('%',#{keyword},'%')
+            </when>
+            <otherwise>
+                and (title like concat('%',#{keyword},'%')
+                or area_info like concat('%',#{keyword},'%')
+                or category like concat('%',#{keyword},'%'))
+            </otherwise>
+        </choose>
+    </sql>
 
     <!--  게시물 찾기  -->
     <select id="selectPost" resultType="PostDto" parameterType="int">

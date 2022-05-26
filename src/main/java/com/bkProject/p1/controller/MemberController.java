@@ -64,7 +64,7 @@ public class MemberController {
 
     ////////////////////////////회원가입/////////////////////////////////
     @PostMapping("/join")
-    public String joinPost(MemberDto memberDto, Model m){
+    public String joinPost(MemberDto memberDto, Model m,RedirectAttributes rttr){
         try {
             //1.유효성검사
             if (!isValid(memberDto)) {
@@ -77,12 +77,12 @@ public class MemberController {
                 memberDto.setMaster_admin(1);
             int rowCnt = service.register(memberDto);
             if(rowCnt!=1) throw new Exception("Register faild");
-            m.addAttribute("msg","REG_OK");
+            rttr.addFlashAttribute("msg","REG_OK");
 
             return "redirect:/main";
         } catch (Exception e) {
             m.addAttribute(memberDto);
-            m.addAttribute("msg","REG_ERR");
+            rttr.addFlashAttribute("msg","REG_ERR");
             return "redirect:/member/join";
         }
     }

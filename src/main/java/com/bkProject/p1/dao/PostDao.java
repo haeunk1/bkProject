@@ -2,6 +2,7 @@ package com.bkProject.p1.dao;
 
 import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.domain.SearchCondition;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,8 @@ public interface PostDao {
     int deleteLike(Map map) throws Exception;
     int likeCntUpdate(Map map) throws Exception;
     int likeCheck(Map map) throws Exception;
+
+    int searchResultCnt(SearchCondition searchCondition) throws Exception;
+    List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception;
 }
 

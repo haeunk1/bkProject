@@ -3,6 +3,7 @@ package com.bkProject.p1.service;
 import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.MemberDto;
 import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.domain.SearchCondition;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +27,6 @@ public interface PostService {
     int deleteLike(Map map) throws Exception;
     int likeCntUpdate(Map map) throws Exception;
     int likeCheck(Map map) throws Exception;
+    int searchResultCnt(SearchCondition searchCondition) throws Exception;
+    List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception;
 }

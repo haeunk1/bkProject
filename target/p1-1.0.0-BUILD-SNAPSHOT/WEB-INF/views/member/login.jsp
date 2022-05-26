@@ -26,14 +26,14 @@
         <a href="">비밀번호 찾기</a> |
         <a href="/member/join">회원가입</a>
     </div>
-    <script>
+    <script>/*
         function setMessage(msg, element){
             document.getElementById("msg").innerHTML = ` ${'${msg}'}`;
 
             if(element) {
                 element.select();
             }
-        }
+        }*/
     </script>
 </form>
 </body>

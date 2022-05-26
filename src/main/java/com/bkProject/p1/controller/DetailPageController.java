@@ -33,6 +33,7 @@ public class DetailPageController {
     MemberService memberService;
     @GetMapping("/detail")
     public String detailPage(HttpServletRequest request, Integer pno, Model m) {
+        System.out.println("test");
 
         HttpSession session = request.getSession();
         MemberDto memberDto= (MemberDto)session.getAttribute("memberDto");

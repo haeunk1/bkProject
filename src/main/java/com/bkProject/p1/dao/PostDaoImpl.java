@@ -2,6 +2,7 @@ package com.bkProject.p1.dao;
 
 import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.domain.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -62,5 +63,12 @@ public class PostDaoImpl implements PostDao {
 
     public int likeCheck(Map map) throws Exception{
         return session.selectOne(namespace+"likeCheck",map);
+    }
+
+    public int searchResultCnt(SearchCondition searchCondition) throws Exception{
+        return session.selectOne(namespace+"searchResultCnt",searchCondition);
+    }
+    public List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception{
+        return session.selectList(namespace+"searchSelectPage",searchCondition);
     }
 }

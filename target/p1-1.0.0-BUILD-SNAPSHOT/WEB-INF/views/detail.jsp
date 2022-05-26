@@ -70,9 +70,39 @@
 <div class="wrapper">
     <div class="wrap">
         <div class="top_area" style="background: #7696fd">
+            <div class="login_area">
+                <!--로그인 하지 않은 상태 -->
+                <c:if test = "${memberDto.id==null}">
+                    <div class="login_button"><a href="/member/login">로그인</a></div>
+                    <span><a href="/member/join">회원가입</a></span>
+                </c:if>
+
+                <c:if test = "${memberDto.id!=null}">
+                    <c:if test ="${memberDto.master_admin==1}">
+                        <select class="admin-option" name="option" onchange="location.href=this.value">
+                            <option>${memberDto.name}</option>
+                            <option value="/post/form">공간등록&수정</option>
+                            <option value="">예약리스트</option>
+                            <option value="">통계&정산</option>
+                            <option value="/member/logout">로그아웃</option>
+                        </select>
+                    </c:if>
+                    <c:if test ="${memberDto.master_admin==0}">
+                        <select class="member-option" name="option" onchange="location.href=this.value">
+                            <option>${memberDto.name}</option>
+                            <option>예약현황</option>
+                            <option>찜리스트</option>
+                            <option value="/member/logout">로그아웃</option>
+                        </select>
+                    </c:if>
+
+                </c:if>
+
+            </div>
             <h1>${postDto.title}</h1>
             <h2>${postDto.main_content}</h2>
             <h3>${postDto.category}</h3>
+            <input type='checkbox' id='likeCheck' onclick='likeCheck()'>좋아요(찜)
         </div>
         <div class="content_area">
             <div class="space_list">
@@ -104,6 +134,88 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+    $(document).ready(function(){
+        let id = '${memberDto.id}';
+        let pno=${postDto.pno};
+        if(id!=''){
+            //좋아요 여부에 따라 checked=true
+            $.ajax({
+                url:'/likeCheck',
+                type:'POST',
+                data:{pno:pno, id:id},
+                dataType:'json',
+                success:function(result){
+                    console.log("result="+result);
+                    if(result==1){
+                        $("input:checkbox[id='likeCheck']").prop("checked",true);
+                    }else if(result==0){
+                        $("input:checkbox[id='likeCheck']").prop("checked",false);
+                    }
+                }
+            })
+        }
+
+
+        let month= ${ch.month};
+        let year=${ch.year};
+        callCalendar(year, month);
+
+
+        ///***이미지 띄우기***
+        /*let pno = '<c:out value="${postDto.pno}"/>';*/
+        let uploadResult=$("#uploadResult");
+        //let pno=${postDto.pno};
+        $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
+            if(arr.length===0){
+                let str="";
+                str+="<div id='result_card'>";
+                str+="<img src='/resources/img/noImg.png'>";
+                str+="</div>";
+                uploadResult.html(str);
+                return;
+            }
+
+            for(let i=0;i<arr.length;i++){
+                let str="";
+                let obj=arr[i];//서버로부터 전달받은 이미지 정보 객체 값
+                let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
+                str += "<div id='result_card'";
+                str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
+                str +=">";
+                str += "<img src='/display?fileName=" + fileCallPath + "'>";
+                str += "</div>";
+
+                uploadResult.append(str);
+
+            }
+        });
+    });
+
+    function likeCheck(){
+        const checkbox=document.getElementById('likeCheck');
+        const is_checked=checkbox.checked;
+        console.log(is_checked);
+        let pno=${postDto.pno};
+
+        $.ajax({
+            url:'/postLike',
+            type:'POST',
+            data:{ch:is_checked, pno:pno},
+            dataType:'json',
+            success:function(result){
+                if(result){
+                    alert("좋아요 추가!")
+                }else{
+                    alert("좋아요 삭제!")
+                }
+            },
+            error:function(result){
+                alert("로그인 해주세요");
+                $("input:checkbox[id='likeCheck']").prop("checked",false);
+            }
+
+        })
+    }
     //'월'에 따른 '일'배열을 가져옴
     function callCalendar(year,month){
         if(month==13){
@@ -338,41 +450,7 @@
     }
 
 
-    $(document).ready(function(){
-        let month= ${ch.month};
-        let year=${ch.year};
-        callCalendar(year, month);
 
-
-        ///***이미지 띄우기***
-        /*let pno = '<c:out value="${postDto.pno}"/>';*/
-        let uploadResult=$("#uploadResult");
-        let pno=${postDto.pno};
-        $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
-            if(arr.length===0){
-                let str="";
-                str+="<div id='result_card'>";
-                str+="<img src='/resources/img/noImg.png'>";
-                str+="</div>";
-                uploadResult.html(str);
-                return;
-            }
-
-            for(let i=0;i<arr.length;i++){
-                let str="";
-                let obj=arr[i];//서버로부터 전달받은 이미지 정보 객체 값
-                let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
-                str += "<div id='result_card'";
-                str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
-                str +=">";
-                str += "<img src='/display?fileName=" + fileCallPath + "'>";
-                str += "</div>";
-
-                uploadResult.append(str);
-
-            }
-        });
-    });
 </script>
 </body>
 </html>

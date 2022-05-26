@@ -1,9 +1,6 @@
 package com.bkProject.p1.controller;
 
-import com.bkProject.p1.domain.AttachImageDto;
-import com.bkProject.p1.domain.MemberDto;
-import com.bkProject.p1.domain.PageHandler;
-import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.domain.*;
 import com.bkProject.p1.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,8 +24,30 @@ import java.util.Map;
 public class MainController {
     @Autowired
     PostService postService;
+/*    @GetMapping("/main")
+    public String main(SearchCondition searchCondition, Model m) throws Exception{
+
+        if(page==null || pageSize==null){
+            page=1;
+            pageSize=10;
+        }
+        int totalCnt = postService.getCount();
+        m.addAttribute("totalCnt",totalCnt);
+
+        PageHandler ph=new PageHandler(totalCnt, searchCondition);
+        m.addAttribute("ph",ph);
+
+//        Map map=new HashMap();
+//        map.put("offset",(page-1)*pageSize);
+//        map.put("pageSize",pageSize);
+        List<PostDto> list = postService.getPage(searchCondition);
+
+        m.addAttribute("list",list);
+        return "main";
+    }*/
+
     @GetMapping("/main")
-    public String main(Integer page, Integer pageSize, Model m) throws Exception{;
+    public String main(Integer page, Integer pageSize, Model m) throws Exception{
 
         if(page==null || pageSize==null){
             page=1;

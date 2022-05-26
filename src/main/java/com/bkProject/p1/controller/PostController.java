@@ -58,11 +58,10 @@ public class PostController {
                 attach.setPno(postDto.getPno());
                 postService.imgPost(attach);
             }
-
-            rttr.addAttribute("msg","postOK");
+            rttr.addFlashAttribute("msg","postOK");
             return "redirect:/main";
         } catch (Exception e) {
-            rttr.addAttribute("msg","postERR");
+            rttr.addFlashAttribute("msg","postERR");
             return "redirect:/post/form";//폼으로 다시 돌아감
         }
 

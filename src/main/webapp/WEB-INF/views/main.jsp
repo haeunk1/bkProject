@@ -148,7 +148,7 @@
 </head>
 <body>
 <script>
-    let msg = "${param.msg}";
+    let msg = "${msg}";
     if(msg=="REG_OK") alert("회원가입을 완료되었습니다.");
     if(msg=="REG_ERR") alert("회원가입을 실패했습니다.");
     if(msg=="postOK") alert("게시글이 등록되었습니다.");
@@ -205,16 +205,19 @@
                 </select>
             </div>
             <div class="search">
+                <form action="<c:url value='/main'/>" class="search-form" method="get">
 
-                <select class="search-option" name="option">
-                    <option>검색조건</option>
-                    <option value="location">위치</option>
-                    <option value="title">제목</option>
-                    <option value="category">카테고리</option>
-                </select>
+                    <select class="search-option" name="option">
+                        <option value="all" selected>검색조건</option>
+                        <option value="title">제목</option>
+                        <option value="category">카테고리</option>
+                        <option value="location">위치</option>
+                    </select>
 
-                <input type="text" name="keyword" class="search-input" type="text" placeholder="검색어를 입력해주세요">
-                <input type="submit" class="search-button" value="검색">
+                    <input type="text" name="keyword" class="search-input" type="text" placeholder="검색어를 입력해주세요">
+                    <input type="submit" class="search-button" value="검색">
+                </form>
+
             </div>
 
             <div class="new_register">
