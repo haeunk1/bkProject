@@ -56,10 +56,10 @@ public class PostServiceImpl implements PostService {
     public int likeCheck(Map map) throws Exception{
         return postDao.likeCheck(map);
     }
-    public int searchResultCnt(SearchCondition searchCondition) throws Exception{
+    public int getSearchResultCnt(SearchCondition searchCondition) throws Exception{
         return postDao.searchResultCnt(searchCondition);
     }
-    public List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception{
+    public List<PostDto> getSearchSelectPage(SearchCondition searchCondition) throws Exception{
         return postDao.searchSelectPage(searchCondition);
     }
 }

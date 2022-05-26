@@ -12,7 +12,7 @@ public class PageHandlerTest {
 
     @Test
     public void print() {
-        PageHandler ph = new PageHandler(400,16);
-        ph.print();
+        /*PageHandler ph = new PageHandler(400,16);
+        ph.print();*/
     }
 }

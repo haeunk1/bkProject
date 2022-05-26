@@ -1,9 +1,14 @@
 package com.bkProject.p1.domain;
 
-public class PageHandler {
-    private int page=1; //현재 페이지
+import org.springframework.web.util.UriComponentsBuilder;
 
-    private int pageSize; // 한 페이지의 크기
+public class PageHandler {
+//    private int page=1; //현재 페이지
+//    private int pageSize; // 한 페이지의 크기
+//    private String option;
+//    private String keyword;
+
+    private SearchCondition searchCondition;
     private int totalCnt; // 총 게시물 개수
     private int navSize=10; //페이지 내비게이션의 크기
     private int totalPage; //전체 페이지 갯수
@@ -12,17 +17,19 @@ public class PageHandler {
     private boolean showPrev; //이전 페이지로 이동하는 링크를 보여줄 것인지의 여부
     private boolean showNext; //다음 페이지로 이동하는 링크를 보여줄 것인지의 여부
 
-    public PageHandler(int totalCnt, int page){
-        this(totalCnt,page,10);
+
+    public PageHandler(int totalCnt, SearchCondition searchCondition){
+        this.totalCnt=totalCnt;
+        this.searchCondition=searchCondition;
+
+        doPaging(totalCnt,searchCondition);
     }
 
-    public PageHandler(int totalCnt, int page, int pageSize){
+    public void doPaging(int totalCnt, SearchCondition searchCondition){
         this.totalCnt=totalCnt;
-        this.page=page;
-        this.pageSize =pageSize;
 
-        totalPage = (int)Math.ceil(totalCnt/(double)pageSize);
-        beginPage = page%navSize==0?page-pageSize+1 : page/navSize*navSize+1;
+        totalPage = (int)Math.ceil(totalCnt/(double)searchCondition.getPageSize());
+        beginPage = searchCondition.getPage()%navSize==0?searchCondition.getPage()- searchCondition.getPageSize()+1 : searchCondition.getPage()/navSize*navSize+1;
         endPage = Math.min(beginPage+navSize-1,totalPage);
 
         showPrev = beginPage!=1;
@@ -31,7 +38,7 @@ public class PageHandler {
     }
 
     void print(){
-        System.out.println("page"+page);
+        System.out.println("page"+searchCondition.getPage());
         System.out.print(showPrev?"<<":"");
         for(int i=beginPage;i<endPage+1;i++){
             System.out.print(" "+i+" ");
@@ -39,20 +46,12 @@ public class PageHandler {
         System.out.println(showNext?">>":"");
     }
 
-    public int getPage() {
-        return page;
+    public SearchCondition getSearchCondition() {
+        return searchCondition;
     }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
+    public void setSearchCondition(SearchCondition searchCondition) {
+        this.searchCondition = searchCondition;
     }
 
     public int getTotalCnt() {
@@ -113,8 +112,7 @@ public class PageHandler {
     @Override
     public String toString() {
         return "PageHandler{" +
-                "page=" + page +
-                ", pageSize=" + pageSize +
+                "searchCondition=" + searchCondition +
                 ", totalCnt=" + totalCnt +
                 ", navSize=" + navSize +
                 ", totalPage=" + totalPage +

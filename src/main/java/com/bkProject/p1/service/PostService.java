@@ -27,6 +27,6 @@ public interface PostService {
     int deleteLike(Map map) throws Exception;
     int likeCntUpdate(Map map) throws Exception;
     int likeCheck(Map map) throws Exception;
-    int searchResultCnt(SearchCondition searchCondition) throws Exception;
-    List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception;
+    int getSearchResultCnt(SearchCondition searchCondition) throws Exception;
+    List<PostDto> getSearchSelectPage(SearchCondition searchCondition) throws Exception;
 }

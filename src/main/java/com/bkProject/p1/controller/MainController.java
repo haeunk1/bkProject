@@ -24,14 +24,14 @@ import java.util.Map;
 public class MainController {
     @Autowired
     PostService postService;
-/*    @GetMapping("/main")
+    @GetMapping("/main")
     public String main(SearchCondition searchCondition, Model m) throws Exception{
-
-        if(page==null || pageSize==null){
+        System.out.println("searchCondition="+searchCondition);
+       /* if(page==null || pageSize==null){
             page=1;
             pageSize=10;
-        }
-        int totalCnt = postService.getCount();
+        }*/
+        int totalCnt = postService.getSearchResultCnt(searchCondition);
         m.addAttribute("totalCnt",totalCnt);
 
         PageHandler ph=new PageHandler(totalCnt, searchCondition);
@@ -40,11 +40,12 @@ public class MainController {
 //        Map map=new HashMap();
 //        map.put("offset",(page-1)*pageSize);
 //        map.put("pageSize",pageSize);
-        List<PostDto> list = postService.getPage(searchCondition);
+        List<PostDto> list = postService.getSearchSelectPage(searchCondition);
 
         m.addAttribute("list",list);
         return "main";
-    }*/
+    }
+/*
 
     @GetMapping("/main")
     public String main(Integer page, Integer pageSize, Model m) throws Exception{
@@ -67,6 +68,7 @@ public class MainController {
         m.addAttribute("list",list);
         return "main";
     }
+*/
 
 
     //이미지는 모든 사용자가 접근가능해야 하기 때문에 일단 MainController에 작성

@@ -208,13 +208,13 @@
                 <form action="<c:url value='/main'/>" class="search-form" method="get">
 
                     <select class="search-option" name="option">
-                        <option value="all" selected>검색조건</option>
-                        <option value="title">제목</option>
-                        <option value="category">카테고리</option>
-                        <option value="location">위치</option>
+                        <option value="all" ${ph.searchCondition.option=='all' || ph.searchCondition.option=='' ? "selected" : ""}>검색조건</option>
+                        <option value="title" ${ph.searchCondition.option=='title' ? "selected" : ""}>제목</option>
+                        <option value="category" ${ph.searchCondition.option=='category' ? "selected" : ""}>카테고리</option>
+                        <option value="location" ${ph.searchCondition.option=='location' ? "selected" : ""}>위치</option>
                     </select>
 
-                    <input type="text" name="keyword" class="search-input" type="text" placeholder="검색어를 입력해주세요">
+                    <input type="text" name="keyword" class="search-input" type="text" value="${ph.searchCondition.keyword}"placeholder="검색어를 입력해주세요">
                     <input type="submit" class="search-button" value="검색">
                 </form>
 
@@ -258,13 +258,13 @@
                 </c:if>
                 <c:if test="${totalCnt ne 0}">
                     <c:if test="${ph.showPrev}">
-                        <a class="page" href="<c:url value="/main?page=${ph.beginPage-1}&pageSize=${ph.pageSize}"/>">&lt;</a>
+                        <a class="page" href="<c:url value="/main${ph.searchCondition.getQueryString(ph.beginPage-1)}"/>">&lt;</a>
                     </c:if>
                     <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-                        <a class="page ${i==ph.page? "paging-active" : ""}" href="<c:url value="/main?page=${i}&pageSize=${ph.pageSize}"/>">${i}</a>
+                        <a class="page ${i==ph.searchCondition.page? "paging-active" : ""}" href="<c:url value="/main${ph.searchCondition.getQueryString(i)}"/>">${i}</a>
                     </c:forEach>
                     <c:if test="${ph.showNext}">
-                        <a class="page" href="<c:url value="/main?page=${ph.endPage+1}&pageSize=${ph.pageSize}"/>">&gt;</a>
+                        <a class="page" href="<c:url value="/main${ph.searchCondition.getQueryString(ph.endPage+1)}"/>">&gt;</a>
                     </c:if>
 
                 </c:if>

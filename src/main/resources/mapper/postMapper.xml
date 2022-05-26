@@ -27,7 +27,7 @@
         select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
         from post
         where true
-        and title like concat('%',#{keyword},'%')
+        <include refid="searchCondition"/>
         ORDER BY pno DESC
             LIMIT #{offset},#{pageSize};
     </select>
@@ -36,18 +36,18 @@
         select count(*)
         from post
         where true
-          and title like concat('%',#{keyword},'%')
+        <include refid="searchCondition"/>
     </select>
 
     <sql id="searchCondition">
         <choose>
-            <when test="option=='title'">
+            <when test='option=="title"'>
                 and title like concat('%',#{keyword},'%')
             </when>
-            <when test="option=='location'">
+            <when test='option=="location"'>
                 and area_info like concat('%',#{keyword},'%')
             </when>
-            <when test="option=='category'">
+            <when test='option=="category"'>
                 and category like concat('%',#{keyword},'%')
             </when>
             <otherwise>
