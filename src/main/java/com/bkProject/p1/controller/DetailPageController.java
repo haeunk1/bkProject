@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,13 +32,13 @@ public class DetailPageController {
     ScheduleService service;
     @Autowired
     MemberService memberService;
+    @Autowired
+    ScheduleService scheduleService;
     @GetMapping("/detail")
     public String detailPage(HttpServletRequest request, Integer pno, Model m) {
-        System.out.println("test");
 
         HttpSession session = request.getSession();
         MemberDto memberDto= (MemberDto)session.getAttribute("memberDto");
-        System.out.println("memberDto="+memberDto);
         if(memberDto!=null)
             m.addAttribute("memberDto",memberDto);
         try {
@@ -60,8 +61,6 @@ public class DetailPageController {
         Map map=new HashMap();
         map.put("id",id);
         map.put("pno",pno);
-        System.out.println("pno="+pno);
-        System.out.println("id="+id);
         try {
             int ch = postService.likeCheck(map); //있음(1) or 없음(0)
             return new ResponseEntity<Integer>(ch, HttpStatus.OK);
@@ -75,12 +74,11 @@ public class DetailPageController {
 
         //로그인 체크
         if(!loginCheck(request)){
-            System.out.println("로그인안함");
             return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
         }
         HttpSession session = request.getSession();
         String id = (String)session.getAttribute("id");
-        System.out.println("id="+id);
+
 
         try {
             Map map = new HashMap();//insertLike,deleteLike
@@ -150,14 +148,22 @@ public class DetailPageController {
 
     }
 
-    @PostMapping("/paytest")
-    public String payPage(HttpServletRequest request, String timeString, Integer totCost, Integer year, Integer month, Integer day, String pno, Model m){
+    @PostMapping("/payCheck")
+    public String payPage(HttpServletRequest request, String timeString, Integer totCost, Integer year, Integer month, Integer day, String pno, Model m, RedirectAttributes rttr){
 
         /*HttpSession session=request.getSession();
         MemberDto memberDto1 = (MemberDto)session.getAttribute("memberDto");
         String masterAdmin = (String)session.getAttribute("master_admin");
         System.out.println("memberDto1="+memberDto1);
         System.out.println("masterAdmin="+masterAdmin);*/
+        //1.세션을 얻어서
+        HttpSession session = request.getSession();
+        //2.세션에 id가 있는지 확인/있으면 true반환
+        String id = (String)session.getAttribute("id");
+        if(id==null){
+            rttr.addFlashAttribute("msg","login");
+            return "redirect:/member/login";
+        }
 
         try {
             ScheduleDto scheduleDto = new ScheduleDto(Integer.parseInt(pno), year,month,day);
@@ -181,12 +187,29 @@ public class DetailPageController {
             m.addAttribute("memberDto",memberDto);
             m.addAttribute("list",list);
             m.addAttribute("totCost",totCost);
+            m.addAttribute("id",id);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return "test";
+        return "payCheck";
+    }
+    @PostMapping("/pay")
+    public String pay(Integer pno,Integer year, Integer month, Integer day, String time, String book_user, RedirectAttributes rttr){
+
+        ScheduleDto dto = new ScheduleDto(pno,year,month,day);
+        time = time.replace("2","1");
+        dto.setTime(time);
+        dto.setBook_user(book_user);
+        try {
+            scheduleService.updateSchedule(dto);
+            rttr.addFlashAttribute("msg","BOOK_OK");
+        } catch (Exception e) {
+            rttr.addFlashAttribute("msg","BOOK_ERR");
+            throw new RuntimeException(e);
+        }
+        return "redirect:/main";
     }
 
 

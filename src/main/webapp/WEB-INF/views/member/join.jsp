@@ -74,8 +74,6 @@
 
     $(document).ready(function(){
         $(".join_button").click(function(){
-            console.log("버튼클릭ok");
-            console.log("체크여부"+$('#masterCheck').is(':checked'));
 
             /* 입력값 변수 */
             var id = $('#id_input').val();                 // id 입력란

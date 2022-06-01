@@ -134,6 +134,113 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+
+
+    //'월'에 따른 '일'배열을 가져옴
+    function callCalendar(year,month,pick){
+        if(month==13){
+            year=year+1;
+            month=1;
+        }
+        if(month==0){
+            year=year-1;
+            month=12;
+        }
+
+
+        $.ajax({
+            url:'/calendar',
+            type:'POST',
+            data:{year:year,month:month},
+            dataType:'json',
+            success:function(ch){
+                //console.log("Array.form="+Array.form(list));
+                showCalendar(ch,pick);
+            },
+            error:function(result){
+                alert("calendar실패");
+            }
+
+        })
+    }
+    function showCalendar(ch,pick){
+        let cost_area=$("#upload_cost");
+        let calendar=$("#upload_calendar");
+        let month=ch.month;
+        let year=ch.year;
+        let lastDay=ch.end;
+        let list=ch.dayList;
+        let nextMonth=month+1;
+        let prevMonth=month-1;
+
+
+        //let day=ch.day;
+        let today = new Date();
+        let tyear=today.getFullYear();
+        let tmonth=today.getMonth()+1;
+
+        let tday=today.getDate();
+        //costarea.html('');//***적용안됨***
+        let str="";
+        str+="<table border='1' width=100% height='300px'>";
+        str+="<a href = '#' onclick='callCalendar("+year+","+prevMonth+")'>"+"<<"+"</a>";
+        str+="<caption class='blind'>"+year+"년"+month+"월</caption>";
+        str+="<a href = '#' onclick='callCalendar("+year+","+nextMonth+")'>"+">>"+"</a>";
+        str+="<colgoup>";
+        str+="<col span='7' style='width:auto;'>";
+        str+="</colgoup>";
+        str+="<thead> <tr align='center'> <th>SUN</th> <th>MON</th> <th>TUE</th> <th>WED</th> <th>THU</th> <th>FRI</th> <th>SAT</th> </tr> </thead>";
+        str+="<tbody>";
+        let i=0;
+        while(true){
+            str+="<tr align='center'>";
+            while(list[i]!="\"br\""){
+                if(list[i] !="&nbsp;"){
+                    if(year<tyear){
+                        str += "<td bgcolor='gray'>" + list[i] + "</td>";
+                    }else{
+                        if(month<tmonth){
+                            str += "<td bgcolor='gray'>" + list[i] + "</td>";
+                        }else if(month==tmonth){
+                            if(list[i]<tday){
+                                str += "<td bgcolor='gray'>" + list[i] + "</td>";
+                            }else{
+                                if (pick==list[i]){
+                                    str += "<td bgcolor='yellow' onclick='callTime(" + year + "," + month + "," + list[i] + ");'>" + list[i] + "</td>";
+                                }else{
+                                    if(year==tyear & month==tmonth & list[i]==tday) {
+                                        str += "<td bgcolor='#87ceeb' onclick='callTime(" + year + "," + month + "," + list[i] + ");'>" + list[i] + "</td>";
+                                    }else{
+                                        str+="<td bgcolor='white' onclick='callTime("+year+","+month+","+list[i]+"); callCalendar("+year+","+month+","+list[i]+");'>"+list[i]+"</td>";
+                                    }
+                                }
+                            }
+                        }else {
+                            if (pick == list[i]) {
+                                str += "<td bgcolor='yellow' onclick='callTime(" + year + "," + month + "," + list[i] + ");'>" + list[i] + "</td>";
+                            } else {
+                                str += "<td bgcolor='white' onclick='callTime(" + year + "," + month + "," + list[i] + "); callCalendar(" + year + "," + month + "," + list[i] + ");'>" + list[i] + "</td>";
+
+                            }
+                        }
+                    }
+                }else{
+                    str+="<td>"+list[i]+"</td>";
+                }
+                i++;
+                if(list[i-1]==lastDay) break;
+            }
+            str+="</tr>";
+            if(list[i-1]==lastDay) break;
+            i++;
+        }
+        str+="</tbody>";
+        str+="</table>";
+        calendar.html(str);
+
+    }
+
+
     $(document).ready(function(){
         let id = '${memberDto.id}';
         let pno=${postDto.pno};
@@ -158,7 +265,7 @@
 
         let month= ${ch.month};
         let year=${ch.year};
-        callCalendar(year, month);
+        callCalendar(year, month,-1);
 
 
         ///***이미지 띄우기***
@@ -216,32 +323,7 @@
 
         })
     }
-    //'월'에 따른 '일'배열을 가져옴
-    function callCalendar(year,month){
-        if(month==13){
-            year=year+1;
-            month=1;
-        }
-        if(month==0){
-            year=year-1;
-            month=12;
-        }
 
-
-        $.ajax({
-            url:'/calendar',
-            type:'POST',
-            data:{year:year,month:month},
-            dataType:'json',
-            success:function(ch){
-                showCalendar(ch);
-            },
-            error:function(result){
-                alert("calendar실패");
-            }
-
-        })
-    }
     //'월'과 '일'정보에 따라 타임스케줄 불러옴
     function callTime(year,month,day) {
         let pno=${postDto.pno};
@@ -328,9 +410,6 @@
 
     let cost=0;
     function showCost(str1,year,month,day){
-        console.log("year="+year);
-        console.log("month="+month);
-        console.log("day="+day);
         let cnt=0;
         for(let i=0;i<18;i++){
             if(str1[i]=='2'){
@@ -340,8 +419,7 @@
         let str='';
         let cost_area=$("#upload_cost");
         let tmp="${postDto.hourly_cost}";
-        let hourly_cost=parseInt(tmp.replace(',',''));
-
+        let hourly_cost=parseInt(tmp.replaceAll(',',''));
         if(cnt!=0) {
             str += cnt + "시간 선택";
             str += "<br>";
@@ -363,7 +441,7 @@
 
         let form=document.createElement('form');
         form.setAttribute('method','post');
-        form.setAttribute('action','/paytest');
+        form.setAttribute('action','/payCheck');
         document.charset="utf-8";
 
         let timeStringField=document.createElement('input');
@@ -406,48 +484,6 @@
         form.submit();
     }
 
-    function showCalendar(ch){
-        let cost_area=$("#upload_cost");
-        let calendar=$("#upload_calendar");
-        let nextMonth=ch.month+1;
-        let prevMonth=ch.month-1;
-        let month=ch.month;
-        let year=ch.year;
-        let list=ch.dayList;
-        //cost_area.html('');//***적용안됨***
-
-        let str="";
-        str+="<table border='1' width=100% height='300px'>";
-        str+="<a href = '#' onclick='callCalendar("+year+","+prevMonth+")'>"+"<<"+"</a>";
-        str+="<caption class='blind'>"+year+"년"+month+"월</caption>";
-        str+="<a href = '#' onclick='callCalendar("+year+","+nextMonth+")'>"+">>"+"</a>";
-        str+="<colgoup>";
-        str+="<col span='7' style='width:auto;'>";
-        str+="</colgoup>";
-        str+="<thead> <tr align='center'> <th>SUN</th> <th>MON</th> <th>TUE</th> <th>WED</th> <th>THU</th> <th>FRI</th> <th>SAT</th> </tr> </thead>";
-        str+="<tbody>";
-        let i=0;
-        let lastDay=ch.end;
-        while(true){
-            str+="<tr align='center'>";
-            while(list[i]!="<br>"){
-                if(list[i] !="&nbsp;"){
-                    str+="<td onclick='callTime("+year+","+month+","+list[i]+");'>"+list[i]+"</td>";
-                }else{
-                    str+="<td>"+list[i]+"</td>";
-                }
-                i++;
-                if(list[i-1]==lastDay) break;
-            }
-            str+="</tr>";
-            if(list[i-1]==lastDay) break;
-            i++;
-        }
-        str+="</tbody>";
-        str+="</table>";
-        calendar.html(str);
-
-    }
 
 
 

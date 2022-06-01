@@ -14,6 +14,7 @@ public class CalendarHandler {
     private int end;
 
 
+
     //현재 년도, 월 , 입력 알아내기
     // 현재 년도, 월에 따라 달력 출력하기
     // 앞, 뒤 화살표 누름에 따라 다음 달로 넘어가기(1월에 <누르면 년도-1, 월은 12월로 가기
@@ -24,7 +25,7 @@ public CalendarHandler(){}
         LocalDate now = LocalDate.now();
         this.year=year;
         this.month = month;
-        day=now.getDayOfYear();
+        day=now.getDayOfMonth();
 
 
         Calendar cal = Calendar.getInstance();
@@ -46,7 +47,7 @@ public CalendarHandler(){}
 //            }
             dayList.add(i);
             if(dayOfWeek%7==0) { //한줄에 7일씩 출력
-                dayList.add("<br>");
+                dayList.add("\"br\"");
             }
             dayOfWeek++;
         }

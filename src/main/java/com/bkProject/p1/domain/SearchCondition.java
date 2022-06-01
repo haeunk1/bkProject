@@ -9,19 +9,33 @@ public class SearchCondition {
     private String keyword="";
     private String option="";
 
+    private String arrange="";
+
+    public String getArrange() {
+        return arrange;
+    }
+
+    public void setArrange(String arrange) {
+        this.arrange = arrange;
+    }
+
     public SearchCondition(){}
-    public SearchCondition(Integer page, Integer pageSize, String keyword, String option) {
+
+    public SearchCondition(Integer page, Integer pageSize, String keyword, String option, String arrange) {
         this.page = page;
         this.pageSize = pageSize;
         this.keyword = keyword;
         this.option = option;
+        this.arrange = arrange;
     }
+
     public String getQueryString(Integer page) {//지정된 페이지로 이동
         return UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("pageSize", pageSize)
                 .queryParam("option", option)
                 .queryParam("keyword", keyword)
+                .queryParam("arrange",arrange)
                 .build().toString();
     }
     public String getQueryString(){
@@ -36,11 +50,12 @@ public class SearchCondition {
         return "SearchCondition{" +
                 "page=" + page +
                 ", pageSize=" + pageSize +
-                ", offset=" + getOffset() +
                 ", keyword='" + keyword + '\'' +
                 ", option='" + option + '\'' +
+                ", arrange='" + arrange + '\'' +
                 '}';
     }
+
 
     public Integer getPage() {
         return page;

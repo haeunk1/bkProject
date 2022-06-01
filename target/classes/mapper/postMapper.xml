@@ -28,7 +28,13 @@
         from post
         where true
         <include refid="searchCondition"/>
-        ORDER BY pno DESC
+        ORDER BY
+            <choose>
+                <when test='arrange=="like"'>like_cnt desc</when>
+                <when test='arrange=="view"'>view_cnt desc</when>
+                <otherwise>pno desc</otherwise>
+            </choose>
+
             LIMIT #{offset},#{pageSize};
     </select>
     <!--  검색조건 페이지 개수 (페이징할 때 사용) -->

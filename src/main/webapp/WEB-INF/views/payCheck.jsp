@@ -65,7 +65,8 @@
     </script>
 </head>
 <body>
-<form  id="join_form">
+<form  id="pay_form" method="post" action="<c:url value='/pay'/>">
+
     <div class="title">[결제확인]</div>
     <h1>${postDto.title}</h1>
     <h2>${postDto.main_content}</h2>
@@ -77,6 +78,7 @@
     ● e-mail : ${memberDto.email}
     <hr>
     <h3>★예약 정보★</h3>
+    ● 예약자 : ${id}<br>
     ● 날짜 : ${scheduleDto.year}년 ${scheduleDto.month}월 ${scheduleDto.day}일<br>
     ● 시간 :<br>
     <c:forEach var="str" items="${list}">
@@ -85,14 +87,66 @@
     ● 최종 비용 : ${totCost}<br>
     <br>
     <br>
-    <div class="join_button_wrap">
-        <input type="button" class="join_button" value="결제">
+    <button type="button" onclick="go()">결제하기</button>
     </div>
     <br>
     <br>
 </form>
 <script>
 
+    function go(){
+        let pno=${postDto.pno};
+        let year=${scheduleDto.year};
+        let month=${scheduleDto.month};
+        let day=${scheduleDto.day};
+        let time='${scheduleDto.time}';
+        let book_user='${id}';
+
+        let form=document.createElement('form');
+        form.setAttribute('method','post');
+        form.setAttribute('action','/pay');
+        document.charset="utf-8";
+
+        let pnoField=document.createElement('input');
+        pnoField.setAttribute('type','hidden');
+        pnoField.setAttribute('name','pno');
+        pnoField.setAttribute('value',pno);
+        form.appendChild(pnoField);
+
+        let yearField=document.createElement('input');
+        yearField.setAttribute('type','hidden');
+        yearField.setAttribute('name','year');
+        yearField.setAttribute('value',year);
+        form.appendChild(yearField);
+
+        let monthField=document.createElement('input');
+        monthField.setAttribute('type','hidden');
+        monthField.setAttribute('name','month');
+        monthField.setAttribute('value',month);
+        form.appendChild(monthField);
+
+        let dayField=document.createElement('input');
+        dayField.setAttribute('type','hidden');
+        dayField.setAttribute('name','day');
+        dayField.setAttribute('value',day);
+        form.appendChild(dayField);
+
+        let timeField=document.createElement('input');
+        timeField.setAttribute('type','hidden');
+        timeField.setAttribute('name','time');
+        timeField.setAttribute('value',time);
+        form.appendChild(timeField);
+
+        let userField=document.createElement('input');
+        userField.setAttribute('type','hidden');
+        userField.setAttribute('name','book_user');
+        userField.setAttribute('value',book_user);
+        form.appendChild(userField);
+
+        document.body.appendChild(form);
+        form.submit();
+
+    }
 </script>
 </body>
 </html>

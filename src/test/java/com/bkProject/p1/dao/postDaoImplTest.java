@@ -22,17 +22,19 @@ public class postDaoImplTest {
 
     @Test
     public void searchSelectPageTest() throws Exception{
-        SearchCondition sc = new SearchCondition(1,10,"파티","category");
+        SearchCondition sc = new SearchCondition(1,10,"party","category","pno");
         int count= postDao.searchResultCnt(sc);
         System.out.println("count="+count);
         List<PostDto> list= postDao.searchSelectPage(sc);
-        System.out.println("list="+list);
+        for(PostDto dto:list){
+            System.out.println("dto="+dto);
+        }
 
-        SearchCondition sc2 = new SearchCondition(1,10,"광주","location");
-        int count2= postDao.searchResultCnt(sc2);
-        System.out.println("count2="+count2);
-        List<PostDto> list2= postDao.searchSelectPage(sc2);
-        System.out.println("list2="+list2);
+//        SearchCondition sc2 = new SearchCondition(1,10,"광주","location","pno");
+//        int count2= postDao.searchResultCnt(sc2);
+//        System.out.println("count2="+count2);
+//        List<PostDto> list2= postDao.searchSelectPage(sc2);
+//        System.out.println("list2="+list2);
     }
     @Test
     public void insert() throws Exception {

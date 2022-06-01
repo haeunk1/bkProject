@@ -26,14 +26,9 @@
         <a href="">비밀번호 찾기</a> |
         <a href="/member/join">회원가입</a>
     </div>
-    <script>/*
-        function setMessage(msg, element){
-            document.getElementById("msg").innerHTML = ` ${'${msg}'}`;
-
-            if(element) {
-                element.select();
-            }
-        }*/
+    <script>
+        let msg = "${msg}";
+        if(msg=="login") alert("로그인이 필요합니다.");
     </script>
 </form>
 </body>

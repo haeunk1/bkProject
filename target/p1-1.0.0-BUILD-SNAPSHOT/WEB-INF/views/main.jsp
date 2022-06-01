@@ -152,6 +152,8 @@
     if(msg=="REG_OK") alert("회원가입을 완료되었습니다.");
     if(msg=="REG_ERR") alert("회원가입을 실패했습니다.");
     if(msg=="postOK") alert("게시글이 등록되었습니다.");
+    if(msg=="BOOK_OK") alert("결제 완료되었습니다.");
+    if(msg=="BOOK_ERR") alert("결제 실패했습니다.");
 </script>
 <div class="wrapper">
     <div class="wrap">
@@ -182,7 +184,7 @@
                     <c:if test ="${memberDto.master_admin==0}">
                         <select class="member-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option>예약현황</option>
+                            <option value="/member/bookingList">예약현황</option>
                             <option>찜리스트</option>
                             <option value="/member/logout">로그아웃</option>
                         </select>
@@ -198,15 +200,17 @@
 
         <div class="navi_bar_area">
             <div class="arrange">
-                <select class="arrange-option" name="option">
-                    <option>정렬</option>
-                    <option value="L">좋아요</option>
-                    <option value="V">조회수</option>
-                </select>
+                <form action="<c:url value='/main'/>" class="search-form" method="get">
+
+                </form>
             </div>
             <div class="search">
                 <form action="<c:url value='/main'/>" class="search-form" method="get">
-
+                    <select class="arrange-option" name="arrange">
+                        <option value="pno"${ph.searchCondition.arrange=='pno' ? "selected" : ""}>정렬</option>
+                        <option value="like"${ph.searchCondition.arrange=='like' ? "selected" : ""}>좋아요</option>
+                        <option value="view" ${ph.searchCondition.arrange=='view' ? "selected" : ""}>조회수</option>
+                    </select>
                     <select class="search-option" name="option">
                         <option value="all" ${ph.searchCondition.option=='all' || ph.searchCondition.option=='' ? "selected" : ""}>검색조건</option>
                         <option value="title" ${ph.searchCondition.option=='title' ? "selected" : ""}>제목</option>

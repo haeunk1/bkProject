@@ -10,6 +10,7 @@ public class ScheduleDto {
     private int month;
     private int day;
     private String time ;
+    private String book_user;
 
     public ScheduleDto() {}
 
@@ -27,8 +28,17 @@ public class ScheduleDto {
                 ", year=" + year +
                 ", month=" + month +
                 ", day=" + day +
-                ", time=" + time +
+                ", time='" + time + '\'' +
+                ", book_user='" + book_user + '\'' +
                 '}';
+    }
+
+    public String getBook_user() {
+        return book_user;
+    }
+
+    public void setBook_user(String book_user) {
+        this.book_user = book_user;
     }
 
     public int getPno() {

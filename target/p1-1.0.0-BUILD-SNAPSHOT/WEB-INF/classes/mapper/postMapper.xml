@@ -27,8 +27,14 @@
         select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
         from post
         where true
-        and title like concat('%',#{keyword},'%')
-        ORDER BY pno DESC
+        <include refid="searchCondition"/>
+        ORDER BY
+            <choose>
+                <when test='arrange=="like"'>like_cnt desc</when>
+                <when test='arrange=="view"'>view_cnt desc</when>
+                <otherwise>pno desc</otherwise>
+            </choose>
+
             LIMIT #{offset},#{pageSize};
     </select>
     <!--  검색조건 페이지 개수 (페이징할 때 사용) -->
@@ -36,18 +42,18 @@
         select count(*)
         from post
         where true
-          and title like concat('%',#{keyword},'%')
+        <include refid="searchCondition"/>
     </select>
 
     <sql id="searchCondition">
         <choose>
-            <when test="option=='title'">
+            <when test='option=="title"'>
                 and title like concat('%',#{keyword},'%')
             </when>
-            <when test="option=='location'">
+            <when test='option=="location"'>
                 and area_info like concat('%',#{keyword},'%')
             </when>
-            <when test="option=='category'">
+            <when test='option=="category"'>
                 and category like concat('%',#{keyword},'%')
             </when>
             <otherwise>

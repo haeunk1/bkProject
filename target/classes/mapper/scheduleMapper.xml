@@ -27,7 +27,7 @@
 
     <update id="update" parameterType="ScheduleDto">
         update schedule
-        set time=#{time}
+        set time=#{time},book_user=#{book_user}
         where pno=#{pno} and year=#{year} and month=#{month} and day=#{day};
     </update>
 

@@ -21,6 +21,13 @@ public class MemberController {
     @Autowired
     MemberService service;
 
+    //예약현황
+    @GetMapping("/bookingList")
+    public String bookingList(){
+        return "/member/bookingList";
+    }
+    //찜리스트
+
     ////////////////////////////로그인 로그아웃/////////////////////////////////
     @GetMapping("/login")
     public String loginGET() {

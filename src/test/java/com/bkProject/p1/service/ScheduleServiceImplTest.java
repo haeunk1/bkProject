@@ -31,5 +31,20 @@ public class ScheduleServiceImplTest {
         System.out.println(result);
    */
     }
+    @Test
+    public void updateSchedule() throws Exception{
+        scheduleService.deleteAll();
+        ScheduleDto dto = new ScheduleDto(3,2022,6,3);
+        String setTime="000000000000000000";
+        dto.setTime(setTime);
+        scheduleService.setSchedule(dto);
+
+        dto.setTime("111111111111111111");
+        dto.setBook_user("eeeee");
+        scheduleService.updateSchedule(dto);
+
+
+
+    }
 
 }
