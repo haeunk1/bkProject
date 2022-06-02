@@ -67,27 +67,29 @@
 <body>
 <form  id="pay_form" method="post" action="<c:url value='/pay'/>">
 
-    <div class="title">[결제확인]</div>
-    <h1>${postDto.title}</h1>
-    <h2>${postDto.main_content}</h2>
+    <div class="title">[${mode=="pay"?"결제확인":"예약내역 확인"}]</div>
+    <h1>${scheduleDto.title}</h1>
+    <h2>${scheduleDto.main_content}</h2>
     <h3>★위치★</h3>
-    ${postDto.area_info}
+    ${scheduleDto.area_info}
     <h3>★HOST정보★</h3>
-    ● nickName : ${memberDto.id}<br>
-    ● phoneNumber : ${memberDto.phone_number}<br>
-    ● e-mail : ${memberDto.email}
+    ● nickName : ${scheduleDto.writer}<br>
+    ● phoneNumber : ${scheduleDto.phone_number}<br>
+    ● e-mail : ${scheduleDto.email}
     <hr>
     <h3>★예약 정보★</h3>
-    ● 예약자 : ${id}<br>
+    ● 예약자 : ${scheduleDto.book_user}<br>
     ● 날짜 : ${scheduleDto.year}년 ${scheduleDto.month}월 ${scheduleDto.day}일<br>
     ● 시간 :<br>
     <c:forEach var="str" items="${list}">
         >> ${str}<br>
     </c:forEach>
-    ● 최종 비용 : ${totCost}<br>
+    <br>
+    ● 최종 비용 : ${scheduleDto.totCost}<br>
     <br>
     <br>
-    <button type="button" onclick="go()">결제하기</button>
+    <div id="payBtm" style=${mode=="check"?"display:none;":""}>
+        <button type="button" onclick="go()">결제하기</button>
     </div>
     <br>
     <br>
@@ -95,17 +97,24 @@
 <script>
 
     function go(){
-        let pno=${postDto.pno};
+        let pno=${scheduleDto.pno};
         let year=${scheduleDto.year};
         let month=${scheduleDto.month};
         let day=${scheduleDto.day};
         let time='${scheduleDto.time}';
-        let book_user='${id}';
+        let book_user='${scheduleDto.book_user}';
+        let totCost=${scheduleDto.totCost};
 
         let form=document.createElement('form');
         form.setAttribute('method','post');
         form.setAttribute('action','/pay');
         document.charset="utf-8";
+
+        let totCostField=document.createElement('input');
+        totCostField.setAttribute('type','hidden');
+        totCostField.setAttribute('name','totCost');
+        totCostField.setAttribute('value',totCost);
+        form.appendChild(totCostField);
 
         let pnoField=document.createElement('input');
         pnoField.setAttribute('type','hidden');

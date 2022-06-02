@@ -5,6 +5,8 @@ import com.bkProject.p1.domain.ScheduleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
@@ -29,5 +31,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     public int updateSchedule(ScheduleDto scheduleDto)throws Exception {
         return scheduleDao.update(scheduleDto);
+    }
+
+    public int dInsert(ScheduleDto scheduleDto)throws Exception{
+        return scheduleDao.dInsert(scheduleDto);
+    }
+    public List<ScheduleDto> dSelectList(String book_user)throws Exception{
+        return scheduleDao.dSelectList(book_user);
+    }
+
+    public ScheduleDto getBookingDetail(int no)throws Exception{
+        return scheduleDao.getBookingDetail(no);
     }
 }

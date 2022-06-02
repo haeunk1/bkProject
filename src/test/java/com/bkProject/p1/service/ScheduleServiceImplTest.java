@@ -47,4 +47,14 @@ public class ScheduleServiceImplTest {
 
     }
 
+    @Test
+    public void test() throws Exception{
+        ScheduleDto dto = new ScheduleDto(3,2022,7,3);
+        String setTime="000000000000000000";
+        dto.setTime(setTime);
+        dto.setBook_user("asdf");
+        dto.setTotCost(123123);
+        scheduleService.dInsert(dto);
+    }
+
 }

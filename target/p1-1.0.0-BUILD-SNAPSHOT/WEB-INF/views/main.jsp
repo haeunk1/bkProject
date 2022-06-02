@@ -184,7 +184,7 @@
                     <c:if test ="${memberDto.master_admin==0}">
                         <select class="member-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option value="/member/bookingList">예약현황</option>
+                            <option value="/user/bookingList">예약현황</option>
                             <option>찜리스트</option>
                             <option value="/member/logout">로그아웃</option>
                         </select>

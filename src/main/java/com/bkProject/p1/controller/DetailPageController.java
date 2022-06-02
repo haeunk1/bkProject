@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,7 +133,6 @@ public class DetailPageController {
         try {
             ScheduleDto scheduleDto = service.getSchedule(dto);
 
-            System.out.println("scheduleDto=="+scheduleDto);
             if(scheduleDto==null){
                 String setTime = "000000000000000000";
 
@@ -147,32 +148,39 @@ public class DetailPageController {
         }
 
     }
-
     @PostMapping("/payCheck")
     public String payPage(HttpServletRequest request, String timeString, Integer totCost, Integer year, Integer month, Integer day, String pno, Model m, RedirectAttributes rttr){
 
-        /*HttpSession session=request.getSession();
-        MemberDto memberDto1 = (MemberDto)session.getAttribute("memberDto");
-        String masterAdmin = (String)session.getAttribute("master_admin");
-        System.out.println("memberDto1="+memberDto1);
-        System.out.println("masterAdmin="+masterAdmin);*/
         //1.세션을 얻어서
         HttpSession session = request.getSession();
         //2.세션에 id가 있는지 확인/있으면 true반환
         String id = (String)session.getAttribute("id");
         if(id==null){
             rttr.addFlashAttribute("msg","login");
-            return "redirect:/member/login";
-        }
+            return "redirect:/member/login?toURL="+request.getRequestURL()+"&pno="+pno;
+        }//url은 전체주소 다 나옴 / uri는 post빼고 context root나옴
 
         try {
             ScheduleDto scheduleDto = new ScheduleDto(Integer.parseInt(pno), year,month,day);
             scheduleDto.setTime(timeString);
+            scheduleDto.setTotCost(totCost);
+
             //1. pno게시물정보 가져오기 - postDto
             PostDto postDto = postService.getPost(Integer.parseInt(pno));
+            scheduleDto.setTitle(postDto.getTitle());
+            scheduleDto.setMain_content(postDto.getMain_content());
+            scheduleDto.setArea_info(postDto.getArea_info());
+
             String writer = postDto.getWriter();
             //2. 작성자 정보 가져오기 - memberDto
             MemberDto memberDto = memberService.getMember(writer);
+
+            scheduleDto.setWriter(writer);
+            scheduleDto.setPhone_number(memberDto.getPhone_number());
+            scheduleDto.setEmail(memberDto.getEmail());
+
+            scheduleDto.setBook_user(id);
+
             //3. timeString해석해서 시간대 문자열로 넘기기
             List<String> list = new ArrayList<String>();
             for(int i=0;i<18;i++){
@@ -183,11 +191,8 @@ public class DetailPageController {
             }
 
             m.addAttribute("scheduleDto",scheduleDto);
-            m.addAttribute("postDto",postDto);
-            m.addAttribute("memberDto",memberDto);
             m.addAttribute("list",list);
-            m.addAttribute("totCost",totCost);
-            m.addAttribute("id",id);
+            m.addAttribute("mode","pay");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -196,8 +201,31 @@ public class DetailPageController {
         return "payCheck";
     }
     @PostMapping("/pay")
-    public String pay(Integer pno,Integer year, Integer month, Integer day, String time, String book_user, RedirectAttributes rttr){
+    public String pay(Integer totCost, Integer pno,Integer year, Integer month, Integer day, String time, String book_user, RedirectAttributes rttr){
 
+
+        try {
+            //1. schedule_detail 추가
+            ScheduleDto dto=new ScheduleDto(pno,year,month,day);
+            dto.setBook_user(book_user);
+            String dTime=time.replace("1","0");
+            dto.setTime(dTime);
+            dto.setTotCost(totCost);
+            scheduleService.dInsert(dto);
+
+            //2. 선택한 시간타임 schedule 업데이트
+            time=time.replace("2","1");
+            dto.setTime(time);
+            scheduleService.updateSchedule(dto);
+            rttr.addFlashAttribute("msg","BOOK_OK");
+
+        } catch (Exception e) {
+            rttr.addFlashAttribute("msg","BOOK_ERR");
+            throw new RuntimeException(e);
+        }
+
+        //1.  2.예약자와 함께 상세 예약내역 저장
+   /*
         ScheduleDto dto = new ScheduleDto(pno,year,month,day);
         time = time.replace("2","1");
         dto.setTime(time);
@@ -209,6 +237,7 @@ public class DetailPageController {
             rttr.addFlashAttribute("msg","BOOK_ERR");
             throw new RuntimeException(e);
         }
+        */
         return "redirect:/main";
     }
 

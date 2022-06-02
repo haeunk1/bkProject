@@ -15,6 +15,8 @@
     <h3 id="title">로그인</h3>
     <input type="text" name="id" placeholder="아이디 입력" maxlength="10" value="${cookie.id.value}"autofocus>
     <input type="password" name="pwd" placeholder="비밀번호">
+    <input type="hidden" name="toURL" value="${param.toURL}">
+    <input type="hidden" name="pno" value="${param.pno}">
 
     <c:if test="${param.result==0}">
         <div class="login_warn">사용자 ID 또는 PASSWORD를 잘못 입력하였습니다.</div>

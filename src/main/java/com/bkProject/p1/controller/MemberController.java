@@ -12,8 +12,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.net.URLEncoder;
-import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping("/member")
@@ -24,7 +22,7 @@ public class MemberController {
     //예약현황
     @GetMapping("/bookingList")
     public String bookingList(){
-        return "/member/bookingList";
+        return "user/bookingList";
     }
     //찜리스트
 
@@ -35,7 +33,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String loginPOST(HttpServletRequest request, HttpServletResponse response, String id, String pwd, boolean rememberId, Model m) throws Exception {
+    public String loginPOST(HttpServletRequest request, HttpServletResponse response, Integer pno,String toURL,String id, String pwd, boolean rememberId, Model m) throws Exception {
 
         MemberDto memberDto = service.login(id,pwd);
 
@@ -61,7 +59,17 @@ public class MemberController {
             response.addCookie(cookie);
         }
         //3. 홈으로 이동
-        return "redirect:/main";
+        System.out.println("pno="+pno);
+        //toURL = toURL==null || toURL.equals("") || pno==null? "/main" : "/detail?pno="+pno;
+        if(toURL==null || toURL.equals("")){
+            toURL="/main";
+        }else{
+            toURL="/detail?pno="+pno;
+        }
+        if(pno!=null)
+            toURL="/detail?pno="+pno;
+
+        return "redirect:"+toURL;
     }
     @GetMapping("/logout")
     public String logout(HttpSession session){

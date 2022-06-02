@@ -73,7 +73,7 @@
             <div class="login_area">
                 <!--로그인 하지 않은 상태 -->
                 <c:if test = "${memberDto.id==null}">
-                    <div class="login_button"><a href="/member/login">로그인</a></div>
+                    <div class="login_button"><a href="/member/login?pno=${postDto.pno}">로그인</a></div>
                     <span><a href="/member/join">회원가입</a></span>
                 </c:if>
 
@@ -441,7 +441,7 @@
 
         let form=document.createElement('form');
         form.setAttribute('method','post');
-        form.setAttribute('action','/paytest');
+        form.setAttribute('action','/payCheck');
         document.charset="utf-8";
 
         let timeStringField=document.createElement('input');

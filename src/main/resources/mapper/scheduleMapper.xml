@@ -27,8 +27,22 @@
 
     <update id="update" parameterType="ScheduleDto">
         update schedule
-        set time=#{time},book_user=#{book_user}
+        set time=#{time}
         where pno=#{pno} and year=#{year} and month=#{month} and day=#{day};
     </update>
+<!-- 예약 세부 내용 -->
+    <insert id="dInsert" parameterType="ScheduleDto">
+        insert into schedule_detail (pno, year, month, day, time, book_user,totCost)
+        values (#{pno},#{year},#{month},#{day},#{time},#{book_user},#{totCost});
+    </insert>
+
+    <select id="dSelectList" parameterType="String" resultType="ScheduleDto">
+        select * from schedule_detail
+        where book_user=#{book_user};
+    </select>
+
+    <select id="getBookingDetail" resultType="ScheduleDto" parameterType="int">
+        select * from schedule_detail where no=#{no};
+    </select>
 
 </mapper>
