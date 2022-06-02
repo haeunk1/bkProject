@@ -92,5 +92,22 @@ public class UserController {
         return "payCheck";
     }
     //찜리스트
+    @GetMapping("/likeList")
+    public String likeList(HttpServletRequest request, Model m){
+        HttpSession session = request.getSession();
+        String id = (String)session.getAttribute("id");
+        try {
+            List<Integer> idList = scheduleService.lSelectList(id);
+            List<PostDto> list = new ArrayList<>();
+            for(Integer pno : idList){
+                PostDto postDto = postService.getPost(pno);
+                list.add(postDto);
+            }
 
+            m.addAttribute("list",list);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return "test2";
+    }
 }

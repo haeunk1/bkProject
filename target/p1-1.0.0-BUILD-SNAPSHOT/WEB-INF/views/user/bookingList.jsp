@@ -157,17 +157,19 @@
         <table>
             <tr>
                 <th class="title">제목</th>
-                <th class="main_content">설명</th>
-                <th class="hourly_cost">비용(시간)</th>
-                <th class="area_info">지역</th>
+                <th class="day">예약일자</th>
+                <th class="time">시간</th>
+                <th class="date">예약일</th>
+                <th class="cost">비용</th>
             </tr>
             <c:forEach var="dto" items="${list}">
                 <tr>
-                        <%--<td class="title">${dto.title}</td>--%>
-                    <td class="title"><a href="<c:url value="/detail?pno=${dto.pno}"/>">${dto.title}</a></td>
-                    <td class="main_content">${dto.main_content}</td>
-                    <td class="hourly_cost">${dto.hourly_cost}</td>
-                    <td class="area_info">${dto.area_info}</td>
+                    <%--<td class="title">${dto.title}</td>--%>
+                    <td class="title"><a href="<c:url value="/user/bookingRead?no=${dto.no}"/>">${dto.title}</a></td>
+                    <td class="day">${dto.year}년 ${dto.month}월 ${dto.day}일</td>
+                    <td class="time">${dto.time}</td>
+                    <td class="date">${dto.book_time}</td>
+                    <td class="cost">${dto.totCost}</td>
 
                 </tr>
             </c:forEach>
