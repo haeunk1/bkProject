@@ -11,7 +11,7 @@ public interface ScheduleDao {
 
     int deleteAll() throws Exception;
 
-    int delete(int pno) throws Exception;
+//    int delete(int pno) throws Exception;
 
     int update(ScheduleDto scheduleDto) throws Exception;
     int dInsert(ScheduleDto scheduleDto) throws Exception;

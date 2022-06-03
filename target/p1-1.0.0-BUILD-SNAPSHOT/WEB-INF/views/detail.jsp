@@ -81,7 +81,7 @@
                     <c:if test ="${memberDto.master_admin==1}">
                         <select class="admin-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option value="/post/form">공간등록&수정</option>
+                            <option value="/post/list">공간등록&수정</option>
                             <option value="">예약리스트</option>
                             <option value="">통계&정산</option>
                             <option value="/member/logout">로그아웃</option>

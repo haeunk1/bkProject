@@ -11,8 +11,8 @@
             select LAST_INSERT_ID()
         </selectKey>
 
-        insert into post(title, category, main_content, detail_content, hourly_cost, area_info, writer,start_time,end_time, like_cnt,view_cnt,comment_cnt)
-        values (#{title}, #{category}, #{main_content}, #{detail_content},  #{hourly_cost}, #{area_info}, #{writer}, #{start_time}, #{end_time},#{like_cnt},#{view_cnt}, #{comment_cnt});
+        insert into post(title, category, main_content, detail_content, hourly_cost, area_info, writer, like_cnt,view_cnt,comment_cnt)
+        values (#{title}, #{category}, #{main_content}, #{detail_content},  #{hourly_cost}, #{area_info}, #{writer},#{like_cnt},#{view_cnt}, #{comment_cnt});
     </insert>
 
     <!--  해당 페이지 찾기  -->
@@ -125,4 +125,25 @@
     <select id="count" resultType="int">
         select count(*) from post;
     </select>
+
+    <select id="adminPostList" resultType="PostDto" parameterType="String">
+        select * from post where writer=#{writer};
+    </select>
+
+    <!--포스트 삭제-->
+    <delete id="deletePost" parameterType="int">
+        delete from post where pno=#{pno};
+    </delete>
+    <delete id="deleteImg" parameterType="int">
+        delete from post_img where pno=#{pno};
+    </delete>
+    <delete id="deleteLikeAll" parameterType="int">
+        delete from post_like where pno=#{pno};
+    </delete>
+    <delete id="deleteSchedule" parameterType="int">
+        delete from schedule where pno=#{pno};
+    </delete>
+    <delete id="deleteScheduleDetail" parameterType="int">
+        delete from schedule_detail where pno=#{pno};
+    </delete>
 </mapper>

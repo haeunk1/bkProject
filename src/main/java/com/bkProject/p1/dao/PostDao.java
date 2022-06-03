@@ -29,5 +29,11 @@ public interface PostDao {
 
     int searchResultCnt(SearchCondition searchCondition) throws Exception;
     List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception;
+    List<PostDto> adminPostList(String writer)throws Exception;
+    int deletePost(int pno) throws Exception;
+    int deleteLikeAll(int pno) throws Exception;
+    int deleteImg(int pno) throws Exception;
+    int deleteSchedule(int pno) throws Exception;
+    int deleteScheduleDetail(int pno) throws Exception;
 }
 

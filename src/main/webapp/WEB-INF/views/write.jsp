@@ -113,11 +113,11 @@
     <form id="form" class="frm" action="" method="post">
 
         <h3>제목</h3>
-        <input name="title" type="text" placeholder="제목을 입력해 주세요."><br>
+        <input name="title" type="text" placeholder="제목을 입력해 주세요." value="${postDto.title}"><br>
         <h3>간단한 설명</h3>
-        <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요."><br>
+        <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요." value="${postDto.main_content}"><br>
         <h3>상세한 설명</h3>
-        <textarea name="detail_content" rows="20" placeholder=" 내용을 입력해 주세요." ></textarea><br>
+        <textarea name="detail_content" rows="20" placeholder=" 내용을 입력해 주세요.">${postDto.detail_content}</textarea><br>
 
 
         <h3>카테고리</h3>
@@ -166,12 +166,16 @@
         </div>
 
         <h3>시간당 가격</h3>
-        <input type="text" name="hourly_cost" id="cost" onkeyup="commas(this)"/>
+        <input type="text" name="hourly_cost" id="cost" value="${postDto.main_content}" onkeyup="commas(this)"/>
+
+        <%--
         <h3>운영시간</h3>
         시작시간<input type="time" id="s_time" min="08:00:00" max="24:00:00">
         <input type="hidden" id="stime" name="start_time" >
         끝나는시간<input type="time" id="e_time" min="08:00:00" max="24:00:00">
         <input type="hidden" id="etime" name="end_time" >
+        --%>
+
         <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
     </form>
 </div>
@@ -280,8 +284,8 @@
     $(document).ready(function(){
 
         $("#writeBtn").on("click", function(){
-            $('#stime').val($('#s_time').val());
-            $('#etime').val($('#e_time').val());
+            // $('#stime').val($('#s_time').val());
+            // $('#etime').val($('#e_time').val());
             $('#address').val($('#address2').val()+" "+$('#address3').val());
 
             if(!formCheck()){return false;}

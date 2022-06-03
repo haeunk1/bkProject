@@ -11,7 +11,7 @@ public interface ScheduleService {
 
     int deleteAll()throws Exception;
 
-    int deletePost(int pno)throws Exception;
+//    int deletePost(int pno)throws Exception;
 
     int updateSchedule(ScheduleDto scheduleDto)throws Exception;
     int dInsert(ScheduleDto scheduleDto)throws Exception;

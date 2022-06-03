@@ -175,7 +175,7 @@
                     <c:if test ="${memberDto.master_admin==1}">
                         <select class="admin-option" name="option" onchange="location.href=this.value">
                             <option>${memberDto.name}</option>
-                            <option value="/post/form">공간등록&수정</option>
+                            <option value="/post/list">공간등록&수정</option>
                             <option value="">예약리스트</option>
                             <option value="">통계&정산</option>
                             <option value="/member/logout">로그아웃</option>
@@ -206,7 +206,7 @@
             </div>
             <div class="search">
                 <form action="<c:url value='/main'/>" class="search-form" method="get">
-                    <select class="arrange-option" name="arrange">
+                    <select class="arrange-option" name="arrange"><%--onchange="location.href=this.value" -->> 변하자마자 바로 적용--%>
                         <option value="pno"${ph.searchCondition.arrange=='pno' ? "selected" : ""}>정렬</option>
                         <option value="like"${ph.searchCondition.arrange=='like' ? "selected" : ""}>좋아요</option>
                         <option value="view" ${ph.searchCondition.arrange=='view' ? "selected" : ""}>조회수</option>

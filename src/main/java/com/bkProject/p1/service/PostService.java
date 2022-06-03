@@ -29,4 +29,11 @@ public interface PostService {
     int likeCheck(Map map) throws Exception;
     int getSearchResultCnt(SearchCondition searchCondition) throws Exception;
     List<PostDto> getSearchSelectPage(SearchCondition searchCondition) throws Exception;
+    List<PostDto> adminPostList(String writer) throws Exception;
+
+    int deletePost(int pno) throws Exception;
+    int deleteLikeAll(int pno) throws Exception;
+    int deleteImg(int pno) throws Exception;
+    int deleteSchedule(int pno) throws Exception;
+    int deleteScheduleDetail(int pno) throws Exception;
 }

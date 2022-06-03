@@ -21,15 +21,16 @@
         delete from schedule;
     </delete>
 
-    <delete id="deletePost" parameterType="int">
+<!--    <delete id="deletePost" parameterType="int">
         delete from schedule where pno=#{pno};
-    </delete>
+    </delete>-->
 
     <update id="update" parameterType="ScheduleDto">
         update schedule
         set time=#{time}
         where pno=#{pno} and year=#{year} and month=#{month} and day=#{day};
     </update>
+
 <!-- 예약 세부 내용 -->
     <insert id="dInsert" parameterType="ScheduleDto">
         insert into schedule_detail (pno, year, month, day, time, book_user,totCost)

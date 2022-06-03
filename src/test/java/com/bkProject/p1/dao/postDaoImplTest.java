@@ -22,13 +22,13 @@ public class postDaoImplTest {
 
     @Test
     public void searchSelectPageTest() throws Exception{
-        SearchCondition sc = new SearchCondition(1,10,"party","category","pno");
-        int count= postDao.searchResultCnt(sc);
-        System.out.println("count="+count);
-        List<PostDto> list= postDao.searchSelectPage(sc);
-        for(PostDto dto:list){
-            System.out.println("dto="+dto);
-        }
+//        SearchCondition sc = new SearchCondition(1,10,"party","category","pno");
+//        int count= postDao.searchResultCnt(sc);
+//        System.out.println("count="+count);
+//        List<PostDto> list= postDao.searchSelectPage(sc);
+//        for(PostDto dto:list){
+//            System.out.println("dto="+dto);
+//        }
 
 //        SearchCondition sc2 = new SearchCondition(1,10,"광주","location","pno");
 //        int count2= postDao.searchResultCnt(sc2);
@@ -36,13 +36,13 @@ public class postDaoImplTest {
 //        List<PostDto> list2= postDao.searchSelectPage(sc2);
 //        System.out.println("list2="+list2);
     }
-    @Test
-    public void insert() throws Exception {
-        PostDto postDto = new PostDto("제목3","설명3","상세설명","12:00","24:00","도봉구","12,000","[date', 'bbq', 'singing_room',' board_game']");
-        postDto.setWriter("eeee");
-        postDao.insert(postDto);
-
-    }
+ //   @Test
+//    public void insert() throws Exception {
+//        PostDto postDto = new PostDto("제목3","설명3","상세설명","12:00","24:00","도봉구","12,000","[date', 'bbq', 'singing_room',' board_game']");
+//        postDto.setWriter("eeee");
+//        postDao.insert(postDto);
+//
+//    }
     @Test
     public void count() throws Exception{
         int count = postDao.count();
@@ -71,5 +71,10 @@ public class postDaoImplTest {
         System.out.println("image1="+image1);
 
         postDao.imgInsert(image1);
+    }
+
+    @Test
+    public void testtt() throws Exception{
+        postDao.deletePost(700);
     }
 }

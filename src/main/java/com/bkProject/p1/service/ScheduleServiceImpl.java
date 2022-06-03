@@ -25,9 +25,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleDao.deleteAll();
     }
 
-    public int deletePost(int pno)throws Exception{
+/*    public int deletePost(int pno)throws Exception{
         return scheduleDao.delete(pno);
-    }
+    }*/
 
     public int updateSchedule(ScheduleDto scheduleDto)throws Exception {
         return scheduleDao.update(scheduleDto);

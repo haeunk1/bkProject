@@ -27,9 +27,9 @@ public class ScheduleDaoImpl implements ScheduleDao {
         return session.delete(namespace+"deleteAll");
     }
 
-    public int delete(int pno) throws Exception{
+/*    public int delete(int pno) throws Exception{
         return session.delete(namespace+"deletePost",pno);
-    }
+    }*/
 
     public int update(ScheduleDto scheduleDto) throws Exception{
         return session.update(namespace+"update",scheduleDto);

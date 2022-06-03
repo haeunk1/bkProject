@@ -62,4 +62,24 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> getSearchSelectPage(SearchCondition searchCondition) throws Exception{
         return postDao.searchSelectPage(searchCondition);
     }
+    public List<PostDto> adminPostList(String writer) throws Exception{
+        return postDao.adminPostList(writer);
+    }
+
+
+    public int deletePost(int pno) throws Exception{
+        return postDao.deletePost(pno);
+    }
+    public int deleteLikeAll(int pno) throws Exception{
+        return postDao.deleteLikeAll(pno);
+    }
+    public int deleteImg(int pno) throws Exception{
+        return postDao.deleteImg(pno);
+    }
+    public int deleteSchedule(int pno) throws Exception{
+        return postDao.deleteSchedule(pno);
+    }
+    public int deleteScheduleDetail(int pno) throws Exception{
+        return postDao.deleteScheduleDetail(pno);
+    }
 }

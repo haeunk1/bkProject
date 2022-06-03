@@ -71,4 +71,22 @@ public class PostDaoImpl implements PostDao {
     public List<PostDto> searchSelectPage(SearchCondition searchCondition) throws Exception{
         return session.selectList(namespace+"searchSelectPage",searchCondition);
     }
+    public List<PostDto> adminPostList(String writer)throws Exception{
+        return session.selectList(namespace+"adminPostList",writer);
+    }
+    public int deletePost(int pno) throws Exception{
+        return session.delete(namespace+"deletePost",pno);
+    }
+    public int deleteLikeAll(int pno) throws Exception{
+        return session.delete(namespace+"deleteLikeAll",pno);
+    }
+    public int deleteImg(int pno) throws Exception{
+        return session.delete(namespace+"deleteImg",pno);
+    }
+    public int deleteSchedule(int pno) throws Exception{
+        return session.delete(namespace+"deleteSchedule",pno);
+    }
+    public int deleteScheduleDetail(int pno) throws Exception{
+        return session.delete(namespace+"deleteScheduleDetail",pno);
+    }
 }

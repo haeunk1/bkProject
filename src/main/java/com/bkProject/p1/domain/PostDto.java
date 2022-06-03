@@ -8,8 +8,6 @@ public class PostDto {
     private String title;
     private String main_content;
     private String detail_content;
-    private String start_time;
-    private String end_time;
     private String area_info;
     private String hourly_cost;
     private String category;
@@ -26,8 +24,6 @@ public class PostDto {
         this.title = title;
         this.main_content = main_content;
         this.detail_content = detail_content;
-        this.start_time = start_time;
-        this.end_time = end_time;
         this.area_info = area_info;
         this.hourly_cost = hourly_cost;
         this.category = category;
@@ -42,8 +38,6 @@ public class PostDto {
                 ", title='" + title + '\'' +
                 ", main_content='" + main_content + '\'' +
                 ", detail_content='" + detail_content + '\'' +
-                ", start_time='" + start_time + '\'' +
-                ", end_time='" + end_time + '\'' +
                 ", area_info='" + area_info + '\'' +
                 ", hourly_cost='" + hourly_cost + '\'' +
                 ", category='" + category + '\'' +
@@ -95,21 +89,6 @@ public class PostDto {
         this.detail_content = detail_content;
     }
 
-    public String getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
-    }
-
-    public String getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(String end_time) {
-        this.end_time = end_time;
-    }
 
     public String getArea_info() {
         return area_info;

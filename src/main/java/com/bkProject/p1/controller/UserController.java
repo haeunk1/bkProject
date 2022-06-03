@@ -108,6 +108,6 @@ public class UserController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "test2";
+        return "user/likeList";
     }
 }
