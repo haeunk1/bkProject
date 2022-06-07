@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>fastcampus</title>
-    <link rel="stylesheet" href="<c:url value='/css/menu.css'/>">
+    <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <style>
@@ -151,6 +151,42 @@
     </style>
 </head>
 <body>
+<div class="nav_wrapper">
+    <nav>
+        <div class="content">
+
+            <div class="logo">
+                <a href="/main">
+                    <img alt="brand" src="/resources/img/logo1.png"/>
+                </a>
+            </div>
+            <ul class="mainMenu">
+                <c:if test="${memberDto.id==null}">
+                    <li><a href="/member/login" >로그인</a></li>
+                </c:if>
+                <c:if test="${memberDto.id!=null}">
+                    <c:if test="${memberDto.master_admin==1}">
+                        <li>${memberDto.name} 관리자
+                            <ul class="subMenu">
+                                <li><a href="/post/list">공간 등록&수정</a></li>
+                                <li><a href="/member/logout">로그아웃</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${memberDto.master_admin==0}">
+                        <li>${memberDto.name} 회원
+                            <ul class="subMenu">
+                                <li><a href="/user/bookingList">예약현황</a></li>
+                                <li><a href="/user/likeList">찜리스트</a></li>
+                                <li><a href="/member/logout">로그아웃</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                </c:if>
+            </ul>
+        </div>
+    </nav>
+</div>
 <div style="text-align:center">
     <div class="board-container" style="margin-top: 50px">
 

@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <script src="https://kit.fontawesome.com/92d2245491.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <meta charset="UTF-8">
     <title>Welcome BookingSite</title>
     <style>
@@ -26,13 +27,13 @@
         .top_area{
             margin-top:20px;
             width: 100%;
-            height: 300px;
+            height: 200px;
         }
 
         .content_area{
             width: 100%;
             background-color: lemonchiffon;
-            height: 2000px;
+            height: auto;
 
         }
 
@@ -50,6 +51,14 @@
         .child{
             flex:1;
         }
+        #calendar_area{
+            background-color:beige;
+            border-radius: 20px;
+            border: 5px solid black;
+            padding-left:10px;
+            padding-right: 10px;
+            padding-top:10px;
+        }
         #result_card img{
             width: 70%;
             height: 300px;
@@ -58,69 +67,87 @@
             margin-top: 10px;
             margin: auto;
         }
-        #upload_time>>table{
-            border:3px;
-            border-collapse:collapse;
 
+        #upload_calendar>table{
+            border:1px solid #444444;
+            border-collapse:collapse;
+        }
+        th,td{
+            border:1px solid #444444;
+        }
+        #upload_time>table{
+            border:1px solid #444444;
         }
 
     </style>
+
 </head>
 <body>
 <div class="wrapper">
-    <div class="wrap">
-        <div class="top_area" style="background: #7696fd">
-            <div class="login_area">
-                <!--로그인 하지 않은 상태 -->
-                <c:if test = "${memberDto.id==null}">
-                    <div class="login_button"><a href="/member/login?pno=${postDto.pno}">로그인</a></div>
-                    <span><a href="/member/join">회원가입</a></span>
-                </c:if>
+    <div class="nav_wrapper">
+        <nav>
+            <div class="content">
 
-                <c:if test = "${memberDto.id!=null}">
-                    <c:if test ="${memberDto.master_admin==1}">
-                        <select class="admin-option" name="option" onchange="location.href=this.value">
-                            <option>${memberDto.name}</option>
-                            <option value="/post/list">공간등록&수정</option>
-                            <option value="">예약리스트</option>
-                            <option value="">통계&정산</option>
-                            <option value="/member/logout">로그아웃</option>
-                        </select>
+                <div class="logo">
+                    <a href="/main">
+                        <img alt="brand" src="/resources/img/logo1.png"/>
+                    </a>
+                </div>
+                <ul class="mainMenu">
+                    <c:if test="${memberDto.id==null}">
+                        <li><a href="/member/login" >로그인</a></li>
                     </c:if>
-                    <c:if test ="${memberDto.master_admin==0}">
-                        <select class="member-option" name="option" onchange="location.href=this.value">
-                            <option>${memberDto.name}</option>
-                            <option value="/user/bookingList">예약현황</option>
-                            <option value="/user/likeList">찜리스트</option>
-                            <option value="/member/logout">로그아웃</option>
-                        </select>
+                    <c:if test="${memberDto.id!=null}">
+                        <c:if test="${memberDto.master_admin==1}">
+                            <li>${memberDto.name} 관리자
+                                <ul class="subMenu">
+                                    <li><a href="/post/list">공간 등록&수정</a></li>
+                                    <li><a href="/member/logout">로그아웃</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
+                        <c:if test="${memberDto.master_admin==0}">
+                            <li>${memberDto.name} 회원
+                                <ul class="subMenu">
+                                    <li><a href="/user/bookingList">예약현황</a></li>
+                                    <li><a href="/user/likeList">찜리스트</a></li>
+                                    <li><a href="/member/logout">로그아웃</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
                     </c:if>
-
-                </c:if>
-
+                </ul>
             </div>
-            <h1>${postDto.title}</h1>
-            <h2>${postDto.main_content}</h2>
-            <h3>${postDto.category}</h3>
+        </nav>
+    </div>
+    <div class="wrap">
+        <div class="top_area" >
+            <h1>${postDto.title}</h1><br>
+            <h2>${postDto.main_content}</h2><br>
+            <h3>#${postDto.category}</h3><br>
             <input type='checkbox' id='likeCheck' onclick='likeCheck()'>좋아요(찜)
         </div>
+        <hr>
         <div class="content_area">
             <div class="space_list">
                     <div class="parent">
-                        <div class="child" style="background: #2E9AFE;">
+                        <div class="child">
                             <div id="uploadResult">
                             </div>
                             <div class="text_area">
+                                <br>
                                 <h2>상세설명</h2>
                                 <h3>${postDto.detail_content}</h3>
-                                <h2>위치</h2>
-                                <h3>${postDto.area_info}</h3>
-                                <h2>댓글</h2>
-                                <h3>댓글리스트 나중에 출력</h3>
+                                <br>
+                                <h3><i class="fa-solid fa-location-dot"></i> 위치</h3>
+                                <h4>${postDto.area_info}</h4>
+                                <br>
+                                <h3><i class="fa-solid fa-comments"></i> 댓글</h3>
+                                <h4>댓글리스트 나중에 출력</h4>
                             </div>
                         </div>
                         <div class="blank"></div>
-                        <div class="child" style="background: #FA5858;">
+                        <div class="child" id ="calendar_area" >
                             <div class="book_area">
                                 <div id="upload_calendar"></div>
                                 <div id="upload_time"></div>
@@ -182,10 +209,14 @@
         let tday=today.getDate();
         //costarea.html('');//***적용안됨***
         let str="";
-        str+="<table border='1' width=100% height='300px'>";
+        str+="<table  width=100% height='300px'>";
+
+       str+="<caption class='blind'>"
         str+="<a href = '#' onclick='callCalendar("+year+","+prevMonth+")'>"+"<<"+"</a>";
-        str+="<caption class='blind'>"+year+"년"+month+"월</caption>";
+        str+=year+"년"+month+"월"
         str+="<a href = '#' onclick='callCalendar("+year+","+nextMonth+")'>"+">>"+"</a>";
+        str+="</caption>";
+
         str+="<colgoup>";
         str+="<col span='7' style='width:auto;'>";
         str+="</colgoup>";

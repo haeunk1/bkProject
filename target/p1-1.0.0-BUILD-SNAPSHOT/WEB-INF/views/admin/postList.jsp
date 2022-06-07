@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>BookingList</title>
+    <title>fastcampus</title>
     <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -35,57 +35,8 @@
             margin: 0 auto;
             /* border: 1px solid black; */
         }
-        .search-container {
-            background-color: rgb(253, 253, 250);
-            width: 100%;
-            height: 110px;
-            border: 1px solid #ddd;
-            margin-top : 10px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .search-form {
-            height: 37px;
-            display: flex;
-        }
-        .search-option {
-            width: 100px;
-            height: 100%;
-            outline: none;
-            margin-right: 5px;
-            border: 1px solid #ccc;
-            color: gray;
-        }
         .search-option > option {
             text-align: center;
-        }
-        .search-input {
-            color: gray;
-            background-color: white;
-            border: 1px solid #ccc;
-            height: 100%;
-            width: 300px;
-            font-size: 15px;
-            padding: 5px 7px;
-        }
-        .search-input::placeholder {
-            color: gray;
-        }
-        .search-button {
-            /* 메뉴바의 검색 버튼 아이콘  */
-            width: 20%;
-            height: 100%;
-            background-color: rgb(22, 22, 22);
-            color: rgb(209, 209, 209);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-        .search-button:hover {
-            color: rgb(165, 165, 165);
         }
         table {
             border-collapse: collapse;
@@ -113,41 +64,20 @@
         td.title:hover {
             text-decoration: underline;
         }
-        .paging {
-            color: black;
+        .plus_btn{
             width: 100%;
-            align-items: center;
+            height: auto;
+            padding-left:0;
+            padding-top:10px;
+            padding-bottom: 10px;
+
         }
-        .page {
-            color: black;
-            padding: 6px;
-            margin-right: 10px;
+        .plusBtn:before{
+            font-family: "FontAwesome";content:"\f0fe";
+            font-size:50px;
+            color:black;
         }
-        .paging-active {
-            background-color: rgb(216, 216, 216);
-            border-radius: 5px;
-            color: rgb(24, 24, 24);
-        }
-        .paging-container {
-            width:100%;
-            height: 70px;
-            display: flex;
-            margin-top: 50px;
-            margin : auto;
-        }
-        .btn-write {
-            background-color: rgb(236, 236, 236); /* Blue background */
-            border: none; /* Remove borders */
-            color: black; /* White text */
-            padding: 6px 12px; /* Some padding */
-            font-size: 16px; /* Set a font size */
-            cursor: pointer; /* Mouse pointer on hover */
-            border-radius: 5px;
-            margin-left: 30px;
-        }
-        .btn-write:hover {
-            text-decoration: underline;
-        }
+
     </style>
 </head>
 <body>
@@ -187,25 +117,29 @@
         </div>
     </nav>
 </div>
+
+<div class="board-container">
+    <div class="plus_btn">
+        <a href="/post/form" class="plusBtn"></a>
+    </div>
 <div style="text-align:center">
-    <div class="board-container" style="margin-top: 50px">
+    <%--<button type="button"><a href="<c:url value="/post/form"/>">공간 등록하기</a></button>--%>
+
 
         <table>
             <tr>
                 <th class="title">제목</th>
-                <th class="day">예약일자</th>
-                <th class="time">시간</th>
-                <th class="date">예약일</th>
-                <th class="cost">비용</th>
+                <th class="main_content">설명</th>
+                <th class="hourly_cost">비용(시간)</th>
+                <th class="btn"></th>
             </tr>
             <c:forEach var="dto" items="${list}">
                 <tr>
-                    <%--<td class="title">${dto.title}</td>--%>
-                    <td class="title"><a href="<c:url value="/user/bookingRead?no=${dto.no}"/>">${dto.title}</a></td>
-                    <td class="day">${dto.year}년 ${dto.month}월 ${dto.day}일</td>
-                    <td class="time">${dto.time}</td>
-                    <td class="date">${dto.book_time}</td>
-                    <td class="cost">${dto.totCost}</td>
+                    <td class="title">${dto.title}</td>
+                    <td class="main_content">${dto.main_content}</td>
+                    <td class="hourly_cost">${dto.hourly_cost}</td>
+                    <td class="btn"><button type="button"><a href="<c:url value="/post/form?pno=${dto.pno}"/>">수정</a></button> <button type="button" onclick="postDelete(${dto.pno})">삭제</button></td>
+
 
                 </tr>
             </c:forEach>
@@ -231,5 +165,43 @@
         </div>--%>
     </div>
 </div>
+<script>
+    function postDelete(pno){
+        let delCheck = confirm("포스트를 정말 삭제하시겠습니까?");
+        if(delCheck){
+            let form = document.createElement('form');
+            form.setAttribute('method','get');
+            form.setAttribute('action','delete');
+            document.charset="utf-8";
+
+            let pnoField=document.createElement('input');
+            pnoField.setAttribute('type','hidden');
+            pnoField.setAttribute('name','pno');
+            pnoField.setAttribute('value',pno);
+            form.appendChild(pnoField);
+
+            document.body.appendChild(form);
+            form.submit();
+            /*$.ajax({
+                url:'/post/delete',
+                type:'GET',
+                data:{pno:pno},
+                dataType:'json',
+                success:function(result){
+                    if(result){
+                        alert("게시글을 삭제했습니다.")
+                    }else{
+                        alert("넘어온 데이터 없음")
+                    }
+
+                },
+                error:function(result){
+                    alert("삭제 실패");
+                }
+
+            })*/
+        }
+    }
+</script>
 </body>
 </html>

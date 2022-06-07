@@ -10,6 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>fastcampus</title>
+    <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <style>
@@ -150,49 +151,65 @@
     </style>
 </head>
 <body>
-<div style="text-align:center">
-    <div class="board-container">
-        <div class="search-container">
-            <form action="<c:url value="/board/list"/>" class="search-form" method="get">
-                <select class="search-option" name="option">
-                    <option value="A" ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ""}>제목+내용</option>
-                    <option value="T" ${ph.sc.option=='T' ? "selected" : ""}>제목만</option>
-                    <option value="W" ${ph.sc.option=='W' ? "selected" : ""}>작성자</option>
-                </select>
+<div class="nav_wrapper">
+    <nav>
+        <div class="content">
 
-                <input type="text" name="keyword" class="search-input" type="text" value="${ph.sc.keyword}" placeholder="검색어를 입력해주세요">
-                <input type="submit" class="search-button" value="검색">
-            </form>
-            <button id="writeBtn" class="btn-write" onclick="location.href='<c:url value="/board/write"/>'"><i class="fa fa-pencil"></i> 글쓰기</button>
+            <div class="logo">
+                <a href="/main">
+                    <img alt="brand" src="/resources/img/logo1.png"/>
+                </a>
+            </div>
+            <ul class="mainMenu">
+                <c:if test="${memberDto.id==null}">
+                    <li><a href="/member/login" >로그인</a></li>
+                </c:if>
+                <c:if test="${memberDto.id!=null}">
+                    <c:if test="${memberDto.master_admin==1}">
+                        <li>${memberDto.name} 관리자
+                            <ul class="subMenu">
+                                <li><a href="/post/list">공간 등록&수정</a></li>
+                                <li><a href="/member/logout">로그아웃</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${memberDto.master_admin==0}">
+                        <li>${memberDto.name} 회원
+                            <ul class="subMenu">
+                                <li><a href="/user/bookingList">예약현황</a></li>
+                                <li><a href="/user/likeList">찜리스트</a></li>
+                                <li><a href="/member/logout">로그아웃</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                </c:if>
+            </ul>
         </div>
+    </nav>
+</div>
+<div style="text-align:center">
+    <div class="board-container" style="margin-top: 50px">
 
         <table>
             <tr>
-                <th class="no">번호</th>
                 <th class="title">제목</th>
-                <th class="writer">이름</th>
-                <th class="regdate">등록일</th>
-                <th class="viewcnt">조회수</th>
+                <th class="main_content">설명</th>
+                <th class="hourly_cost">비용(시간)</th>
+                <th class="area_info">지역</th>
             </tr>
-            <c:forEach var="boardDto" items="${list}">
+            <c:forEach var="dto" items="${list}">
                 <tr>
-                    <td class="no">${boardDto.bno}</td>
-                    <td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>">${boardDto.title}</a></td>
-                    <td class="writer">${boardDto.writer}</td>
-                    <c:choose>
-                        <c:when test="${boardDto.reg_date.time >= startOfToday}">
-                            <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="HH:mm" type="time"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>
-                        </c:otherwise>
-                    </c:choose>
-                    <td class="viewcnt">${boardDto.view_cnt}</td>
+                        <%--<td class="title">${dto.title}</td>--%>
+                    <td class="title"><a href="<c:url value="/detail?pno=${dto.pno}"/>">${dto.title}</a></td>
+                    <td class="main_content">${dto.main_content}</td>
+                    <td class="hourly_cost">${dto.hourly_cost}</td>
+                    <td class="area_info">${dto.area_info}</td>
+
                 </tr>
             </c:forEach>
         </table>
         <br>
-        <div class="paging-container">
+        <%--<div class="paging-container">
             <div class="paging">
                 <c:if test="${totalCnt==null || totalCnt==0}">
                     <div> 게시물이 없습니다. </div>
@@ -209,7 +226,7 @@
                     </c:if>
                 </c:if>
             </div>
-        </div>
+        </div>--%>
     </div>
 </div>
 </body>

@@ -34,7 +34,11 @@ public class MainController {
         m.addAttribute("ph",ph);
 
         List<PostDto> list = postService.getSearchSelectPage(searchCondition);
-
+        for(PostDto dto : list){
+            String cate = dto.getCategory();
+            cate = cate.replace(","," #");
+            dto.setCategory(cate);
+        }
         m.addAttribute("list",list);
         return "main";
     }

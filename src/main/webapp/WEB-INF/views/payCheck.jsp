@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://kit.fontawesome.com/92d2245491.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,6 +54,19 @@
             font-weight: 900;
             color: white;
         }
+        .back_btn{
+            width: 100%;
+            height: 100px;
+        }
+        .btn:before{
+            font-family: "FontAwesome";content:"\f359";
+            font-size:50px;
+            color:rgb(89,117,196);
+        }
+        a{
+            text-decoration:none;
+        }
+
     </style>
 
     <title>Register</title>
@@ -65,6 +79,18 @@
     </script>
 </head>
 <body>
+<c:if test="${mode=='pay'}">
+<%--    <button type="button"><a href="/detail?pno=${scheduleDto.pno}">◀ 돌아가기</a></button>--%>
+    <div class="back_btn">
+        <a href="/detail?pno=${scheduleDto.pno}" class="btn"></a>
+    </div>
+</c:if>
+<c:if test="${mode!='pay'}">
+    <div class="back_btn">
+        <a href="/user/bookingList" class="btn"></a>
+    </div>
+<%--    <button type="button"><a href="/user/bookingList">◀ 돌아가기</a></button>--%>
+</c:if>
 <form  id="pay_form" method="post" action="<c:url value='/pay'/>">
 
     <div class="title">[${mode=="pay"?"결제확인":"예약내역 확인"}]</div>
@@ -95,7 +121,7 @@
     <br>
 </form>
 <script>
-
+    alert(${mode})
     function go(){
         let pno=${scheduleDto.pno};
         let year=${scheduleDto.year};

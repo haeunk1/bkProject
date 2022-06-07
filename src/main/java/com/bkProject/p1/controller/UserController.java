@@ -31,12 +31,13 @@ public class UserController {
     public String bookingList(HttpServletRequest request, Model m){
         HttpSession session=request.getSession();
         String id=(String)session.getAttribute("id");
-        System.out.println("id="+id);
+
         try {
             //1.schedule_detail에서 id로 예약내역 가져오기
             List<ScheduleDto> list = scheduleService.dSelectList(id);
             for(ScheduleDto dto:list){
                 int pno = dto.getPno();
+
                 PostDto postDto = postService.getPost(pno);
                 dto.setTitle(postDto.getTitle());
                 int sum=0;

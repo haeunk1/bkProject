@@ -45,7 +45,15 @@ public class DetailPageController {
             m.addAttribute("memberDto",memberDto);
         try {
             PostDto postDto = postService.getPost(pno);
+
+            String cate = postDto.getCategory();
+            cate = cate.replace(","," #");
+            postDto.setCategory(cate);
+
+
+
             m.addAttribute("postDto",postDto);
+
 
             CalendarHandler ch = new CalendarHandler();
             LocalDate now = LocalDate.now();
@@ -55,6 +63,7 @@ public class DetailPageController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         return "detail";
     }
     //로그인 한 회원이 해당 게시물에 '좋아요'를 눌렀는지 확인

@@ -29,6 +29,7 @@ public class MemberController {
     ////////////////////////////로그인 로그아웃/////////////////////////////////
     @GetMapping("/login")
     public String loginGET() {
+
         return "/member/login";
     }
 
@@ -59,7 +60,6 @@ public class MemberController {
             response.addCookie(cookie);
         }
         //3. 홈으로 이동
-        System.out.println("pno="+pno);
         //toURL = toURL==null || toURL.equals("") || pno==null? "/main" : "/detail?pno="+pno;
         if(toURL==null || toURL.equals("")){
             toURL="/main";

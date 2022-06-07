@@ -5,8 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <script src="https://kit.fontawesome.com/92d2245491.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <title>Welcome BookingSite</title>
     <style>
         *{
@@ -21,67 +22,12 @@
         .wrap{
             width : 1080px;
             margin: auto;
-        }
-        /* 로고, 검색, 로그인 */
-        .top_area{
-            width: 100%;
-            height: 150px;
-            /* background-color: #f7f0b9; */
-        }
-        /* 로고 영역 */
-        .logo_area{
-            width: 25%;
-            height: 100%;
-            background-color: red;
-            float:left;
-        }
-        /* 검색 박스 영역 */
-        .search_area{
-            width: 50%;
-            height: 100%;
-            background-color: yellow;
-            float:left;
-        }
-        /* 로그인 버튼 영역 */
-        .login_area{
-            width: 25%;
-            height: 100%;
-            display: inline-block;
-            text-align: center;
-        }
-        .login_button{
-            height: 50%;
-            background-color: #D4DFE6;
-            margin-top: 30px;
-            line-height: 77px;
-            font-size: 40px;
-            font-weight: 900;
-            border-radius: 10px;
-            cursor: pointer;
+            height: auto;
         }
         .login_area>span{
             margin-top: 10px;
             font-weight: 900;
             display: inline-block;
-        }
-        .login_button{
-            height : 50%;
-            background-color: #D4DFE6;
-            margin-top:30px;
-        }
-
-        /* 제품 목록 네비 */
-        .navi_bar_area{
-            width: 100%;
-            height: 70px;
-            background-color: #7696fd;
-        }
-
-        /* 홈페이지 메인 제품 목록  */
-        /* float 속성 해제 */
-
-        .clearfix{
-            clear: both;
         }
         .navi_bar_area{
             background-color: rgb(253, 253, 250);
@@ -94,31 +40,24 @@
             justify-content: center;
             align-items: center;
         }
-        .new_register{
-            display: none;
-        }
         .content_area{
             width: 100%;
-            background-color: #97ef97;
+            /*background-color: #97ef97;*/
             height: 3000px;
 
         }
-        /*.post>div{
-            margin:50px;
-        }*/
-
         .space_list{
 
             margin:10px 20px 10px 20px;
             border-radius: 15px;
-            background-color: pink;
+            /*background-color: pink;*/
             height: 80%;
 
         }
 
         .parent{
             border-radius: 15px;
-            border: 5px solid green;
+            border: 5px solid beige;
             padding: 10px;
             background-color: white;
             width: 97%;
@@ -131,6 +70,7 @@
         .child{
             flex:1;
             background: #2E9AFE;
+            padding-left:10px;
         }
 
         #result_card img{
@@ -140,6 +80,24 @@
             padding: 5px;
             margin-top: 10px;
             margin: auto;
+        }
+        .page_handler{
+            color: black;
+            width: 100%;
+            align-items: center;
+            margin-top: 20px;
+            text-align:center;
+
+
+        }
+        .page {
+            color: black;
+            padding: 6px;
+            margin-right: 10px;
+        }
+        .arrange{
+            float:left;
+            /*margin-left:20px;*/
         }
 
 
@@ -156,61 +114,54 @@
     if(msg=="BOOK_ERR") alert("결제 실패했습니다.");
 </script>
 <div class="wrapper">
+    <div class="nav_wrapper">
+        <nav>
+            <div class="content">
+
+                <div class="logo">
+                    <a href="/main">
+                        <img alt="brand" src="/resources/img/logo1.png"/>
+                    </a>
+                </div>
+                <ul class="mainMenu">
+                    <c:if test="${memberDto.id==null}">
+                        <li><a href="/member/login">로그인</a></li>
+                    </c:if>
+                    <c:if test="${memberDto.id!=null}">
+                        <c:if test="${memberDto.master_admin==1}">
+                            <li>${memberDto.name} 관리자
+                                <ul class="subMenu">
+                                    <li><a href="/post/list">공간 등록&수정</a></li>
+                                    <li><a href="/member/logout">로그아웃</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
+                        <c:if test="${memberDto.master_admin==0}">
+                            <li>${memberDto.name} 회원
+                                <ul class="subMenu">
+                                    <li><a href="/user/bookingList">예약현황</a></li>
+                                    <li><a href="/user/likeList">찜리스트</a></li>
+                                    <li><a href="/member/logout">로그아웃</a></li>
+                                </ul>
+                            </li>
+                        </c:if>
+                    </c:if>
+                </ul>
+            </div>
+        </nav>
+    </div>
     <div class="wrap">
-        <div class="top_area">
-            <div class="logo_area">
-                <h1>logo area</h1>
-            </div>
-            <div class="search_area">
-                <h1>Search area</h1>
-            </div>
-            <div class="login_area">
-                <!--로그인 하지 않은 상태 -->
-                <c:if test = "${memberDto.id==null}">
-                    <div class="login_button"><a href="/member/login">로그인</a></div>
-                    <span><a href="/member/join">회원가입</a></span>
-                </c:if>
-
-                <c:if test = "${memberDto.id!=null}">
-                    <c:if test ="${memberDto.master_admin==1}">
-                        <select class="admin-option" name="option" onchange="location.href=this.value">
-                            <option>${memberDto.name}</option>
-                            <option value="/post/list">공간등록&수정</option>
-                            <option value="">예약리스트</option>
-                            <option value="">통계&정산</option>
-                            <option value="/member/logout">로그아웃</option>
-                        </select>
-                    </c:if>
-                    <c:if test ="${memberDto.master_admin==0}">
-                        <select class="member-option" name="option" onchange="location.href=this.value">
-                            <option>${memberDto.name}</option>
-                            <option value="/user/bookingList">예약현황</option>
-                            <option value="/user/likeList">찜리스트</option>
-                            <option value="/member/logout">로그아웃</option>
-                        </select>
-                    </c:if>
-
-                </c:if>
-
-            </div>
-            <div class="clearfix"></div>
-        </div>
-
-
-
         <div class="navi_bar_area">
             <div class="arrange">
-                <form action="<c:url value='/main'/>" class="search-form" method="get">
-
-                </form>
+                <select class="arrange-option" name="arrange"><%--onchange="location.href=this.value" -->> 변하자마자 바로 적용--%>
+                    <option value="pno"${ph.searchCondition.arrange=='pno' ? "selected" : ""}>정렬</option>
+                    <option value="like"${ph.searchCondition.arrange=='like' ? "selected" : ""}>좋아요</option>
+                    <option value="view" ${ph.searchCondition.arrange=='view' ? "selected" : ""}>조회수</option>
+                </select>
             </div>
             <div class="search">
                 <form action="<c:url value='/main'/>" class="search-form" method="get">
-                    <select class="arrange-option" name="arrange"><%--onchange="location.href=this.value" -->> 변하자마자 바로 적용--%>
-                        <option value="pno"${ph.searchCondition.arrange=='pno' ? "selected" : ""}>정렬</option>
-                        <option value="like"${ph.searchCondition.arrange=='like' ? "selected" : ""}>좋아요</option>
-                        <option value="view" ${ph.searchCondition.arrange=='view' ? "selected" : ""}>조회수</option>
-                    </select>
+
                     <select class="search-option" name="option">
                         <option value="all" ${ph.searchCondition.option=='all' || ph.searchCondition.option=='' ? "selected" : ""}>검색조건</option>
                         <option value="title" ${ph.searchCondition.option=='title' ? "selected" : ""}>제목</option>
@@ -223,16 +174,11 @@
                 </form>
 
             </div>
-
-            <div class="new_register">
-                <button>새로운 공간 등록</button>
-            </div>
         </div>
         <div class="content_area">
             <div class="space_list">
                 <c:forEach var="postDto" items="${list}">
                     <a href="detail?pno=${postDto.pno}">
-                            <%-- <a href="<c:url value = '/detail?pno=${postDto.pno}'/>">--%>
                         <div class="parent">
                             <div class="child">
                                 <div id="uploadResult">
@@ -242,12 +188,12 @@
                             </div>
                             <div class="blank"></div>
                             <div class="child" style="background: #FA5858;">
-                                <br><td class="title">${postDto.title}</td>
-                                <br><td class="category">${postDto.category}</td>
-                                <br><td class="hourly_cost">시간당 금액 : ${postDto.hourly_cost}</td>
-                                <br><td class="area_info">위치 : ${postDto.area_info}</td>
-                                <br><td class="like_cnt">좋아요 : ${postDto.like_cnt}</td>
-                                <br><td class="view_cnt">조회수 : ${postDto.view_cnt}</td>
+                                <br><td class="title"><h2>${postDto.title}</h2></td>
+                                <br><td class="category"> #${postDto.category}</td>
+                                <br><td class="hourly_cost"> <i class="fa-solid fa-won-sign"></i> 시간당 금액 : ${postDto.hourly_cost}</td>
+                                <br><td class="area_info"> <i class="fa-solid fa-location-dot"></i> 위치 : ${postDto.area_info}</td>
+                                <br><td class="like_cnt"> <i class="fa-solid fa-heart"></i> 좋아요 : ${postDto.like_cnt}</td>
+                                <br><td class="view_cnt"> <i class="fa-solid fa-eye"></i> 조회수 : ${postDto.view_cnt}</td>
                             </div>
                         </div>
                     </a>
@@ -272,9 +218,6 @@
                     </c:if>
 
                 </c:if>
-
-
-
             </div>
         </div>
     </div>

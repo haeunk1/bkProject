@@ -25,7 +25,7 @@
     <button>로그인</button>
     <div>
         <label><input type="checkbox" name="rememberId"  ${empty cookie.id.value ? "":"checked"}> 아이디 기억</label> |
-        <a href="">비밀번호 찾기</a> |
+   <%--     <a href="">비밀번호 찾기</a> |--%>
         <a href="/member/join">회원가입</a>
     </div>
     <script>
@@ -33,5 +33,6 @@
         if(msg=="login") alert("로그인이 필요합니다.");
     </script>
 </form>
+</div>
 </body>
 </html>
