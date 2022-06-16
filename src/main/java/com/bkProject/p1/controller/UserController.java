@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -59,7 +61,6 @@ public class UserController {
 
     @GetMapping("/bookingRead")
     public String bookingRead(Integer no, Model m){
-        System.out.println("no="+no);
         try {
             ScheduleDto scheduleDto = scheduleService.getBookingDetail(no);
             PostDto postDto = postService.getPost(scheduleDto.getPno());
@@ -111,4 +112,36 @@ public class UserController {
         }
         return "user/likeList";
     }
+
+    @PostMapping("/delBook")
+    public String delBook(Integer no, RedirectAttributes rttr){
+        try {
+            ScheduleDto detail_scheduleDto = scheduleService.getBookingDetail(no);
+            //1. schedule time수정
+            //1-1. time정보 가져옴
+            ScheduleDto scheduleDto = scheduleService.getSchedule(detail_scheduleDto);
+            String time = scheduleDto.getTime();
+            String dTime = detail_scheduleDto.getTime();
+
+            //1-2. time정보 변경
+            System.out.println("time="+time);
+            String str="";
+            for(int i=0;i<18;i++){
+                str+= dTime.charAt(i)=='2'?'0':time.charAt(i);
+            }
+
+            //1-3. schedule에 time반영
+            scheduleDto.setTime(str);
+            scheduleService.updateSchedule(scheduleDto);
+            //2. schedule_delete 삭제
+            scheduleService.dDeleteBooking(no);
+            rttr.addFlashAttribute("msg","DEL_OK");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/user/bookingList";
+    }
+
 }

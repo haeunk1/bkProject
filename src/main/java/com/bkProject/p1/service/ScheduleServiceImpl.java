@@ -46,4 +46,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<Integer> lSelectList(String id) throws Exception{
         return scheduleDao.lSelectList(id);
     }
+
+    public int dDeleteBooking(int no) throws Exception{
+        return scheduleDao.dDeleteBooking(no);
+    }
 }

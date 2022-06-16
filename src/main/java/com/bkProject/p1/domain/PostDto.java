@@ -18,8 +18,17 @@ public class PostDto {
     private int comment_cnt=0;
     private List<AttachImageDto> imageList; //이미지정보 리스트
 
-
+    private AttachImageDto imgOne;
     public PostDto(){}
+
+    public AttachImageDto getImgOne() {
+        return imgOne;
+    }
+
+    public void setImgOne(AttachImageDto imgOne) {
+        this.imgOne = imgOne;
+    }
+
     public PostDto(String title, String main_content, String detail_content, String start_time, String end_time, String area_info, String hourly_cost, String category) {
         this.title = title;
         this.main_content = main_content;

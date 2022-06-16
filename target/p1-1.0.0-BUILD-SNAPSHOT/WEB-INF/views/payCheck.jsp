@@ -114,14 +114,43 @@
     ● 최종 비용 : ${scheduleDto.totCost}<br>
     <br>
     <br>
-    <div id="payBtm" style=${mode=="check"?"display:none;":""}>
-        <button type="button" onclick="go()">결제하기</button>
+    <div id="payBtm"> <%--style=${mode=="check"?"display:none;":""}--%>
+        <c:if test="${mode=='check'}">
+            <button type="button" ><a href="/user/bookingList">확인</a></button>
+            <button type="button" onclick="delBook()">예약 취소</button>
+        </c:if>
+        <c:if test="${mode!='check'}">
+            <button type="button" onclick="go()">결제하기</button>
+        </c:if>
+
+
     </div>
     <br>
     <br>
 </form>
 <script>
-    alert(${mode})
+    function delBook(){
+        let check = confirm("예약을 취소하시겠습니까?");
+        if(check){
+            let no=${scheduleDto.no};
+
+            let form=document.createElement('form');
+            form.setAttribute('method','post');
+            form.setAttribute('action','/user/delBook');
+            document.charset="utf-8";
+
+            let noField=document.createElement('input');
+            noField.setAttribute('type','hidden');
+            noField.setAttribute('name','no');
+            noField.setAttribute('value',no);
+            form.appendChild(noField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+
     function go(){
         let pno=${scheduleDto.pno};
         let year=${scheduleDto.year};

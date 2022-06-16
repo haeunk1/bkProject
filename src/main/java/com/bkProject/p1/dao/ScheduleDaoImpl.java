@@ -50,4 +50,8 @@ public class ScheduleDaoImpl implements ScheduleDao {
         return session.selectList(namespace+"lSelectList",id);
     }
 
+    public int dDeleteBooking(int no)throws Exception{
+        return session.delete(namespace+"dDeleteBooking",no);
+    }
+
 }

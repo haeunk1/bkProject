@@ -184,10 +184,10 @@
 
     /* 이미지 업로드 */
     $("input[type='file']").on("change",function(e){
-        //이미지 존재시 삭제
+        /*//이미지 존재시 삭제
         if($(".imgDeleteBtn").length>0){
             deleteFile();
-        }
+        }*/
         let formData = new FormData();
         let fileInput = $('input[name="uploadFile"]');
         let fileList = fileInput[0].files; //파일리스트 접근
@@ -203,7 +203,7 @@
                 */
         //서버에 전송할 파일들을 formData에 업로드
         for(let i=0; i<fileList.length;i++){
-            formData.append("uploadFile",fileList[i]);
+            formData.append("multipartFiles",fileList[i]);
         }
         $.ajax({
             type : 'POST',
@@ -214,7 +214,6 @@
             dataType : 'json',//전송받을 데이터 타입
 
             success : function (result){
-                console.log(result);
                 showUploadImage(result);
             },
             error : function(result){
@@ -233,14 +232,13 @@
         let uploadResult = $("#uploadResult");
 
         for(let i=0;i<uploadResultArr.length;i++){
-            console.log(i);
 
             let obj=uploadResultArr[i];
-            let str=""; //div태그 내부에 이미지를 출력하는 태그 코드들을 추가
-            let fileCallPath =encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+            let str="";
+            let fileCallPath =obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName;
 
             str+="<div id='result_card'>";
-            str+="<img src='/display?fileName="+fileCallPath+"'>";
+            str+="<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+"'>";
             str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
             str += "<input type='hidden' name='imageList["+i+"].fileName' value='"+ obj.fileName +"'>";
             str += "<input type='hidden' name='imageList["+i+"].uuid' value='"+ obj.uuid +"'>";
@@ -249,6 +247,10 @@
 
             uploadResult.append(str);
         }
+        //이미지 삭제 버튼 동작
+        $("#uploadResult").on("click",".imgDeleteBtn",function(e){
+            deleteFile();
+        });
 
         //파일 삭제 메서드
         function deleteFile(){
@@ -271,10 +273,7 @@
             });
         }
 
-        //이미지 삭제 버튼 동작
-        $("#uploadResult").on("click",".imgDeleteBtn",function(e){
-            deleteFile();
-        });
+
 
 
 

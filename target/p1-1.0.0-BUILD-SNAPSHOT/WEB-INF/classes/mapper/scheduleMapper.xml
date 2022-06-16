@@ -46,6 +46,10 @@
         select * from schedule_detail where no=#{no};
     </select>
 
+    <delete id ="dDeleteBooking" parameterType="int">
+        delete from schedule_detail where no = #{no};
+    </delete>
+
     <!--찜 리스트-->
     <select id="lSelectList" parameterType="String" resultType="int">
         select * from post_like

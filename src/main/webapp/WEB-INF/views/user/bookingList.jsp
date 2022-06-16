@@ -151,6 +151,10 @@
     </style>
 </head>
 <body>
+<script>
+    let msg = "${msg}";
+    if(msg=="DEL_OK") alert("예약이 삭제되었습니다.");
+</script>
 <div class="nav_wrapper">
     <nav>
         <div class="content">

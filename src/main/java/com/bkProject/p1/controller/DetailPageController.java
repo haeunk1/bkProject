@@ -233,20 +233,6 @@ public class DetailPageController {
             throw new RuntimeException(e);
         }
 
-        //1.  2.예약자와 함께 상세 예약내역 저장
-   /*
-        ScheduleDto dto = new ScheduleDto(pno,year,month,day);
-        time = time.replace("2","1");
-        dto.setTime(time);
-        dto.setBook_user(book_user);
-        try {
-            scheduleService.updateSchedule(dto);
-            rttr.addFlashAttribute("msg","BOOK_OK");
-        } catch (Exception e) {
-            rttr.addFlashAttribute("msg","BOOK_ERR");
-            throw new RuntimeException(e);
-        }
-        */
         return "redirect:/main";
     }
 

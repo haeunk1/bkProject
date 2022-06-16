@@ -18,4 +18,5 @@ public interface ScheduleService {
     List<ScheduleDto> dSelectList(String book_user)throws Exception;
     ScheduleDto getBookingDetail(int no)throws Exception;
     List<Integer> lSelectList(String id) throws Exception;
+    int dDeleteBooking(int no) throws Exception;
 }

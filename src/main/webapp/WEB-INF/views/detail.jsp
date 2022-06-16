@@ -200,7 +200,6 @@
         let nextMonth=month+1;
         let prevMonth=month-1;
 
-
         //let day=ch.day;
         let today = new Date();
         let tyear=today.getFullYear();
@@ -316,11 +315,12 @@
             for(let i=0;i<arr.length;i++){
                 let str="";
                 let obj=arr[i];//서버로부터 전달받은 이미지 정보 객체 값
-                let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
+                let fileCallPath =obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName;
+                //let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
                 str += "<div id='result_card'";
                 str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
                 str +=">";
-                str += "<img src='/display?fileName=" + fileCallPath + "'>";
+                str += "<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+ "'>";
                 str += "</div>";
 
                 uploadResult.append(str);

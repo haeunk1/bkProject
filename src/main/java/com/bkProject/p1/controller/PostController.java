@@ -59,7 +59,6 @@ public class PostController {
         HttpSession session= request.getSession();
         MemberDto memberDto = (MemberDto)session.getAttribute("memberDto");
         postDto.setWriter(memberDto.getId());
-        System.out.println("postDto="+postDto);
         try {
             postService.post(postDto);
             //if(postDto.getImageList()==null || postDto.getImageList().size()<=0) return;
@@ -77,6 +76,8 @@ public class PostController {
         }
 
     }
+
+
     @GetMapping("/list")
     public String adminPostList(HttpServletRequest request, Model m){
         HttpSession session = request.getSession();

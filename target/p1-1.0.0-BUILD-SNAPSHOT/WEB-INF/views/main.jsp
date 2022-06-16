@@ -6,6 +6,8 @@
 <html>
 <head>
     <script src="https://kit.fontawesome.com/92d2245491.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <title>Welcome BookingSite</title>
@@ -29,7 +31,7 @@
             font-weight: 900;
             display: inline-block;
         }
-        .navi_bar_area{
+        .main_wrapper{
             background-color: rgb(253, 253, 250);
             width: 100%;
             height: 110px;
@@ -99,6 +101,18 @@
             float:left;
             /*margin-left:20px;*/
         }
+        .search{
+            float:right;
+        }
+
+        #uploadResult img{
+            max-width: 30%;
+            height: auto;
+            display: block;
+            padding: 5px;
+            margin-top: 10px;
+            margin: auto;
+        }
 
 
 
@@ -112,6 +126,7 @@
     if(msg=="postOK") alert("게시글이 등록되었습니다.");
     if(msg=="BOOK_OK") alert("결제 완료되었습니다.");
     if(msg=="BOOK_ERR") alert("결제 실패했습니다.");
+
 </script>
 <div class="wrapper">
     <div class="nav_wrapper">
@@ -151,30 +166,59 @@
         </nav>
     </div>
     <div class="wrap">
-        <div class="navi_bar_area">
-            <div class="arrange">
-                <select class="arrange-option" name="arrange"><%--onchange="location.href=this.value" -->> 변하자마자 바로 적용--%>
-                    <option value="pno"${ph.searchCondition.arrange=='pno' ? "selected" : ""}>정렬</option>
-                    <option value="like"${ph.searchCondition.arrange=='like' ? "selected" : ""}>좋아요</option>
-                    <option value="view" ${ph.searchCondition.arrange=='view' ? "selected" : ""}>조회수</option>
-                </select>
-            </div>
+        <div class="main_wrapper">
             <div class="search">
                 <form action="<c:url value='/main'/>" class="search-form" method="get">
+                        <select class="arrange-option" name="arrange"><%--onchange="location.href=this.value" -->> 변하자마자 바로 적용--%>
+                            <option value="pno"${ph.searchCondition.arrange=='pno' ? "selected" : ""}>정렬</option>
+                            <option value="like"${ph.searchCondition.arrange=='like' ? "selected" : ""}>좋아요</option>
+                            <option value="view" ${ph.searchCondition.arrange=='view' ? "selected" : ""}>조회수</option>
+                        </select>
+                        <select class="search-option" name="option">
+                            <option value="all" ${ph.searchCondition.option=='all' || ph.searchCondition.option=='' ? "selected" : ""}>검색조건</option>
+                            <option value="title" ${ph.searchCondition.option=='title' ? "selected" : ""}>제목</option>
+                            <option value="category" ${ph.searchCondition.option=='category' ? "selected" : ""}>카테고리</option>
+                            <option value="location" ${ph.searchCondition.option=='location' ? "selected" : ""}>위치</option>
+                        </select>
 
-                    <select class="search-option" name="option">
-                        <option value="all" ${ph.searchCondition.option=='all' || ph.searchCondition.option=='' ? "selected" : ""}>검색조건</option>
-                        <option value="title" ${ph.searchCondition.option=='title' ? "selected" : ""}>제목</option>
-                        <option value="category" ${ph.searchCondition.option=='category' ? "selected" : ""}>카테고리</option>
-                        <option value="location" ${ph.searchCondition.option=='location' ? "selected" : ""}>위치</option>
-                    </select>
+                        <input type="text" name="keyword" class="search-input" type="text" value="${ph.searchCondition.keyword}"placeholder="검색어를 입력해주세요">
+                        <input type="submit" class="search-button" value="검색">
 
-                    <input type="text" name="keyword" class="search-input" type="text" value="${ph.searchCondition.keyword}"placeholder="검색어를 입력해주세요">
-                    <input type="submit" class="search-button" value="검색">
+
                 </form>
 
             </div>
         </div>
+        <%--<div class="content_area">
+            <div class="space_list">
+                <c:forEach var="postDto" items="${list}">
+                    <a href="detail?pno=${postDto.pno}">
+                        <div class="parent">
+                            <div class="child">
+                                <div id="uploadResult">
+                                    &lt;%&ndash;<img src="/display?fileName=2022\06\07\s_bdbee177-50e6-413c-83d8-a11824bd5c6d_화면 캡처 2022-05-10 104917.png">&ndash;%&gt;
+                                    &lt;%&ndash;<img src="/mainImg?pno=${postDto.pno}">&ndash;%&gt;
+                                        &lt;%&ndash;<img src="C:\upload\ ${postDto.imgOne.uploadPath}\s_${postDto.imgOne.uuid}_${postDto.imgOne.fileName}">&ndash;%&gt;
+                                        &lt;%&ndash;<img src ="\upload\2022\06\07\s_bdbee177-50e6-413c-83d8-a11824bd5c6d_화면 캡처 2022-05-10 104917.png">&ndash;%&gt;
+                                        <img src ="/resources/img/test.png">
+
+
+                                </div>
+                            </div>
+                            <div class="blank"></div>
+                            <div class="child" style="background: #FA5858;">
+                                <br><td class="title"><h2>${postDto.title}</h2></td>
+                                <br><td class="category"> #${postDto.category}</td>
+                                <br><td class="hourly_cost"> <i class="fa-solid fa-won-sign"></i> 시간당 금액 : ${postDto.hourly_cost}</td>
+                                <br><td class="area_info"> <i class="fa-solid fa-location-dot"></i> 위치 : ${postDto.area_info}</td>
+                                <br><td class="like_cnt"> <i class="fa-solid fa-heart"></i> 좋아요 : ${postDto.like_cnt}</td>
+                                <br><td class="view_cnt"> <i class="fa-solid fa-eye"></i> 조회수 : ${postDto.view_cnt}</td>
+                            </div>
+                        </div>
+                    </a>
+                </c:forEach>
+
+            </div>--%>
         <div class="content_area">
             <div class="space_list">
                 <c:forEach var="postDto" items="${list}">
@@ -182,6 +226,12 @@
                         <div class="parent">
                             <div class="child">
                                 <div id="uploadResult">
+                                        <img src="/display?filePath=${postDto.imgOne.uploadPath}&fileUuid=${postDto.imgOne.uuid}&fileName=${postDto.imgOne.fileName}">
+                                        <%--<img src="/mainImg?pno=${postDto.pno}">--%>
+                                        <%--<img src="C:\upload\ ${postDto.imgOne.uploadPath}\s_${postDto.imgOne.uuid}_${postDto.imgOne.fileName}">--%>
+                                       <%-- <img src ="\upload\2022\06\07\s_bdbee177-50e6-413c-83d8-a11824bd5c6d_화면 캡처 2022-05-10 104917.png">--%>
+
+                                    <%--<img src ="/resources/img/test.png">--%>
 
 
                                 </div>
@@ -221,11 +271,38 @@
             </div>
         </div>
     </div>
-</div>
-<script>
-    //메인화면 이미지 띄우기(보류)
-    /*$(document).ready(function(){
-        let pno='<c:out value="${postDto.pno}"/>';
+    <script>
+
+/*        $(document).ready(function(){
+            let list=${pnoList};
+
+
+            for(let i=0;i<list.length;i++){
+                let tmp="#id"+String(list[i]);
+                let imgArea = $(tmp);
+                let str=""
+                let pno=list[i];
+
+                $.ajax({
+                    url:'/getImgInfo',
+                    data:{pno:pno},
+                    dataType:'text',
+                    type:'POST',
+                    success:function(result){
+                        let fileCallPath = encodeURIComponent(result.uploadPath+"/s_"+result.uuid+"_"+result.fileName);
+                        str+="<img src='/display?fileName="+fileCallPath+"'>";
+                    }
+                });
+
+
+                imgArea.html(str);
+
+            }
+        });*/
+
+        //메인화면 이미지 띄우기(보류)
+        /*$(document).ready(function(){
+            let pno='<c:out value="${postDto.pno}"/>';
         console.log(pno);
         let uploadResult=$("#uploadResult");
         $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
@@ -252,6 +329,7 @@
         });
 
     });*/
-</script>
+    </script>
+</div>
 </body>
 </html>

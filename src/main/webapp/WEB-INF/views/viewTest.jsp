@@ -1,3 +1,6 @@
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -5,41 +8,50 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
     <meta charset="UTF-8">
     <title>Welcome BookingSite</title>
-    <script src="https://kit.fontawesome.com/92d2245491.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
+
 </head>
 <body>
-<div class="nav_wrapper">
-    <nav>
-        <div class="content">
 
-            <div class="logo">
-                <a href="/main">
-                    <img alt="brand" src="/img/logo1.png"/>
-                </a>
-            </div>
-            <ul class="mainMenu">
-                <c:if test="${memberDto.id==null}">
-                    <li><a href="/member/login" >로그인</a></li>
-                </c:if>
-                <c:if test="${memberDto.id!=null}">
-                    <c:if test="${memberDto.master_admin==0}">
-                        <li>${memberDto.name} 회원
-                            <ul class="subMenu">
-                                <li><a href="/user/bookingList">예약현황</a></li>
-                                <li><a href="/user/likeList">찜리스트</a></li>
-                                <li><a href="/member/logout">로그아웃</a></li>
-                            </ul>
-                        </li>
-                    </c:if>
-                </c:if>
-            </ul>
-        </div>
-    </nav>
-</div>
+
+<form id="form" class="frm" action="" method="post">
+
+    <input type="file" id ="fileItem" name='uploadFile' >
+    <div id="uploadResult"></div>
+
+    <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
+</form>
+
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+    /* 이미지 업로드 */
+    $("input[type='file']").on("change",function(e){
+
+        let formData = new FormData();
+        let fileInput = $('input[name="uploadFile"]');
+        let fileList = fileInput[0].files; //파일리스트 접근
+        let fileObj = fileList[0];
+        formData.append("uploadFile",fileObj);
+
+        $.ajax({
+            type : 'POST',
+            url:'/test1',
+            processData : false, //서버로 전송할 데이터를 queryString형태로 변환할지 여부
+            contentType : false, //서버로 전송되는 데이터의 content-type
+            data : formData, //서버로 전송할 데이터
+            dataType : 'json',//전송받을 데이터 타입
+
+            success : function (result){
+                alert("성공");
+            }
+        });
+
+    });
+</script>
 </body>
 
 </html>

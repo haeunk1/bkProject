@@ -49,11 +49,11 @@ public class ScheduleServiceImplTest {
 
     @Test
     public void test() throws Exception{
-        ScheduleDto dto = new ScheduleDto(3,2022,7,3);
-        String setTime="000000000000000000";
+        ScheduleDto dto = new ScheduleDto(33,2022,3,3);
+        String setTime="000000000000000022";
         dto.setTime(setTime);
         dto.setBook_user("asdf");
-        dto.setTotCost(123123);
+        dto.setTotCost(333333);
         scheduleService.dInsert(dto);
     }
 
