@@ -15,7 +15,6 @@ public class MemberDto {
 
     public void setMaster_admin(Integer master_admin) {
         this.master_admin = master_admin;
-        System.out.println("master_admin=="+master_admin);
 
     }
 

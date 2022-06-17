@@ -189,36 +189,6 @@
 
             </div>
         </div>
-        <%--<div class="content_area">
-            <div class="space_list">
-                <c:forEach var="postDto" items="${list}">
-                    <a href="detail?pno=${postDto.pno}">
-                        <div class="parent">
-                            <div class="child">
-                                <div id="uploadResult">
-                                    &lt;%&ndash;<img src="/display?fileName=2022\06\07\s_bdbee177-50e6-413c-83d8-a11824bd5c6d_화면 캡처 2022-05-10 104917.png">&ndash;%&gt;
-                                    &lt;%&ndash;<img src="/mainImg?pno=${postDto.pno}">&ndash;%&gt;
-                                        &lt;%&ndash;<img src="C:\upload\ ${postDto.imgOne.uploadPath}\s_${postDto.imgOne.uuid}_${postDto.imgOne.fileName}">&ndash;%&gt;
-                                        &lt;%&ndash;<img src ="\upload\2022\06\07\s_bdbee177-50e6-413c-83d8-a11824bd5c6d_화면 캡처 2022-05-10 104917.png">&ndash;%&gt;
-                                        <img src ="/resources/img/test.png">
-
-
-                                </div>
-                            </div>
-                            <div class="blank"></div>
-                            <div class="child" style="background: #FA5858;">
-                                <br><td class="title"><h2>${postDto.title}</h2></td>
-                                <br><td class="category"> #${postDto.category}</td>
-                                <br><td class="hourly_cost"> <i class="fa-solid fa-won-sign"></i> 시간당 금액 : ${postDto.hourly_cost}</td>
-                                <br><td class="area_info"> <i class="fa-solid fa-location-dot"></i> 위치 : ${postDto.area_info}</td>
-                                <br><td class="like_cnt"> <i class="fa-solid fa-heart"></i> 좋아요 : ${postDto.like_cnt}</td>
-                                <br><td class="view_cnt"> <i class="fa-solid fa-eye"></i> 조회수 : ${postDto.view_cnt}</td>
-                            </div>
-                        </div>
-                    </a>
-                </c:forEach>
-
-            </div>--%>
         <div class="content_area">
             <div class="space_list">
                 <c:forEach var="postDto" items="${list}">
@@ -227,13 +197,6 @@
                             <div class="child">
                                 <div id="uploadResult">
                                         <img src="/display?filePath=${postDto.imgOne.uploadPath}&fileUuid=${postDto.imgOne.uuid}&fileName=${postDto.imgOne.fileName}">
-                                        <%--<img src="/mainImg?pno=${postDto.pno}">--%>
-                                        <%--<img src="C:\upload\ ${postDto.imgOne.uploadPath}\s_${postDto.imgOne.uuid}_${postDto.imgOne.fileName}">--%>
-                                       <%-- <img src ="\upload\2022\06\07\s_bdbee177-50e6-413c-83d8-a11824bd5c6d_화면 캡처 2022-05-10 104917.png">--%>
-
-                                    <%--<img src ="/resources/img/test.png">--%>
-
-
                                 </div>
                             </div>
                             <div class="blank"></div>
@@ -261,7 +224,9 @@
                         <a class="page" href="<c:url value="/main${ph.searchCondition.getQueryString(ph.beginPage-1)}"/>">&lt;</a>
                     </c:if>
                     <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-                        <a class="page ${i==ph.searchCondition.page? "paging-active" : ""}" href="<c:url value="/main${ph.searchCondition.getQueryString(i)}"/>">${i}</a>
+
+                            <a class="page ${i==ph.searchCondition.page? "paging-active" : ""}" style="color:${ph.searchCondition.page eq i ? 'red;' : 'black;'} " href="<c:url value="/main${ph.searchCondition.getQueryString(i)}"/>">${i}</a>
+
                     </c:forEach>
                     <c:if test="${ph.showNext}">
                         <a class="page" href="<c:url value="/main${ph.searchCondition.getQueryString(ph.endPage+1)}"/>">&gt;</a>

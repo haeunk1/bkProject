@@ -123,19 +123,19 @@
         <h3>카테고리</h3>
         <div class="category_area">
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="파티">파티</label>
-                <label><input type="checkbox" name="category" value="데이트">데이트</label>
-                <label><input type="checkbox" name="category" value="역근처">역근처</label>
+                <label><input type="checkbox" name="category" id="파티" value="파티">파티</label>
+                <label><input type="checkbox" name="category" id="데이트" value="데이트">데이트</label>
+                <label><input type="checkbox" name="category" id="역근처" value="역근처">역근처</label>
             </div>
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="스튜디오">스튜디오</label>
-                <label><input type="checkbox" name="category" value="바베큐">바베큐</label>
-                <label><input type="checkbox" name="category" value="singing_room">노래방</label>
+                <label><input type="checkbox" name="category" id="스튜디오" value="스튜디오">스튜디오</label>
+                <label><input type="checkbox" name="category" id="바베큐" value="바베큐">바베큐</label>
+                <label><input type="checkbox" name="category" id="노래방" value="노래방">노래방</label>
             </div>
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="브라이덜샤워">브라이덜샤워</label>
-                <label><input type="checkbox" name="category" value="보드게임">보드게임</label>
-                <label><input type="checkbox" name="category" value="영화">영화</label>
+                <label><input type="checkbox" name="category" id="브라이덜샤워" value="브라이덜샤워">브라이덜샤워</label>
+                <label><input type="checkbox" name="category" id="보드게임" value="보드게임">보드게임</label>
+                <label><input type="checkbox" name="category" id="영화" value="영화">영화</label>
             </div>
         </div>
         <br>
@@ -147,10 +147,12 @@
             </div>
             <div class="form_section_content">
                 <input type="file" id ="fileItem" name='uploadFile'  multiple>
-                <div id="uploadResult"></div>
+                <div id="uploadResult">
+                </div>
             </div>
         </div>
         <br>
+
 
 
         <h3>주소</h3>
@@ -166,21 +168,36 @@
         </div>
 
         <h3>시간당 가격</h3>
-        <input type="text" name="hourly_cost" id="cost" value="${postDto.main_content}" onkeyup="commas(this)"/>
-
-        <%--
-        <h3>운영시간</h3>
-        시작시간<input type="time" id="s_time" min="08:00:00" max="24:00:00">
-        <input type="hidden" id="stime" name="start_time" >
-        끝나는시간<input type="time" id="e_time" min="08:00:00" max="24:00:00">
-        <input type="hidden" id="etime" name="end_time" >
-        --%>
+        <input type="text" name="hourly_cost" id="cost" value="${postDto.hourly_cost}" onkeyup="commas(this)"/>
 
         <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
     </form>
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+    function deleteFile(filePath,fileFullName){
+
+        //let targetFile=$(".imgDeleteBtn").data("file");
+        let fileCallPath =filePath+"/"+fileFullName;
+        let div_id = "result_card"+"_"+fileFullName;
+
+        let targetDiv = document.getElementById(div_id);//이미지를 감싸고 있는 태그
+
+        $.ajax({
+            url:'/deleteFile',
+            data:{fileName:fileCallPath},
+            dataType:'text',
+            type:'POST',
+            success:function(result){
+                targetDiv.remove();
+                $("input[type='file']").val("");
+            },
+            error : function (result){
+                console.log(result);
+                alert("파일을 삭제하지 못하였습니다.")
+            }
+        });
+    }//개인정보 영향평가 전문교육
 
     /* 이미지 업로드 */
     $("input[type='file']").on("change",function(e){
@@ -227,7 +244,7 @@
     /*이미지 출력*/
     function showUploadImage(uploadResultArr){
         //데이터 검증
-        if(!uploadResultArr || uploadResultArr.length==0) return
+        if(!uploadResultArr || uploadResultArr.length==0) return;
 
         let uploadResult = $("#uploadResult");
 
@@ -235,26 +252,33 @@
 
             let obj=uploadResultArr[i];
             let str="";
-            let fileCallPath =obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName;
+            let fileFullName =obj.uuid+"_"+obj.fileName;
 
+
+            str+="<div id='result_card"+"_"+fileFullName+"'>";
             str+="<div id='result_card'>";
             str+="<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+"'>";
-            str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
+            //str+="<div class='imgDeleteBtn' onclick='deleteFile("+fileCallPath+")'>X</div>";
+            //str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
+            //str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick='deleteFile();' data-file='"+fileCallPath+"'>X</a>";
+            str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick=\"deleteFile(\'"+obj.uploadPath+"\',\'"+fileFullName+"\');\">X</a>";
+
             str += "<input type='hidden' name='imageList["+i+"].fileName' value='"+ obj.fileName +"'>";
             str += "<input type='hidden' name='imageList["+i+"].uuid' value='"+ obj.uuid +"'>";
             str += "<input type='hidden' name='imageList["+i+"].uploadPath' value='"+ obj.uploadPath +"'>";
+            str+="</div>";
             str+="</div>";
 
             uploadResult.append(str);
         }
         //이미지 삭제 버튼 동작
-        $("#uploadResult").on("click",".imgDeleteBtn",function(e){
+    /*    $("#uploadResult").on("click",".imgDeleteBtn",function(e){
             deleteFile();
-        });
+        });*/
 
-        //파일 삭제 메서드
+        /*//파일 삭제 메서드
         function deleteFile(){
-            let targetFile=$(".imgDeleteBtn").data("file");//"file":썸네일 경로 데이터
+            let targetFile=$(".imgDeleteBtn").data("file");
             let targetDiv = $("#result_card");//이미지를 감싸고 있는 태그
             $.ajax({
                 url:'/deleteFile',
@@ -271,7 +295,9 @@
                     alert("파일을 삭제하지 못하였습니다.")
                 }
             });
-        }
+        }*/
+        //파일 삭제 메서드
+
 
 
 
@@ -281,6 +307,12 @@
 
 
     $(document).ready(function(){
+        let strArr = "${postDto.category}";
+        let arr=strArr.split(',');
+        for(let i=0;i<arr.length;i++){
+            let id = document.getElementById(arr[i]);
+            id.checked=true;
+        }
 
         $("#writeBtn").on("click", function(){
             // $('#stime').val($('#s_time').val());

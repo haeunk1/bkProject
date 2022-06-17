@@ -31,29 +31,15 @@ import java.util.UUID;
 @Controller
 public class PostImageController {//관리자만 사용 가능한 영역
     private int port = 21;
-    private final String user = "asdf2";
-    private final String pw = "1234";
-    private final String server = "192.168.0.38";
+    private final String user = "haeunkim";
+    private final String pw = "8398";
+    private final String server = "192.168.10.68";
     @Autowired
     PostService postService;
-/*    @PostMapping("/getImgInfo")
-    public ResponseEntity<AttachImageDto> getImgInfo(Integer pno) {
-        AttachImageDto dto;
-        try {
-            //ResponseEntity<AttachImageDto>
-            System.out.println("pno=" + pno);
-            List<AttachImageDto> list = postService.getImageList(pno);
-            dto = list.get(0);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return new ResponseEntity<AttachImageDto>(dto, HttpStatus.OK);
-    }*/
-
 
     @PostMapping("/deleteFile")
     public ResponseEntity<String> deleteFile(String fileName){//Http Body에 String 데이터를 추가
+        System.out.println("fileName="+fileName);
         FTPClient ftpClient = new FTPClient();
         try {
 

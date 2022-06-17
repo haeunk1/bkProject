@@ -38,6 +38,7 @@ public class PostController {
             if(pno!=null){
                 PostDto postDto = postService.getPost(pno);
                 m.addAttribute("postDto",postDto);
+
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

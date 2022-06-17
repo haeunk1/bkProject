@@ -147,10 +147,12 @@
             </div>
             <div class="form_section_content">
                 <input type="file" id ="fileItem" name='uploadFile'  multiple>
-                <div id="uploadResult"></div>
+                <div id="uploadResult">
+                </div>
             </div>
         </div>
         <br>
+
 
 
         <h3>주소</h3>
@@ -166,7 +168,7 @@
         </div>
 
         <h3>시간당 가격</h3>
-        <input type="text" name="hourly_cost" id="cost" value="${postDto.main_content}" onkeyup="commas(this)"/>
+        <input type="text" name="hourly_cost" id="cost" value="${postDto.hourly_cost}" onkeyup="commas(this)"/>
 
         <%--
         <h3>운영시간</h3>
@@ -181,6 +183,29 @@
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+    function deleteFile(filePath,fileFullName){
+
+        //let targetFile=$(".imgDeleteBtn").data("file");
+        let fileCallPath =filePath+"/"+fileFullName;
+        let div_id = "result_card"+"_"+fileFullName;
+
+        let targetDiv = document.getElementById(div_id);//이미지를 감싸고 있는 태그
+
+        $.ajax({
+            url:'/deleteFile',
+            data:{fileName:fileCallPath},
+            dataType:'text',
+            type:'POST',
+            success:function(result){
+                targetDiv.remove();
+                $("input[type='file']").val("");
+            },
+            error : function (result){
+                console.log(result);
+                alert("파일을 삭제하지 못하였습니다.")
+            }
+        });
+    }//개인정보 영향평가 전문교육
 
     /* 이미지 업로드 */
     $("input[type='file']").on("change",function(e){
@@ -227,7 +252,7 @@
     /*이미지 출력*/
     function showUploadImage(uploadResultArr){
         //데이터 검증
-        if(!uploadResultArr || uploadResultArr.length==0) return
+        if(!uploadResultArr || uploadResultArr.length==0) return;
 
         let uploadResult = $("#uploadResult");
 
@@ -235,26 +260,33 @@
 
             let obj=uploadResultArr[i];
             let str="";
-            let fileCallPath =obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName;
+            let fileFullName =obj.uuid+"_"+obj.fileName;
 
+
+            str+="<div id='result_card"+"_"+fileFullName+"'>";
             str+="<div id='result_card'>";
             str+="<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+"'>";
-            str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
+            //str+="<div class='imgDeleteBtn' onclick='deleteFile("+fileCallPath+")'>X</div>";
+            //str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
+            //str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick='deleteFile();' data-file='"+fileCallPath+"'>X</a>";
+            str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick=\"deleteFile(\'"+obj.uploadPath+"\',\'"+fileFullName+"\');\">X</a>";
+
             str += "<input type='hidden' name='imageList["+i+"].fileName' value='"+ obj.fileName +"'>";
             str += "<input type='hidden' name='imageList["+i+"].uuid' value='"+ obj.uuid +"'>";
             str += "<input type='hidden' name='imageList["+i+"].uploadPath' value='"+ obj.uploadPath +"'>";
+            str+="</div>";
             str+="</div>";
 
             uploadResult.append(str);
         }
         //이미지 삭제 버튼 동작
-        $("#uploadResult").on("click",".imgDeleteBtn",function(e){
+    /*    $("#uploadResult").on("click",".imgDeleteBtn",function(e){
             deleteFile();
-        });
+        });*/
 
-        //파일 삭제 메서드
+        /*//파일 삭제 메서드
         function deleteFile(){
-            let targetFile=$(".imgDeleteBtn").data("file");//"file":썸네일 경로 데이터
+            let targetFile=$(".imgDeleteBtn").data("file");
             let targetDiv = $("#result_card");//이미지를 감싸고 있는 태그
             $.ajax({
                 url:'/deleteFile',
@@ -271,7 +303,9 @@
                     alert("파일을 삭제하지 못하였습니다.")
                 }
             });
-        }
+        }*/
+        //파일 삭제 메서드
+
 
 
 

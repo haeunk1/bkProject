@@ -266,6 +266,10 @@
         }
         str+="</tbody>";
         str+="</table>";
+
+        if($("#costDiv").length>0){
+            $("#costDiv").remove();
+        }
         calendar.html(str);
 
     }
@@ -452,6 +456,7 @@
         let tmp="${postDto.hourly_cost}";
         let hourly_cost=parseInt(tmp.replaceAll(',',''));
         if(cnt!=0) {
+            str+="<div id='costDiv'>";
             str += cnt + "시간 선택";
             str += "<br>";
             str += "비용 : 총";
@@ -461,6 +466,7 @@
             str +="<button type='button' id='payBtn' onclick=\"payBtnClick(\'"+str1+"',"+hourly_cost*cnt+","+year+","+month+","+day+")\">";
             str +="결제하기";
             str +="</button>";
+            str+="</div>";
             cost_area.html(str);
         }else{
             cost_area.html(str);
