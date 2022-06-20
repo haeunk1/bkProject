@@ -9,6 +9,7 @@
         <typeAlias alias="AttachImageDto" type="com.bkProject.p1.domain.AttachImageDto"/>
         <typeAlias alias="ScheduleDto" type="com.bkProject.p1.domain.ScheduleDto"/>
         <typeAlias alias="SearchCondition" type="com.bkProject.p1.domain.SearchCondition"/>
+        <typeAlias alias="CommentDto" type="com.bkProject.p1.domain.CommentDto"/>
 <!--        <typeAlias alias="SearchCondition" type="com.bkProject.p1.domain.SearchCondition"/>-->
 
     </typeAliases>

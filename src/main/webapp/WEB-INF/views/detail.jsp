@@ -37,7 +37,7 @@
 
         }
 
-        .parent{
+        /*.parent{
             border-radius: 15px;
             background-color: white;
             width: 100%;
@@ -45,11 +45,31 @@
             display:grid;
             grid-template-columns:18fr 0.1fr 12fr;
             margin-top:10px;
-/*            margin-bottom: 10px;*/
+!*            margin-bottom: 10px;*!
 
         }
         .child{
             flex:1;
+        }*/
+        .parent{
+            border-radius: 15px;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            display:flex;
+            grid-template-columns:18fr 0.1fr 12fr;
+            margin-top:10px;
+            /*            margin-bottom: 10px;*/
+
+        }
+        .child1{
+            flex:6;
+        }
+        .child2{
+            flex:3.8;
+        }
+        .blank{
+            flex:0.2;
         }
         #calendar_area{
             background-color:beige;
@@ -77,6 +97,104 @@
         }
         #upload_time>table{
             border:1px solid #444444;
+        }
+        #commentWrapper{
+            width : 100%;
+            height : 120px;
+            border:1px solid gray;
+            margin : 10px;
+            display:flex;
+        }
+        #userImg{
+            flex:1;
+            position:relative;
+            text-align:center;
+            line-height:150px;
+        }
+        #commentWrapper2{
+            flex:5;
+        }
+        #cTop{
+            height: 20%;
+            display:flex;
+        }
+        #userId{
+            flex:1;
+        }
+        #star{
+            flex:1;
+        }
+
+        #cMiddle{
+            height: 60%;
+        }
+        #cBottom{
+            height: 20%;
+            display:flex;
+
+        }
+        #date{
+            flex:9;
+        }
+        #btn{
+            flex:2;
+            padding-bottom: 10px;
+        }
+        #commentInput{
+            height: auto;
+            width:100%;
+        }
+        #iTop{
+            height: 20px;
+        }
+        #iMiddle{
+            height: 180px;
+        }
+        #iBottom{
+            height:20px;
+            float:right;
+            padding-right : 10px;
+            padding-bottom: 10px;
+        }
+/*        input[type=text]{
+            width:100%;
+            height:auto;
+        }*/
+
+        #myform fieldset{
+            display: inline-block;
+            direction: rtl;
+            border:0;
+        }
+        #myform fieldset legend{
+            text-align: right;
+        }
+        #myform input[type=radio]{
+            display: none;
+        }
+        #myform label{
+            font-size: 3em;
+            color: transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+        #myform label:hover{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #myform label:hover ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #myform input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewContents{
+            width: 100%;
+            height: 110px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: solid 1.5px #D3D3D3;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
         }
 
     </style>
@@ -131,7 +249,7 @@
         <div class="content_area">
             <div class="space_list">
                     <div class="parent">
-                        <div class="child">
+                        <div class="child1">
                             <div id="uploadResult">
                             </div>
                             <div class="text_area">
@@ -142,12 +260,51 @@
                                 <h3><i class="fa-solid fa-location-dot"></i> 위치</h3>
                                 <h4>${postDto.area_info}</h4>
                                 <br>
-                                <h3><i class="fa-solid fa-comments"></i> 댓글</h3>
-                                <h4>댓글리스트 나중에 출력</h4>
+                                <h3><i class="fa-solid fa-comments"></i> 리뷰 </h3>
+
+                                <hr>
+                                <div id="commentList"></div>
+
+                                <hr>
+                                <div id="commentInput">
+
+                                    <div id="iTop">
+                                        <c:if test="${memberDto.id==null}">
+                                            로그인이 필요합니다.
+                                        </c:if>
+                                        <c:if test="${memberDto.id!=null}">
+                                            ${memberDto.name}
+                                        </c:if>
+                                    </div>
+                                    <div id="iMiddle">
+                                        <form class="mb-3" name="myform" id="myform" method="post">
+                                            <fieldset>
+                                                <span class="text-bold">별점을 선택해주세요</span>
+                                                <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                                                    for="rate1">★</label>
+                                                <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                                                    for="rate2">★</label>
+                                                <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                                                    for="rate3">★</label>
+                                                <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                                                    for="rate4">★</label>
+                                                <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                                                    for="rate5">★</label>
+                                            </fieldset>
+                                            <div>
+                                                <textarea name="reviewContents" type="text" id="reviewContents"<%--class="col-auto form-control"--%>
+                                                          placeholder="리뷰를 작성해주세요."></textarea>
+                                            </div>
+                                        </form>
+                                        <%--<input type="text"placeholder="리뷰를 작성해주세요." name="comment"><br>--%>
+                                    </div>
+                                    <div id="iBottom">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="blank"></div>
-                        <div class="child" id ="calendar_area" >
+                        <div class="child2" id ="calendar_area" >
                             <div class="book_area">
                                 <div id="upload_calendar"></div>
                                 <div id="upload_time"></div>
@@ -161,6 +318,238 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+
+    function toHtml(comments){
+        let id = '${memberDto.id}';
+
+        let commentList = $("#commentList");
+        if(!comments || comments.length==0){
+            let tmp ="<br><h3>댓글이 없습니다</h3><br>";
+            commentList.html(tmp);
+            return;
+        }
+        let tmp="";
+        for(let i=0;i<comments.length;i++){
+            let obj = comments[i];
+            tmp+="<div id='commentWrapper'>";
+            tmp +="<div id='userImg'> <i class='fa-solid fa-circle-user fa-5x'></i></div>";
+            tmp +="<div id='commentWrapper2'>";
+            //tmp +="<div id='cTop'>"+obj.commenter+"</div>";
+            tmp +="<div id='cTop'>"
+            tmp +="<div id='userId'>"+obj.commenter+"</div>";
+            tmp +="<div id='star'>";
+            let s="";
+            for(let j=0;j<obj.starScore;j++){
+                s+="★";
+            }
+            tmp +=s;
+            tmp +="</div>";//star
+            tmp+="</div>";//cTop
+            tmp +="<div id='cMiddle'><span id='comment'>"+obj.comment+"</span></div>";
+            tmp +="<div id='cBottom'>";
+            tmp +="<div id='date'>"+obj.up_date+"</div>";
+            tmp +="<div id='btn'>";
+
+            if(id!='' && id==obj.commenter){
+                tmp +="<input type='hidden' id=input"+obj.cno+" value='"+obj.comment+"'>"
+                tmp += "<button class='delBtn' value="+obj.cno+">삭제</button>";
+                tmp += "<button class='modBtn' value="+obj.cno+">수정</button>";
+            }
+            tmp +="</div></div></div></div>";
+        }
+        commentList.html(tmp);
+    }
+
+
+    function showList(pno){
+        $.ajax({
+            type:'GET',       // 요청 메서드
+            url: '/comments?pno='+pno,  // 요청 URI
+            dataType:'json',
+            success : function(result){
+                console.log("전달 성공");
+                toHtml(result);
+            },
+            error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+        });
+    }
+
+    $(document).ready(function(){
+        let id = '${memberDto.id}';
+        let pno=${postDto.pno};
+        //댓글 띄우기
+        showList(pno);
+        let iBottom = $("#iBottom");
+        let str = "<button id='insert'>입력</button>";
+        iBottom.html(str);
+
+        $(document).on("click", "button[id='modBtn2']", function() {
+            if(!$('input[name=reviewStar]').is(':checked')){
+                alert("별점을 체크해주세요.");
+                return false;
+            }
+
+            let comment = $('#reviewContents').val();
+            let cno=$(this).attr("value");
+
+            if ($('#reviewContents').val() == "") {
+                alert("리뷰를 작성해주세요.");
+                $('#reviewContents').focus();
+                return false;
+            }
+
+            $.ajax({
+                type:'PATCH',       // 요청 메서드
+                url: '/comments/'+cno,  // 요청 URI(/ch4/comments?bno=1085  POST)
+                headers : { "content-type": "application/json"}, // 요청 헤더
+                data : JSON.stringify({cno:cno,comment:comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                success : function(result){
+                    alert(result);
+                    let iBottom = $("#iBottom");
+                    let str = "<button id='insert'>입력</button>";
+                    iBottom.html(str);
+                    $("textarea[name=reviewContents]").val("");//수정완료하면 택스트 공백만들기
+
+                    showList(pno);
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        });
+
+
+
+
+        $("#commentList").on("click",".modBtn",function(){
+            let cno=$(this).attr("value");
+
+            let inputid="input"+cno;
+            let comment = document.getElementById(inputid).value;
+
+            //1. comment의 내용을 input에 뿌려주기
+            $("textarea[name=reviewContents]").val(comment);
+
+            //2. 수정버튼 추가하기, cno전달
+            let iBottom = $("#iBottom");
+            let str = "<button id='modBtn2' value="+cno+">수정 확인</button>";
+            iBottom.html(str);
+
+        });
+
+        //댓글삭제하기
+        $("#commentList").on("click",".delBtn",function(){
+
+            let cno=$(this).attr("value");
+
+            $.ajax({
+                type:'DELETE',       // 요청 메서드
+                url: '/comments/'+cno+'?pno='+pno,  // 요청 URI
+                success : function(result){
+                    alert(result)
+                    showList(pno);
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            });
+        });
+
+        //댓글 작성하기
+        $("#insertBtn").click(function(){
+            if(id==''){
+                alert("로그인이 필요합니다.");
+                return;
+            }
+
+            //let form = document.getElementById("form");
+
+            if ($('#reviewContents').val() == "") {
+                alert("리뷰를 작성해주세요.");
+                $('#reviewContents').focus();
+                return false;
+            }
+            if(!$('input[name=reviewStar]').is(':checked')){
+                alert("별점을 체크해주세요.");
+                return false;
+            }
+            let starScore=$('input[name=reviewStar]:checked').val();
+            let comment = $('#reviewContents').val();
+            $.ajax({
+                type:'POST',       // 요청 메서드
+                url: '/comments?pno='+pno,
+                headers : { "content-type": "application/json"}, // 요청 헤더
+                data : JSON.stringify({pno:pno,comment:comment,starScore:starScore}),
+                //data : JSON.stringify({pno:pno,comment:comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                success : function(result){
+                    alert(result);
+                    showList(pno);
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        });
+
+
+
+
+
+/////////////////댓글
+
+
+
+
+
+        if(id!=''){
+            //좋아요 여부에 따라 checked=true
+            $.ajax({
+                url:'/likeCheck',
+                type:'POST',
+                data:{pno:pno, id:id},
+                dataType:'json',
+                success:function(result){
+                    console.log("result="+result);
+                    if(result==1){
+                        $("input:checkbox[id='likeCheck']").prop("checked",true);
+                    }else if(result==0){
+                        $("input:checkbox[id='likeCheck']").prop("checked",false);
+                    }
+                }
+            })
+        }
+
+
+        let month= ${ch.month};
+        let year=${ch.year};
+        callCalendar(year, month,-1);
+
+
+        ///***이미지 띄우기***
+        /*let pno = '<c:out value="${postDto.pno}"/>';*/
+        let uploadResult=$("#uploadResult");
+        //let pno=${postDto.pno};
+        $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
+            if(arr.length===0){
+                let str="";
+                str+="<div id='result_card'>";
+                str+="<img src='/resources/img/noImg.png'>";
+                str+="</div>";
+                uploadResult.html(str);
+                return;
+            }
+
+            for(let i=0;i<arr.length;i++){
+                let str="";
+                let obj=arr[i];//서버로부터 전달받은 이미지 정보 객체 값
+                let fileCallPath =obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName;
+                //let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
+                str += "<div id='result_card'";
+                str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
+                str +=">";
+                str += "<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+ "'>";
+                str += "</div>";
+
+                uploadResult.append(str);
+
+            }
+        });
+    });
+
 
 
     //'월'에 따른 '일'배열을 가져옴
@@ -275,63 +664,7 @@
     }
 
 
-    $(document).ready(function(){
-        let id = '${memberDto.id}';
-        let pno=${postDto.pno};
-        if(id!=''){
-            //좋아요 여부에 따라 checked=true
-            $.ajax({
-                url:'/likeCheck',
-                type:'POST',
-                data:{pno:pno, id:id},
-                dataType:'json',
-                success:function(result){
-                    console.log("result="+result);
-                    if(result==1){
-                        $("input:checkbox[id='likeCheck']").prop("checked",true);
-                    }else if(result==0){
-                        $("input:checkbox[id='likeCheck']").prop("checked",false);
-                    }
-                }
-            })
-        }
 
-
-        let month= ${ch.month};
-        let year=${ch.year};
-        callCalendar(year, month,-1);
-
-
-        ///***이미지 띄우기***
-        /*let pno = '<c:out value="${postDto.pno}"/>';*/
-        let uploadResult=$("#uploadResult");
-        //let pno=${postDto.pno};
-        $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
-            if(arr.length===0){
-                let str="";
-                str+="<div id='result_card'>";
-                str+="<img src='/resources/img/noImg.png'>";
-                str+="</div>";
-                uploadResult.html(str);
-                return;
-            }
-
-            for(let i=0;i<arr.length;i++){
-                let str="";
-                let obj=arr[i];//서버로부터 전달받은 이미지 정보 객체 값
-                let fileCallPath =obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName;
-                //let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
-                str += "<div id='result_card'";
-                str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
-                str +=">";
-                str += "<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+ "'>";
-                str += "</div>";
-
-                uploadResult.append(str);
-
-            }
-        });
-    });
 
     function likeCheck(){
         const checkbox=document.getElementById('likeCheck');

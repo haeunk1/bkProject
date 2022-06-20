@@ -123,19 +123,19 @@
         <h3>카테고리</h3>
         <div class="category_area">
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="파티">파티</label>
-                <label><input type="checkbox" name="category" value="데이트">데이트</label>
-                <label><input type="checkbox" name="category" value="역근처">역근처</label>
+                <label><input type="checkbox" name="category" id="파티" value="파티">파티</label>
+                <label><input type="checkbox" name="category" id="데이트" value="데이트">데이트</label>
+                <label><input type="checkbox" name="category" id="역근처" value="역근처">역근처</label>
             </div>
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="스튜디오">스튜디오</label>
-                <label><input type="checkbox" name="category" value="바베큐">바베큐</label>
-                <label><input type="checkbox" name="category" value="singing_room">노래방</label>
+                <label><input type="checkbox" name="category" id="스튜디오" value="스튜디오">스튜디오</label>
+                <label><input type="checkbox" name="category" id="바베큐" value="바베큐">바베큐</label>
+                <label><input type="checkbox" name="category" id="노래방" value="노래방">노래방</label>
             </div>
             <div class="temp-box">
-                <label><input type="checkbox" name="category" value="브라이덜샤워">브라이덜샤워</label>
-                <label><input type="checkbox" name="category" value="보드게임">보드게임</label>
-                <label><input type="checkbox" name="category" value="영화">영화</label>
+                <label><input type="checkbox" name="category" id="브라이덜샤워" value="브라이덜샤워">브라이덜샤워</label>
+                <label><input type="checkbox" name="category" id="보드게임" value="보드게임">보드게임</label>
+                <label><input type="checkbox" name="category" id="영화" value="영화">영화</label>
             </div>
         </div>
         <br>
@@ -170,14 +170,6 @@
         <h3>시간당 가격</h3>
         <input type="text" name="hourly_cost" id="cost" value="${postDto.hourly_cost}" onkeyup="commas(this)"/>
 
-        <%--
-        <h3>운영시간</h3>
-        시작시간<input type="time" id="s_time" min="08:00:00" max="24:00:00">
-        <input type="hidden" id="stime" name="start_time" >
-        끝나는시간<input type="time" id="e_time" min="08:00:00" max="24:00:00">
-        <input type="hidden" id="etime" name="end_time" >
-        --%>
-
         <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
     </form>
 </div>
@@ -205,7 +197,7 @@
                 alert("파일을 삭제하지 못하였습니다.")
             }
         });
-    }//개인정보 영향평가 전문교육
+    }
 
     /* 이미지 업로드 */
     $("input[type='file']").on("change",function(e){
@@ -315,6 +307,12 @@
 
 
     $(document).ready(function(){
+        let strArr = "${postDto.category}";
+        let arr=strArr.split(',');
+        for(let i=0;i<arr.length;i++){
+            let id = document.getElementById(arr[i]);
+            id.checked=true;
+        }
 
         $("#writeBtn").on("click", function(){
             // $('#stime').val($('#s_time').val());
