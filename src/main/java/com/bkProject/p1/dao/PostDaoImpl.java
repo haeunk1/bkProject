@@ -21,6 +21,9 @@ public class PostDaoImpl implements PostDao {
     public int insert(PostDto postDto) throws Exception{
         return session.insert(namespace+"insert",postDto);
     }
+    public int update(PostDto postDto) throws Exception{
+        return session.update(namespace+"update",postDto);
+    }
 
     public int deleteAll() throws Exception{
         return session.delete(namespace+"deleteAll");

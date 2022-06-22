@@ -78,6 +78,7 @@
             padding-left:10px;
             padding-right: 10px;
             padding-top:10px;
+            height:500px;
         }
         #result_card img{
             width: 70%;
@@ -109,17 +110,18 @@
             flex:1;
             position:relative;
             text-align:center;
-            line-height:150px;
+            line-height:165px;
         }
         #commentWrapper2{
             flex:5;
         }
         #cTop{
+            border-bottom:solid 1px gray;
             height: 20%;
             display:flex;
         }
         #userId{
-            flex:1;
+            flex:4.5;
         }
         #star{
             flex:1;
@@ -255,10 +257,16 @@
                             <div class="text_area">
                                 <br>
                                 <h2>상세설명</h2>
+                                <hr>
+                                <br>
                                 <h3>${postDto.detail_content}</h3>
                                 <br>
                                 <h3><i class="fa-solid fa-location-dot"></i> 위치</h3>
-                                <h4>${postDto.area_info}</h4>
+                                <hr>
+                                <br>
+                                <h4>${postDto.area_info}</h4><br>
+                                <div id="map" style="width:100%;height:350px;"></div>
+
                                 <br>
                                 <h3><i class="fa-solid fa-comments"></i> 리뷰 </h3>
 
@@ -273,7 +281,7 @@
                                             로그인이 필요합니다.
                                         </c:if>
                                         <c:if test="${memberDto.id!=null}">
-                                            ${memberDto.name}
+                                            <h4>${memberDto.name}</h4>
                                         </c:if>
                                     </div>
                                     <div id="iMiddle">
@@ -317,7 +325,54 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=890933eee4cefb5cd4a841205758a755&libraries=services"></script>
+
+
+
 <script>
+    function kakaoMap(area_info,detail_area){
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(area_info, function(result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    //content: '<div style="width:150px;text-align:center;padding:6px 0;">상세주소</div>'
+                    content: "<div style='width:150px;text-align:center;padding:6px 0;'>"+detail_area+"</div>"
+                });
+                infowindow.open(map, marker);
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+    }
+
+
+
 
     function toHtml(comments){
         let id = '${memberDto.id}';
@@ -339,8 +394,12 @@
             tmp +="<div id='userId'>"+obj.commenter+"</div>";
             tmp +="<div id='star'>";
             let s="";
+            let c=5-obj.starScore;
             for(let j=0;j<obj.starScore;j++){
                 s+="★";
+            }
+            for(let j=0;j<c;j++){
+                s+="☆";
             }
             tmp +=s;
             tmp +="</div>";//star
@@ -377,10 +436,16 @@
     $(document).ready(function(){
         let id = '${memberDto.id}';
         let pno=${postDto.pno};
+
+        //지도 띄우기
+        let area_info="${postDto.area_info}";
+        let detail_area="${postDto.detail_area}";
+        kakaoMap(area_info,detail_area);
+
         //댓글 띄우기
         showList(pno);
         let iBottom = $("#iBottom");
-        let str = "<button id='insert'>입력</button>";
+        let str = "<button id='insertBtn'>입력</button>";
         iBottom.html(str);
 
         $(document).on("click", "button[id='modBtn2']", function() {
@@ -406,7 +471,7 @@
                 success : function(result){
                     alert(result);
                     let iBottom = $("#iBottom");
-                    let str = "<button id='insert'>입력</button>";
+                    let str = "<button id='insertBtn'>입력</button>";
                     iBottom.html(str);
                     $("textarea[name=reviewContents]").val("");//수정완료하면 택스트 공백만들기
 

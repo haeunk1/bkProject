@@ -112,6 +112,7 @@
             padding: 5px;
             margin-top: 10px;
             margin: auto;
+            background-position:center;
         }
 
 
@@ -238,62 +239,6 @@
     </div>
     <script>
 
-/*        $(document).ready(function(){
-            let list=${pnoList};
-
-
-            for(let i=0;i<list.length;i++){
-                let tmp="#id"+String(list[i]);
-                let imgArea = $(tmp);
-                let str=""
-                let pno=list[i];
-
-                $.ajax({
-                    url:'/getImgInfo',
-                    data:{pno:pno},
-                    dataType:'text',
-                    type:'POST',
-                    success:function(result){
-                        let fileCallPath = encodeURIComponent(result.uploadPath+"/s_"+result.uuid+"_"+result.fileName);
-                        str+="<img src='/display?fileName="+fileCallPath+"'>";
-                    }
-                });
-
-
-                imgArea.html(str);
-
-            }
-        });*/
-
-        //메인화면 이미지 띄우기(보류)
-        /*$(document).ready(function(){
-            let pno='<c:out value="${postDto.pno}"/>';
-        console.log(pno);
-        let uploadResult=$("#uploadResult");
-        $.getJSON("/getImageList",{pno:pno},function(arr){ //1.url매핑 메서드 요청 2.객체초기자(pno전달) 3.성공적으로 서버로부터 이미 정보를 전달받았을 때 실행할 콜백 함수
-            if(arr.length===0){
-                let str="";
-                str+="<div id='result_card'>";
-                str+="<img src='/resources/img/noImg.png'>";
-                str+="</div>";
-                uploadResult.html(str);
-                return;
-            }
-
-            let str="";
-            let obj=arr[0];//서버로부터 전달받은 이미지 정보 객체 값
-
-            let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+obj.uuid + "_" + obj.fileName);
-            str += "<div id='result_card'";
-            str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
-            str +=">";
-            str += "<img scr='/display?fileName=" + fileCallPath + "'>";
-            str += "/>";
-
-            uploadResult.html(str);
-        });
-
-    });*/
     </script>
 </div>
 </body>

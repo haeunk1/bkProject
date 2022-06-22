@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -31,11 +33,23 @@ import java.util.UUID;
 @Controller
 public class PostImageController {//관리자만 사용 가능한 영역
     private int port = 21;
-    private final String user = "haeunkim";
-    private final String pw = "8398";
-    private final String server = "192.168.10.68";
+    private final String user = "asdf3";
+    private final String pw = "1234";
+    private final String server = "172.30.1.26";
     @Autowired
     PostService postService;
+    //@PostMapping("/modImgTest")
+    @RequestMapping(value="/modImgTest", method={RequestMethod.GET,RequestMethod.POST})
+    public ResponseEntity<List<AttachImageDto>> ttt(Integer pno) {
+        List<AttachImageDto> list=null;
+        try {
+            list = postService.getImageList(pno);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     @PostMapping("/deleteFile")
     public ResponseEntity<String> deleteFile(String fileName){//Http Body에 String 데이터를 추가

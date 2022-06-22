@@ -14,10 +14,14 @@ import java.util.Map;
 public class PostServiceImpl implements PostService {
     @Autowired
     PostDao postDao;
-
+    @Override
     public int post(PostDto postDto) throws Exception{
         return postDao.insert(postDto);
     }
+    public int update(PostDto postDto) throws Exception{
+        return postDao.update(postDto);
+    }
+
 
     public int reset() throws Exception{
         return postDao.deleteAll();

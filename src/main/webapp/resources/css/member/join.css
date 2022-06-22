@@ -1,6 +1,6 @@
 form {
     width:400px;
-    height:600px;
+    height:700px;
     display : flex;
     flex-direction: column;
     align-items:center;
@@ -69,8 +69,9 @@ button {
     display:none;
 }
 .join_button_wrap{
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: center;
+    margin-bottom: 20px;
 }
 .join_button{
     width: 100%;

@@ -9,6 +9,7 @@ public class PostDto {
     private String main_content;
     private String detail_content;
     private String area_info;
+    private String detail_area;
     private String hourly_cost;
     private String category;
 
@@ -39,6 +40,13 @@ public class PostDto {
 
     }
 
+    public String getDetail_area() {
+        return detail_area;
+    }
+
+    public void setDetail_area(String detail_area) {
+        this.detail_area = detail_area;
+    }
 
     @Override
     public String toString() {
@@ -48,6 +56,7 @@ public class PostDto {
                 ", main_content='" + main_content + '\'' +
                 ", detail_content='" + detail_content + '\'' +
                 ", area_info='" + area_info + '\'' +
+                ", detail_area='" + detail_area + '\'' +
                 ", hourly_cost='" + hourly_cost + '\'' +
                 ", category='" + category + '\'' +
                 ", writer='" + writer + '\'' +
@@ -55,6 +64,7 @@ public class PostDto {
                 ", view_cnt=" + view_cnt +
                 ", comment_cnt=" + comment_cnt +
                 ", imageList=" + imageList +
+                ", imgOne=" + imgOne +
                 '}';
     }
 

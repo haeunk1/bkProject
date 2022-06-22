@@ -111,13 +111,13 @@
 <div class="container">
     <h2 class="writing-header">POST 작성</h2>
     <form id="form" class="frm" action="" method="post">
-
+        <%--<input type="hidden" name="pno" id="pno">--%>
         <h3>제목</h3>
-        <input name="title" type="text" placeholder="제목을 입력해 주세요." value="${postDto.title}"><br>
+        <input name="title" type="text" placeholder="제목을 입력해 주세요."><br>
         <h3>간단한 설명</h3>
-        <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요." value="${postDto.main_content}"><br>
+        <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요." ><br>
         <h3>상세한 설명</h3>
-        <textarea name="detail_content" rows="20" placeholder=" 내용을 입력해 주세요.">${postDto.detail_content}</textarea><br>
+        <textarea name="detail_content" rows="20" placeholder=" 내용을 입력해 주세요."></textarea><br>
 
 
         <h3>카테고리</h3>
@@ -161,20 +161,41 @@
                 <input class="address_input_1" id="address1" placeholder="우편주소" readonly>
                 <input class="address_button" type="button" value="우편번호 찾기" onClick="execution_daum_address()">
             </div>
-            <input class="address_input_2" id="address2" placeholder="주소" readonly>
+            <input class="address_input_2" id="address2" placeholder="주소"  readonly ><%----%>
 
-            <input class="address_input_3" type="text" id="address3" placeholder="상세주소" readonly>
-            <input type="hidden" id="address" name="area_info" >
+            <input class="address_input_3" type="text" id="address3" placeholder="상세주소"  readonly>
+            <input type="hidden" id="area_info" name="area_info" >
+            <input type="hidden" id="detail_area" name="detail_area" >
         </div>
 
         <h3>시간당 가격</h3>
-        <input type="text" name="hourly_cost" id="cost" value="${postDto.hourly_cost}" onkeyup="commas(this)"/>
+        <input type="text" name="hourly_cost" id="cost"  onkeyup="commas(this)"/>
 
-        <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
+        <button type="button" id="writeBtn"><i class="fa fa-pencil"></i>등록</button>
     </form>
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+    $(document).ready(function(){
+
+        $("#writeBtn").on("click", function(){
+            $('#area_info').val($('#address2').val());
+            $('#detail_area').val($('#address3').val());
+
+            if(!formCheck()){return false;}
+
+            let form = $("#form");
+            form.attr("action", "<c:url value='/post/write'/>");
+            form.attr("method", "post");
+            /*if(formCheck())
+                form.submit();*/
+            form.submit();
+        });
+    });
+
+
+    //이미지 삭제
     function deleteFile(filePath,fileFullName){
 
         //let targetFile=$(".imgDeleteBtn").data("file");
@@ -234,8 +255,8 @@
                 showUploadImage(result);
             },
             error : function(result){
-                console.log(result)
-                alert("이미지 파일이 아닙니다.")
+                console.log(result);
+                alert("이미지 파일이 아닙니다.");
             }
         });
 
@@ -258,9 +279,6 @@
             str+="<div id='result_card"+"_"+fileFullName+"'>";
             str+="<div id='result_card'>";
             str+="<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+"'>";
-            //str+="<div class='imgDeleteBtn' onclick='deleteFile("+fileCallPath+")'>X</div>";
-            //str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
-            //str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick='deleteFile();' data-file='"+fileCallPath+"'>X</a>";
             str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick=\"deleteFile(\'"+obj.uploadPath+"\',\'"+fileFullName+"\');\">X</a>";
 
             str += "<input type='hidden' name='imageList["+i+"].fileName' value='"+ obj.fileName +"'>";
@@ -271,64 +289,10 @@
 
             uploadResult.append(str);
         }
-        //이미지 삭제 버튼 동작
-    /*    $("#uploadResult").on("click",".imgDeleteBtn",function(e){
-            deleteFile();
-        });*/
-
-        /*//파일 삭제 메서드
-        function deleteFile(){
-            let targetFile=$(".imgDeleteBtn").data("file");
-            let targetDiv = $("#result_card");//이미지를 감싸고 있는 태그
-            $.ajax({
-                url:'/deleteFile',
-                data:{fileName:targetFile},
-                dataType:'text',
-                type:'POST',
-                success:function(result){
-                    console.log(result);
-                    targetDiv.remove();
-                    $("input[type='file']").val("");
-                },
-                error : function (result){
-                    console.log(result);
-                    alert("파일을 삭제하지 못하였습니다.")
-                }
-            });
-        }*/
-        //파일 삭제 메서드
-
-
-
-
-
-
     }
 
 
-    $(document).ready(function(){
-        let strArr = "${postDto.category}";
-        let arr=strArr.split(',');
-        for(let i=0;i<arr.length;i++){
-            let id = document.getElementById(arr[i]);
-            id.checked=true;
-        }
 
-        $("#writeBtn").on("click", function(){
-            // $('#stime').val($('#s_time').val());
-            // $('#etime').val($('#e_time').val());
-            $('#address').val($('#address2').val()+" "+$('#address3').val());
-
-            if(!formCheck()){return false;}
-
-            let form = $("#form");
-            form.attr("action", "<c:url value='/post/write'/>");
-            form.attr("method", "post");
-            /*if(formCheck())
-                form.submit();*/
-            form.submit();
-        });
-    });
 
     function formCheck() {
         let form = document.getElementById("form");

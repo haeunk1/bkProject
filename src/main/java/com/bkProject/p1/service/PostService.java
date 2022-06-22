@@ -11,6 +11,7 @@ import java.util.Map;
 public interface PostService {
 
     int post(PostDto postDto) throws Exception;
+    int update(PostDto postDto) throws Exception;
 
     int reset() throws Exception;
 

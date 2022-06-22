@@ -229,16 +229,20 @@
     function toggle1(){
         // 토글 할 버튼 선택 (btn1)
         const email = document.getElementById('email');
+        let formCss=document.getElementById('join_form');
+
 
         // 보이기
         if(email.style.display !== 'block') {
             email.style.display = 'block';
             emaillabel.style.display = 'block';
+            formCss.style.height=800+"px";
         }
         // 숨기기
         else {
             email.style.display = 'none';
             emaillabel.style.display = 'none';
+            formCss.style.height=700+"px";
         }
     }
 

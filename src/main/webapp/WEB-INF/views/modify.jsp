@@ -107,13 +107,14 @@
 <script>
     let msg = "${param.msg}";
     if(msg=="postERR") alert("게시글 등록이 실패되었습니다.");
+    if(msg=="modifyOK") alert("수정이 완료되었습니다");
 </script>
 <div class="container">
     <h2 class="writing-header">POST 작성</h2>
     <form id="form" class="frm" action="" method="post">
-
+        <input type="hidden" name="pno" id="pno" value="${postDto.pno}">
         <h3>제목</h3>
-        <input name="title" type="text" placeholder="제목을 입력해 주세요." value="${postDto.title}"><br>
+        <input name="title" type="text" placeholder="제목을 입력해 주세요." value="<c:out value='${postDto.title}'/>"><br>
         <h3>간단한 설명</h3>
         <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요." value="${postDto.main_content}"><br>
         <h3>상세한 설명</h3>
@@ -161,20 +162,93 @@
                 <input class="address_input_1" id="address1" placeholder="우편주소" readonly>
                 <input class="address_button" type="button" value="우편번호 찾기" onClick="execution_daum_address()">
             </div>
-            <input class="address_input_2" id="address2" placeholder="주소" readonly>
+            <input class="address_input_2" id="address2" placeholder="주소"  value = "${postDto.area_info}" readonly ><%----%>
 
-            <input class="address_input_3" type="text" id="address3" placeholder="상세주소" readonly>
-            <input type="hidden" id="address" name="area_info" >
+            <input class="address_input_3" type="text" id="address3" placeholder="상세주소" value = "${postDto.detail_area}" readonly>
+            <input type="hidden" id="area_info" name="area_info" >
+            <input type="hidden" id="detail_area" name="detail_area" >
         </div>
 
         <h3>시간당 가격</h3>
         <input type="text" name="hourly_cost" id="cost" value="${postDto.hourly_cost}" onkeyup="commas(this)"/>
 
-        <button type="button" id="writeBtn" class="btn btn-write"><i class="fa fa-pencil"></i> 등록</button>
+
+        <button type="button" id="modifyBtn" ><i class="fa fa-pencil"></i>수정</button>
+
+
+
+
     </form>
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+    $(document).ready(function(){
+
+        ///////////////////////////////
+        let strArr = "${postDto.category}";
+        let arr=strArr.split(',');
+        //카테고리 체크
+        if(strArr!=''){
+            for(let i=0;i<arr.length;i++){
+                let id = document.getElementById(arr[i]);
+                id.checked=true;
+            }
+        }
+        //세부주소 입력란 활성화
+        let detail_area = "${postDto.detail_area}";
+        if(detail_area!=''){
+            document.getElementById("address3").readOnly = false;
+        }
+
+        let area_info="${postDto.area_info}";
+        if(area_info!=""){
+            $('#address2').val(area_info);
+        }
+////////////////////////////////////
+
+        //기존 이미지 띄우기
+        //let imgList = ${postDto.imageList};
+        //let JsonArray=JSON.stringify(${postDto.imageList});
+
+        //showUploadImage(JSON.stringify(${postDto.imageList}));
+
+/*
+        let pno = ${postDto.pno};
+        $.ajax({
+            type : 'POST',
+            url:'/modImgTest',
+            processData : false, //서버로 전송할 데이터를 queryString형태로 변환할지 여부
+            contentType : false, //서버로 전송되는 데이터의 content-type
+            data : {pno:pno}, //서버로 전송할 데이터
+            dataType : 'json',//전송받을 데이터 타입
+
+            success : function (result){
+                alert("과연?");
+                showUploadImage(result);
+            }
+        });
+
+*/
+
+        $("#modifyBtn").on("click", function(){
+            $('#area_info').val($('#address2').val());
+            $('#detail_area').val($('#address3').val());
+
+
+            if(!formCheck()){return false;}
+
+            let form = $("#form");
+            form.attr("action", "<c:url value='/post/modify'/>");
+            form.attr("method", "post");
+            /*if(formCheck())
+                form.submit();*/
+            form.submit();
+        });
+    });
+
+
+    //이미지 삭제
     function deleteFile(filePath,fileFullName){
 
         //let targetFile=$(".imgDeleteBtn").data("file");
@@ -234,8 +308,8 @@
                 showUploadImage(result);
             },
             error : function(result){
-                console.log(result)
-                alert("이미지 파일이 아닙니다.")
+                console.log(result);
+                alert("이미지 파일이 아닙니다.");
             }
         });
 
@@ -271,64 +345,10 @@
 
             uploadResult.append(str);
         }
-        //이미지 삭제 버튼 동작
-    /*    $("#uploadResult").on("click",".imgDeleteBtn",function(e){
-            deleteFile();
-        });*/
-
-        /*//파일 삭제 메서드
-        function deleteFile(){
-            let targetFile=$(".imgDeleteBtn").data("file");
-            let targetDiv = $("#result_card");//이미지를 감싸고 있는 태그
-            $.ajax({
-                url:'/deleteFile',
-                data:{fileName:targetFile},
-                dataType:'text',
-                type:'POST',
-                success:function(result){
-                    console.log(result);
-                    targetDiv.remove();
-                    $("input[type='file']").val("");
-                },
-                error : function (result){
-                    console.log(result);
-                    alert("파일을 삭제하지 못하였습니다.")
-                }
-            });
-        }*/
-        //파일 삭제 메서드
-
-
-
-
-
-
     }
 
 
-    $(document).ready(function(){
-        let strArr = "${postDto.category}";
-        let arr=strArr.split(',');
-        for(let i=0;i<arr.length;i++){
-            let id = document.getElementById(arr[i]);
-            id.checked=true;
-        }
 
-        $("#writeBtn").on("click", function(){
-            // $('#stime').val($('#s_time').val());
-            // $('#etime').val($('#e_time').val());
-            $('#address').val($('#address2').val()+" "+$('#address3').val());
-
-            if(!formCheck()){return false;}
-
-            let form = $("#form");
-            form.attr("action", "<c:url value='/post/write'/>");
-            form.attr("method", "post");
-            /*if(formCheck())
-                form.submit();*/
-            form.submit();
-        });
-    });
 
     function formCheck() {
         let form = document.getElementById("form");

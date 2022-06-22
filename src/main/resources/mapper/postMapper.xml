@@ -5,26 +5,37 @@
 
 <mapper namespace="com.bkProject.p1.dao.PostMapper">
 
-<!--  게시물 등록  -->
+    <!--  게시물 등록  -->
     <insert id="insert" parameterType="PostDto">
         <selectKey resultType="int" keyProperty="pno" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
 
-        insert into post(title, category, main_content, detail_content, hourly_cost, area_info, writer, like_cnt,view_cnt,comment_cnt)
-        values (#{title}, #{category}, #{main_content}, #{detail_content},  #{hourly_cost}, #{area_info}, #{writer},#{like_cnt},#{view_cnt}, #{comment_cnt});
+        insert into post(title, category, main_content, detail_content, hourly_cost, area_info,detail_area, writer, like_cnt,view_cnt,comment_cnt)
+        values (#{title}, #{category}, #{main_content}, #{detail_content},  #{hourly_cost}, #{area_info},#{detail_area}, #{writer},#{like_cnt},#{view_cnt}, #{comment_cnt});
     </insert>
-
+    <!--게시물 업데이트-->
+    <update id="update" parameterType="PostDto">
+        update post
+        set  title=#{title},
+             main_content=#{main_content},
+             detail_content=#{detail_content},
+             area_info=#{area_info},
+             detail_area=#{detail_area},
+             hourly_cost=#{hourly_cost},
+             category=#{category}
+        where pno=#{pno} and writer=#{writer};
+    </update>
     <!--  해당 페이지 찾기  -->
     <select id="selectPage" parameterType="map" resultType="PostDto">
-        select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
+        select pno,title, category,hourly_cost, area_info,detail_area, like_cnt, view_cnt
         from post
         ORDER BY pno DESC
         LIMIT #{offset},#{pageSize};
     </select>
     <!--  검색조건 페이지 찾기  -->
     <select id="searchSelectPage" parameterType="SearchCondition" resultType="PostDto">
-        select pno,title, category,hourly_cost, area_info, like_cnt, view_cnt
+        select pno,title, category,hourly_cost, area_info, detail_area,like_cnt, view_cnt
         from post
         where true
         <include refid="searchCondition"/>
@@ -52,6 +63,7 @@
             </when>
             <when test='option=="location"'>
                 and area_info like concat('%',#{keyword},'%')
+ /*               or detail_area like concat('%',#{keyword},'%')*/
             </when>
             <when test='option=="category"'>
                 and category like concat('%',#{keyword},'%')
@@ -112,6 +124,9 @@
     <insert id="imgInsert">
         insert into post_img(pno,fileName,uploadPath,uuid) values(#{pno},#{fileName},#{uploadPath},#{uuid})
     </insert>
+
+    <!-- 게시물 이미지 수정 -->
+
 
     <!--  게시물 이미지 얻기  -->
     <select id="getImageList" resultType="AttachImageDto" parameterType="int">

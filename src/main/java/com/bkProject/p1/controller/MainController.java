@@ -39,9 +39,11 @@ public class MainController {
         for (PostDto dto : list) {
             //main이미지
             List<AttachImageDto> imglist = postService.getImageList(dto.getPno());
-            imgOne = imglist.get(0);
-            dto.setImgOne(imgOne);
-            //
+
+            if(imglist.size()!=0) {
+                imgOne = imglist.get(0);
+                dto.setImgOne(imgOne);
+            }
             String cate = dto.getCategory();
             cate = cate.replace(",", " #");
             dto.setCategory(cate);

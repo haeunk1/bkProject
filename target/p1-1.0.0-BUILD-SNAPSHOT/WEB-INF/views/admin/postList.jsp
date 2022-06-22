@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>fastcampus</title>
+    <title>postList</title>
     <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -138,7 +138,7 @@
                     <td class="title">${dto.title}</td>
                     <td class="main_content">${dto.main_content}</td>
                     <td class="hourly_cost">${dto.hourly_cost}</td>
-                    <td class="btn"><button type="button"><a href="<c:url value="/post/form?pno=${dto.pno}"/>">수정</a></button> <button type="button" onclick="postDelete(${dto.pno})">삭제</button></td>
+                    <td class="btn"><button type="button"><a href="<c:url value="/post/modifyForm?pno=${dto.pno}"/>">수정</a></button> <button type="button" onclick="postDelete(${dto.pno})">삭제</button></td>
 
 
                 </tr>
