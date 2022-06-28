@@ -59,6 +59,7 @@ public class MemberController {
             cookie.setMaxAge(0);//쿠키삭제
             response.addCookie(cookie);
         }
+
         //3. 홈으로 이동
         //toURL = toURL==null || toURL.equals("") || pno==null? "/main" : "/detail?pno="+pno;
         if(toURL==null || toURL.equals("")){
@@ -79,15 +80,9 @@ public class MemberController {
 
     ////////////////////////////회원가입/////////////////////////////////
     @PostMapping("/join")
-    public String joinPost(MemberDto memberDto, Model m,RedirectAttributes rttr){
+    public String joinPOST(MemberDto memberDto, Model m,RedirectAttributes rttr){
         try {
-            //1.유효성검사
-            if (!isValid(memberDto)) {
-                return "redirect:/member/join";
-            }
-            //2.db저장
-//            System.out.println("memberDto = " + memberDto);
-//            System.out.println("memberDto.getId()" + memberDto.getId());
+            //db저장
             if(memberDto.getEmail()!="")
                 memberDto.setMaster_admin(1);
             int rowCnt = service.register(memberDto);
@@ -102,10 +97,6 @@ public class MemberController {
         }
     }
 
-    private boolean isValid(MemberDto memberDto) {
-        return true;
-    }
-
     @GetMapping("/join")
     public String joinGET() {
         return "/member/join";
@@ -113,7 +104,7 @@ public class MemberController {
 
     @PostMapping("/memberIdCheck")
     @ResponseBody
-    public String memberIdCheckPOST(String memberId) throws Exception {
+    public String memberIdCheck(String memberId) throws Exception {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(memberId);
 

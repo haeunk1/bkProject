@@ -52,37 +52,6 @@ public CalendarHandler(){}
             dayOfWeek++;
         }
     }
-    /*public CalendarHandler(int year, int month) {
-        LocalDate now = LocalDate.now();
-        this.year=year;
-        this.month = month;
-        day=now.getDayOfYear();
-
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR,year);
-        cal.set(Calendar.MONTH,month);
-//        System.out.println("-----["+year+"년 "+month+"월]-----");
-//        System.out.println("  일  월  화  수  목  금  토");
-        cal.set(year,month-1,1);
-        end = cal.getActualMaximum(Calendar.DATE); //해당 월 마지막 날짜
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK); //해당 날짜의 요일(1:일요일 … 7:토요일)
-        for(int i=1; i<=end; i++) {
-            if(i==1) {
-                for(int j=1; j<dayOfWeek; j++) {
-                    dayList.add("&nbsp;&nbsp;");
-                }
-            }
-            if(i<10) { //한자릿수일 경우 공백을 추가해서 줄맞추기
-                dayList.add("&nbsp;");
-            }
-            dayList.add("&nbsp;"+i+"&nbsp;");
-            if(dayOfWeek%7==0) { //한줄에 7일씩 출력
-                dayList.add("<br>");
-            }
-            dayOfWeek++;
-        }
-    }*/
 
     public int getEnd() {
         return end;

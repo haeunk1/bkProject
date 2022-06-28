@@ -7,200 +7,9 @@
 <head>
     <script src="https://kit.fontawesome.com/92d2245491.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/detail.css" type="text/css">
     <meta charset="UTF-8">
-    <title>Welcome BookingSite</title>
-    <style>
-        *{
-            margin: 0;
-            padding:0;
-        }
-        /* 화면 전체 렙 */
-        .wrapper{
-            width: 100%;
-        }
-        /* content 랩 */
-        .wrap{
-            width : 1080px;
-            margin: auto;
-        }
-        /* 로고, 검색, 로그인 */
-        .top_area{
-            margin-top:20px;
-            width: 100%;
-            height: 200px;
-        }
-
-        .content_area{
-            width: 100%;
-            background-color: lemonchiffon;
-            height: auto;
-
-        }
-
-        /*.parent{
-            border-radius: 15px;
-            background-color: white;
-            width: 100%;
-            height: 100%;
-            display:grid;
-            grid-template-columns:18fr 0.1fr 12fr;
-            margin-top:10px;
-!*            margin-bottom: 10px;*!
-
-        }
-        .child{
-            flex:1;
-        }*/
-        .parent{
-            border-radius: 15px;
-            background-color: white;
-            width: 100%;
-            height: 100%;
-            display:flex;
-            grid-template-columns:18fr 0.1fr 12fr;
-            margin-top:10px;
-            /*            margin-bottom: 10px;*/
-
-        }
-        .child1{
-            flex:6;
-        }
-        .child2{
-            flex:3.8;
-        }
-        .blank{
-            flex:0.2;
-        }
-        #calendar_area{
-            background-color:beige;
-            border-radius: 20px;
-            border: 5px solid black;
-            padding-left:10px;
-            padding-right: 10px;
-            padding-top:10px;
-            height:500px;
-        }
-        #result_card img{
-            width: 70%;
-            height: 300px;
-            display: block;
-            padding: 5px;
-            margin-top: 10px;
-            margin: auto;
-        }
-
-        #upload_calendar>table{
-            border:1px solid #444444;
-            border-collapse:collapse;
-        }
-        th,td{
-            border:1px solid #444444;
-        }
-        #upload_time>table{
-            border:1px solid #444444;
-        }
-        #commentWrapper{
-            width : 100%;
-            height : 120px;
-            border:1px solid gray;
-            margin : 10px;
-            display:flex;
-        }
-        #userImg{
-            flex:1;
-            position:relative;
-            text-align:center;
-            line-height:165px;
-        }
-        #commentWrapper2{
-            flex:5;
-        }
-        #cTop{
-            border-bottom:solid 1px gray;
-            height: 20%;
-            display:flex;
-        }
-        #userId{
-            flex:4.5;
-        }
-        #star{
-            flex:1;
-        }
-
-        #cMiddle{
-            height: 60%;
-        }
-        #cBottom{
-            height: 20%;
-            display:flex;
-
-        }
-        #date{
-            flex:9;
-        }
-        #btn{
-            flex:2;
-            padding-bottom: 10px;
-        }
-        #commentInput{
-            height: auto;
-            width:100%;
-        }
-        #iTop{
-            height: 20px;
-        }
-        #iMiddle{
-            height: 180px;
-        }
-        #iBottom{
-            height:20px;
-            float:right;
-            padding-right : 10px;
-            padding-bottom: 10px;
-        }
-/*        input[type=text]{
-            width:100%;
-            height:auto;
-        }*/
-
-        #myform fieldset{
-            display: inline-block;
-            direction: rtl;
-            border:0;
-        }
-        #myform fieldset legend{
-            text-align: right;
-        }
-        #myform input[type=radio]{
-            display: none;
-        }
-        #myform label{
-            font-size: 3em;
-            color: transparent;
-            text-shadow: 0 0 0 #f0f0f0;
-        }
-        #myform label:hover{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        #myform label:hover ~ label{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        #myform input[type=radio]:checked ~ label{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-        }
-        #reviewContents{
-            width: 100%;
-            height: 110px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: solid 1.5px #D3D3D3;
-            border-radius: 5px;
-            font-size: 16px;
-            resize: none;
-        }
-
-    </style>
-
+    <title>여기다!</title>
 </head>
 <body>
 <div class="wrapper">
@@ -215,7 +24,7 @@
                 </div>
                 <ul class="mainMenu">
                     <c:if test="${memberDto.id==null}">
-                        <li><a href="/member/login" >로그인</a></li>
+                        <li><a href="/member/login?pno=${postDto.pno}" >로그인</a></li>
                     </c:if>
                     <c:if test="${memberDto.id!=null}">
                         <c:if test="${memberDto.master_admin==1}">
@@ -245,7 +54,9 @@
             <h1>${postDto.title}</h1><br>
             <h2>${postDto.main_content}</h2><br>
             <h3>#${postDto.category}</h3><br>
-            <input type='checkbox' id='likeCheck' onclick='likeCheck()'>좋아요(찜)
+            <div id="likeWrap">
+                <a href='javascript:void(0);' onclick="likeCheck(true)"> <i class='far fa-heart' style='color:red' onclick='likeCheck(true)'></i></a>
+            </div>
         </div>
         <hr>
         <div class="content_area">
@@ -259,7 +70,10 @@
                                 <h2>상세설명</h2>
                                 <hr>
                                 <br>
-                                <h3>${postDto.detail_content}</h3>
+                                <div id="textareaDiv">
+                                    <h3><pre>${postDto.detail_content}</pre></h3>
+                                </div>
+
                                 <br>
                                 <h3><i class="fa-solid fa-location-dot"></i> 위치</h3>
                                 <hr>
@@ -268,9 +82,13 @@
                                 <div id="map" style="width:100%;height:350px;"></div>
 
                                 <br>
-                                <h3><i class="fa-solid fa-comments"></i> 리뷰 </h3>
+                                <h3>
+                                    <div style="float:left"><i class="fa-solid fa-comments"></i> 리뷰 </div>
+                                    <div id="commentCnt" style="float:left"></div>
+                                </h3>
 
                                 <hr>
+                                <br>
                                 <div id="commentList"></div>
 
                                 <hr>
@@ -331,6 +149,41 @@
 
 
 <script>
+    //좋아요체크
+    function likeCheck(result){
+        let pno=${postDto.pno};
+        $.ajax({
+            url:'/postLike',
+            type:'POST',
+            data:{ch:result, pno:pno},
+            dataType:'json',
+            success:function(result){
+                if(result){
+                    alert("좋아요 추가!");
+                    let likeWrap = $("#likeWrap");
+                    let str = "<a href='javascript:void(0);' onclick='likeCheck(false)'> <i class='fas fa-heart' style='color:red'></i></a>";
+                    likeWrap.html(str);
+                }else{
+                    alert("좋아요 삭제!");
+                    let likeWrap = $("#likeWrap");
+                    let str = "<a href='javascript:void(0);' onclick='likeCheck(true)'> <i class='far fa-heart' style='color:red'></i></a>";
+                    likeWrap.html(str);
+                }
+
+
+
+            },
+            error:function(result){
+                alert("로그인 해주세요");
+                let likeWrap = $("#likeWrap");
+                let str = "<a href='javascript:void(0);' onclick='likeCheck(true)'> <i class='far fa-heart' style='color:red'></i></a>";
+                likeWrap.html(str);
+                //$("input:checkbox[id='likeCheck']").prop("checked",false);
+            }
+
+        })
+    }
+
     function kakaoMap(area_info,detail_area){
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
@@ -373,8 +226,8 @@
 
 
 
-
-    function toHtml(comments){
+    //댓글 띄우기
+    function showReview(comments){
         let id = '${memberDto.id}';
 
         let commentList = $("#commentList");
@@ -420,20 +273,28 @@
     }
 
 
-    function showList(pno){
+    function getList(pno){
         $.ajax({
             type:'GET',       // 요청 메서드
             url: '/comments?pno='+pno,  // 요청 URI
             dataType:'json',
             success : function(result){
-                console.log("전달 성공");
-                toHtml(result);
+                showReview(result);
             },
             error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
         });
     }
 
+    function showCommentCnt(result) {
+        let commentDiv=$("#commentCnt");
+        let str="("+result+")";
+        commentDiv.html(str);
+
+    }
+
     $(document).ready(function(){
+        let result=${postDto.comment_cnt};
+        showCommentCnt(result);
         let id = '${memberDto.id}';
         let pno=${postDto.pno};
 
@@ -443,39 +304,40 @@
         kakaoMap(area_info,detail_area);
 
         //댓글 띄우기
-        showList(pno);
+        getList(pno);
+
         let iBottom = $("#iBottom");
         let str = "<button id='insertBtn'>입력</button>";
         iBottom.html(str);
 
         $(document).on("click", "button[id='modBtn2']", function() {
+
             if(!$('input[name=reviewStar]').is(':checked')){
                 alert("별점을 체크해주세요.");
                 return false;
             }
-
-            let comment = $('#reviewContents').val();
-            let cno=$(this).attr("value");
-
             if ($('#reviewContents').val() == "") {
                 alert("리뷰를 작성해주세요.");
                 $('#reviewContents').focus();
                 return false;
             }
+            let starScore=$('input[name=reviewStar]:checked').val();
+            let comment = $('#reviewContents').val();
+            let cno=$(this).attr("value");
 
             $.ajax({
                 type:'PATCH',       // 요청 메서드
                 url: '/comments/'+cno,  // 요청 URI(/ch4/comments?bno=1085  POST)
                 headers : { "content-type": "application/json"}, // 요청 헤더
-                data : JSON.stringify({cno:cno,comment:comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                data : JSON.stringify({cno:cno,comment:comment,starScore:starScore}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success : function(result){
                     alert(result);
                     let iBottom = $("#iBottom");
                     let str = "<button id='insertBtn'>입력</button>";
                     iBottom.html(str);
-                    $("textarea[name=reviewContents]").val("");//수정완료하면 택스트 공백만들기
 
-                    showList(pno);
+                    $("textarea[name=reviewContents]").val("");//수정완료하면 택스트 공백만들기
+                    getList(pno);
                 },
                 error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
@@ -509,8 +371,9 @@
                 type:'DELETE',       // 요청 메서드
                 url: '/comments/'+cno+'?pno='+pno,  // 요청 URI
                 success : function(result){
-                    alert(result)
-                    showList(pno);
+                    alert("삭제되었습니다.");
+                    showCommentCnt(result);
+                    getList(pno);
                 },
                 error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
             });
@@ -543,22 +406,14 @@
                 data : JSON.stringify({pno:pno,comment:comment,starScore:starScore}),
                 //data : JSON.stringify({pno:pno,comment:comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success : function(result){
-                    alert(result);
-                    showList(pno);
+                    alert("댓글이 입력되었습니다.");
+                    document.getElementById("reviewContents").value='';
+                    showCommentCnt(result);
+                    getList(pno);
                 },
                 error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
         });
-
-
-
-
-
-/////////////////댓글
-
-
-
-
 
         if(id!=''){
             //좋아요 여부에 따라 checked=true
@@ -568,10 +423,19 @@
                 data:{pno:pno, id:id},
                 dataType:'json',
                 success:function(result){
-                    console.log("result="+result);
                     if(result==1){
+
+                        let likeWrap = $("#likeWrap");
+                        let str = "<a href='javascript:void(0);' onclick='likeCheck(false)'> <i class='fas fa-heart' style='color:red'></i></a>";
+                        likeWrap.html(str);
+
                         $("input:checkbox[id='likeCheck']").prop("checked",true);
                     }else if(result==0){
+
+                        let likeWrap = $("#likeWrap");
+                        let str = "<a href='javascript:void(0);' onclick='likeCheck(true)'> <i class='far fa-heart' style='color:red'></i></a>";
+                        likeWrap.html(str);
+
                         $("input:checkbox[id='likeCheck']").prop("checked",false);
                     }
                 }
@@ -731,31 +595,7 @@
 
 
 
-    function likeCheck(){
-        const checkbox=document.getElementById('likeCheck');
-        const is_checked=checkbox.checked;
-        console.log(is_checked);
-        let pno=${postDto.pno};
 
-        $.ajax({
-            url:'/postLike',
-            type:'POST',
-            data:{ch:is_checked, pno:pno},
-            dataType:'json',
-            success:function(result){
-                if(result){
-                    alert("좋아요 추가!")
-                }else{
-                    alert("좋아요 삭제!")
-                }
-            },
-            error:function(result){
-                alert("로그인 해주세요");
-                $("input:checkbox[id='likeCheck']").prop("checked",false);
-            }
-
-        })
-    }
 
     //'월'과 '일'정보에 따라 타임스케줄 불러옴
     function callTime(year,month,day) {

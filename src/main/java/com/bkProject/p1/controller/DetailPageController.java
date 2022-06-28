@@ -11,11 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +36,7 @@ public class DetailPageController {
     @Autowired
     ScheduleService scheduleService;
     @GetMapping("/detail")
+    @Transactional
     public String detailPage(HttpServletRequest request, Integer pno, Model m) {
 
         HttpSession session = request.getSession();
@@ -45,15 +45,13 @@ public class DetailPageController {
             m.addAttribute("memberDto",memberDto);
         try {
             PostDto postDto = postService.getPost(pno);
+            postService.increaseViewCnt(pno);
 
             String cate = postDto.getCategory();
             cate = cate.replace(","," #");
             postDto.setCategory(cate);
 
-
-
             m.addAttribute("postDto",postDto);
-
 
             CalendarHandler ch = new CalendarHandler();
             LocalDate now = LocalDate.now();
@@ -207,7 +205,7 @@ public class DetailPageController {
             throw new RuntimeException(e);
         }
 
-        return "payCheck";
+        return "member/payCheck";
     }
     @PostMapping("/pay")
     public String pay(Integer totCost, Integer pno,Integer year, Integer month, Integer day, String time, String book_user, RedirectAttributes rttr){

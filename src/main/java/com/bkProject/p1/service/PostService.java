@@ -12,10 +12,12 @@ public interface PostService {
 
     int post(PostDto postDto) throws Exception;
     int update(PostDto postDto) throws Exception;
+    int increaseViewCnt(int pno) throws Exception;
 
     int reset() throws Exception;
 
     int imgPost(AttachImageDto attachImageDto) throws Exception;
+    List<Integer> getLikeList(String id) throws Exception;
 
     List<PostDto> getPage(Map map) throws Exception;
 

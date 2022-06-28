@@ -2,6 +2,7 @@ package com.bkProject.p1.dao;
 
 import com.bkProject.p1.domain.AttachImageDto;
 import com.bkProject.p1.domain.PostDto;
+import com.bkProject.p1.domain.ScheduleDto;
 import com.bkProject.p1.domain.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class PostDaoImpl implements PostDao {
 
     public List<AttachImageDto> getImageList(int pno) throws Exception{
         return session.selectList(namespace+"getImageList",pno);
+    }
+    public List<Integer> getLikeList(String id) throws Exception{
+        return session.selectList(namespace+"getLikeList",id);
     }
 
     public PostDto getPost(int pno) throws Exception{

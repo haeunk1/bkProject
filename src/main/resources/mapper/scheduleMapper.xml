@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bkProject.p1.dao.ScheduleMapper">
-    <!--<mapper namespace="com.bkProject.p1.dao.PostMapper">-->
 
 
     <select id="getSchedule" resultType="ScheduleDto" parameterType="ScheduleDto">
@@ -21,10 +20,6 @@
         delete from schedule;
     </delete>
 
-<!--    <delete id="deletePost" parameterType="int">
-        delete from schedule where pno=#{pno};
-    </delete>-->
-
     <update id="update" parameterType="ScheduleDto">
         update schedule
         set time=#{time}
@@ -36,7 +31,6 @@
         insert into schedule_detail (pno, year, month, day, time, book_user,totCost)
         values (#{pno},#{year},#{month},#{day},#{time},#{book_user},#{totCost});
     </insert>
-
     <select id="dSelectList" parameterType="String" resultType="ScheduleDto">
         select * from schedule_detail
         where book_user=#{book_user};
@@ -50,9 +44,4 @@
         delete from schedule_detail where no = #{no};
     </delete>
 
-    <!--찜 리스트-->
-    <select id="lSelectList" parameterType="String" resultType="int">
-        select * from post_like
-        where id=#{id};
-    </select>
 </mapper>

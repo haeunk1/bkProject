@@ -52,36 +52,43 @@ PostService postService;
     @Test
     public void post() throws Exception{
         //postService.reset();
-/*
-        for(int i=1;i<=220;i++){
-            PostDto postDto = new PostDto("제목"+i,"설명"+i,"상세설명"+i,"12:00","24:00","도봉구","12,000","[date', 'bbq', 'singing_room',' board_game']");
+        for(int i=1;i<=200;i++){
+            PostDto postDto = new PostDto("제목"+i,"설명"+i,"상세설명"+i,"서울 구로구 온수동 45-32","2층 207호","12,000","파티,역근처,스튜디오,브라이덜샤워");
             postDto.setWriter("작성자"+i);
-            List<AttachImageDto> list=new ArrayList<AttachImageDto>();
+
+            /*List<AttachImageDto> list=new ArrayList<AttachImageDto>();
 
             AttachImageDto attachImageDto1 = new AttachImageDto();
             attachImageDto1.setPno(postDto.getPno());
-            attachImageDto1.setFileName("test"+i);
-            attachImageDto1.setUploadPath("2022\05\16");
-            attachImageDto1.setUuid("5b61ba10-cf1c-44bc-8aae-4903d30"+i);
+            attachImageDto1.setFileName("test1");
+            attachImageDto1.setUploadPath("2022/06/23");
+            attachImageDto1.setUuid("t1"+i);
             list.add(attachImageDto1);
 
             AttachImageDto attachImageDto2 = new AttachImageDto();
             attachImageDto2.setPno(postDto.getPno());
-            attachImageDto2.setFileName("test"+i+"_2");
-            attachImageDto2.setUploadPath("2022\05\16");
-            attachImageDto2.setUuid("68e09aa8-e5d7-43bb-904f-f1a3c07b39"+i);
+            attachImageDto2.setFileName("test2");
+            attachImageDto2.setUploadPath("2022/06/23");
+            attachImageDto2.setUuid("t2"+i);
             list.add(attachImageDto2);
 
-            postDto.setImageList(list);
+            AttachImageDto attachImageDto3 = new AttachImageDto();
+            attachImageDto2.setPno(postDto.getPno());
+            attachImageDto2.setFileName("test3");
+            attachImageDto2.setUploadPath("2022/06/23");
+            attachImageDto2.setUuid("t3"+i);
+            list.add(attachImageDto3);
+
+            postDto.setImageList(list);*/
 
             postService.post(postDto);
 
-            for(AttachImageDto attach:postDto.getImageList()){
+            /*for(AttachImageDto attach:postDto.getImageList()){
 
                 attach.setPno(postDto.getPno());
                 postService.imgPost(attach);
-            }
-        }*/
+            }*/
+        }
 
 
     }

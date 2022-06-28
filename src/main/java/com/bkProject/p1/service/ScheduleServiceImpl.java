@@ -25,10 +25,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleDao.deleteAll();
     }
 
-/*    public int deletePost(int pno)throws Exception{
-        return scheduleDao.delete(pno);
-    }*/
-
     public int updateSchedule(ScheduleDto scheduleDto)throws Exception {
         return scheduleDao.update(scheduleDto);
     }
@@ -43,10 +39,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleDto getBookingDetail(int no)throws Exception{
         return scheduleDao.getBookingDetail(no);
     }
-    public List<Integer> lSelectList(String id) throws Exception{
-        return scheduleDao.lSelectList(id);
-    }
-
     public int dDeleteBooking(int no) throws Exception{
         return scheduleDao.dDeleteBooking(no);
     }

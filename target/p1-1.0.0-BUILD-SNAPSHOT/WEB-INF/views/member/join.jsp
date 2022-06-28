@@ -57,10 +57,7 @@
     <span class="mail_input_box_warn"></span>
 
 
-    <div class="join_button_wrap">
-        <input type="button" class="join_button" value="가입하기">
-    </div>
-<%--    <button>회원 가입</button>--%>
+    <button type="button" id="join_button">가입하기</button>
 </form>
 <script>
     /* 유효성 검사 통과유무 변수 */
@@ -74,9 +71,8 @@
     var mailCheck = false;            // 이메일
 
     $(document).ready(function(){
-        $(".join_button").click(function(){
-
-            /* 입력값 변수 */
+        $("#join_button").on("click", function(){
+            /!* 입력값 변수 *!/
             var id = $('#id_input').val();                 // id 입력란
             var pwd = $('#pwd_input').val();                // 비밀번호 입력란
             var pwd2 = $('#pwd2_input').val();            // 비밀번호 확인 입력란
@@ -147,9 +143,9 @@
             }
             return false;
 
-
         });
     });
+
     $('#pwd2_input').on("propertychange change keyup paste input",function(){
         //입력할 때마다 초기화
         var pwd=$('#pwd_input').val();

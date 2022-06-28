@@ -91,7 +91,7 @@ public class UserController {
             throw new RuntimeException(e);
         }
 
-        return "payCheck";
+        return "member/payCheck";
     }
     //찜리스트
     @GetMapping("/likeList")
@@ -99,7 +99,7 @@ public class UserController {
         HttpSession session = request.getSession();
         String id = (String)session.getAttribute("id");
         try {
-            List<Integer> idList = scheduleService.lSelectList(id);
+            List<Integer> idList = postService.getLikeList(id);
             List<PostDto> list = new ArrayList<>();
             for(Integer pno : idList){
                 PostDto postDto = postService.getPost(pno);

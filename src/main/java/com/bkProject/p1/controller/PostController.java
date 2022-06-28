@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,26 +31,24 @@ public class PostController {
         if (!adminLoginCheck(request)) {
             return "redirect:/member/login";
         }
-        return "write";
+        return "admin/write";
     }
     @GetMapping("/modifyForm")
-    public String form(HttpServletRequest request,Integer pno,Model m) {
+    public String modifyForm(HttpServletRequest request,Integer pno,Model m) {
         if (!adminLoginCheck(request)) {
             return "redirect:/member/login";
         }
         try {
             if(pno!=null){
                 PostDto postDto = postService.getPost(pno);
-                //이미지 리스트도 같이 전달
-//                List<AttachImageDto> list = postService.getImageList(pno);
-//                postDto.setImageList(list);
+
                 m.addAttribute("postDto",postDto);
 
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "modify";
+        return "admin/modify";
     }
     //@PostMapping("modify")
     @RequestMapping(value="/modify", method={RequestMethod.GET,RequestMethod.POST})
@@ -60,13 +57,12 @@ public class PostController {
         HttpSession session= request.getSession();
         MemberDto memberDto = (MemberDto)session.getAttribute("memberDto");
         postDto.setWriter(memberDto.getId());
-        System.out.println("modify postDto : "+ postDto);
 
 
 
         try {
             postService.update(postDto);
-            //if(postDto.getImageList()==null || postDto.getImageList().size()<=0) return;
+
             postService.deleteImg(postDto.getPno());
             for(AttachImageDto attach:postDto.getImageList()){
 
@@ -75,10 +71,10 @@ public class PostController {
                 postService.imgPost(attach);
             }
             rttr.addFlashAttribute("msg","postOK");
-            //return "redirect:/main";
+
         } catch (Exception e) {
             rttr.addFlashAttribute("msg","postERR");
-            //return "redirect:/post/form";//폼으로 다시 돌아감
+
         }
 
         rttr.addFlashAttribute("msg","modifyOK");
@@ -95,8 +91,8 @@ public class PostController {
     @Transactional
     //@PostMapping("/write")
     @RequestMapping(value="/write", method={RequestMethod.GET,RequestMethod.POST})
-    public String testt(PostDto postDto, HttpServletRequest request, RedirectAttributes rttr){
-        ///////////////////////////
+    public String write(PostDto postDto, HttpServletRequest request, RedirectAttributes rttr){
+
         HttpSession session= request.getSession();
         MemberDto memberDto = (MemberDto)session.getAttribute("memberDto");
         postDto.setWriter(memberDto.getId());
@@ -136,14 +132,10 @@ public class PostController {
     }
 
     @GetMapping("/delete")
-    public String deletepost(Integer pno, RedirectAttributes rttr){
+    public String deletePost(Integer pno, RedirectAttributes rttr){
 
         try {
             postService.deletePost(pno);
-            postService.deleteLikeAll(pno);
-            postService.deleteImg(pno);
-            postService.deleteSchedule(pno);
-            postService.deleteScheduleDetail(pno);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

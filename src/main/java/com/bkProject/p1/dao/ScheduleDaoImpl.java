@@ -46,9 +46,6 @@ public class ScheduleDaoImpl implements ScheduleDao {
     public ScheduleDto getBookingDetail(int no) throws Exception{
         return session.selectOne(namespace+"getBookingDetail",no);
     }
-    public List<Integer> lSelectList(String id) throws Exception{
-        return session.selectList(namespace+"lSelectList",id);
-    }
 
     public int dDeleteBooking(int no)throws Exception{
         return session.delete(namespace+"dDeleteBooking",no);

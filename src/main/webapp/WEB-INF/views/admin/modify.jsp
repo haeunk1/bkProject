@@ -6,121 +6,33 @@
 <head>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <meta charset="UTF-8">
-    <title>post form</title>
+    <title>여기다!</title>
+    <link rel="stylesheet" href="/resources/css/admin/write.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: "Noto Sans KR", sans-serif;
-        }
-        .container {
-            width : 50%;
-            margin : auto;
-        }
-        .writing-header {
-            position: relative;
-            margin: 20px 0 0 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #323232;
-        }
-        input {
-            width: 100%;
-            height: 35px;
-            margin: 5px 0px 10px 0px;
-            border: 1px solid #e9e8e8;
-            padding: 8px;
-            background: #f8f8f8;
-            outline-color: #e6e6e6;
-        }
-        textarea {
-            width: 100%;
-            background: #f8f8f8;
-            margin: 5px 0px 10px 0px;
-            border: 1px solid #e9e8e8;
-            resize: none;
-            padding: 8px;
-            outline-color: #e6e6e6;
-        }
-        .frm {
-            width:100%;
-        }
-        .btn {
-            background-color: rgb(236, 236, 236); /* Blue background */
-            border: none; /* Remove borders */
-            color: black; /* White text */
-            padding: 6px 12px; /* Some padding */
-            font-size: 16px; /* Set a font size */
-            cursor: pointer; /* Mouse pointer on hover */
-            border-radius: 5px;
-        }
-        .btn:hover {
-            text-decoration: underline;
-        }
-        .category_area{
-            width:100%;
-            margin:auto;
-            display:grid;
 
-            grid-template-columns: 33% 33% 33%;
-            gap:10px
-        }
-        .temp-box{
-            width:100%;
-            height:100%;
-            font-size:20px;
-            text-align:left;
-        }
-
-
-        #result_card img{
-            max-width: 100%;
-            height: auto;
-            display: block;
-            padding: 5px;
-            margin-top: 10px;
-            margin: auto;
-        }
-        #result_card {
-            position: relative;
-        }
-        .imgDeleteBtn{
-            position: absolute;
-            top: 0;
-            right: 5%;
-            background-color: #ef7d7d;
-            color: wheat;
-            font-weight: 900;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            line-height: 26px;
-            text-align: center;
-            border: none;
-            display: block;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
 <script>
     let msg = "${param.msg}";
     if(msg=="postERR") alert("게시글 등록이 실패되었습니다.");
+    if(msg=="modifyOK") alert("수정이 완료되었습니다");
 </script>
 <div class="container">
-    <h2 class="writing-header">POST 작성</h2>
+    <h2 class="writing-header">POST 수정</h2>
     <form id="form" class="frm" action="" method="post">
-        <%--<input type="hidden" name="pno" id="pno">--%>
+        <input type="hidden" name="pno" id="pno" value="${postDto.pno}">
+        <br>
         <h3>제목</h3>
-        <input name="title" type="text" placeholder="제목을 입력해 주세요."><br>
+        <input name="title" type="text" placeholder="제목을 입력해 주세요." value="<c:out value='${postDto.title}'/>"><br>
+        <br>
         <h3>간단한 설명</h3>
-        <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요." ><br>
+        <input name="main_content" type="text" placeholder="공간을 간략히 설명해주세요." value="${postDto.main_content}"><br>
+        <br>
         <h3>상세한 설명</h3>
-        <textarea name="detail_content" rows="20" placeholder=" 내용을 입력해 주세요."></textarea><br>
+        <textarea name="detail_content" rows="20" placeholder=" 내용을 입력해 주세요.">${postDto.detail_content}</textarea><br>
+        <br>
 
-
-        <h3>카테고리</h3>
+        <h3>카테고리</h3><br>
         <div class="category_area">
             <div class="temp-box">
                 <label><input type="checkbox" name="category" id="파티" value="파티">파티</label>
@@ -139,8 +51,7 @@
             </div>
         </div>
         <br>
-
-        <h3>이미지</h3>
+        <h3>이미지</h3><br>
         <div class="form_section">
             <div class="form_section_title">
                 <label>상품 이미지</label>
@@ -152,26 +63,26 @@
             </div>
         </div>
         <br>
-
-
-
         <h3>주소</h3>
         <div class="address_input">
             <div class="address_input_wrap">
                 <input class="address_input_1" id="address1" placeholder="우편주소" readonly>
                 <input class="address_button" type="button" value="우편번호 찾기" onClick="execution_daum_address()">
             </div>
-            <input class="address_input_2" id="address2" placeholder="주소"  readonly ><%----%>
+            <input class="address_input_2" id="address2" placeholder="주소"  value = "${postDto.area_info}" readonly ><%----%>
 
-            <input class="address_input_3" type="text" id="address3" placeholder="상세주소"  readonly>
+            <input class="address_input_3" type="text" id="address3" placeholder="상세주소" value = "${postDto.detail_area}" readonly>
             <input type="hidden" id="area_info" name="area_info" >
             <input type="hidden" id="detail_area" name="detail_area" >
         </div>
-
+        <br>
         <h3>시간당 가격</h3>
-        <input type="text" name="hourly_cost" id="cost"  onkeyup="commas(this)"/>
+        <input type="text" name="hourly_cost" id="cost" value="${postDto.hourly_cost}" onkeyup="commas(this)"/>
 
-        <button type="button" id="writeBtn"><i class="fa fa-pencil"></i>등록</button>
+        <br>
+        <button type="button" id="modifyBtn" ><i class="fa fa-pencil"></i>수정</button>
+
+        <br>
     </form>
 </div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -179,14 +90,35 @@
 
     $(document).ready(function(){
 
-        $("#writeBtn").on("click", function(){
+        let strArr = "${postDto.category}";
+        let arr=strArr.split(',');
+        //카테고리 체크
+        if(strArr!=''){
+            for(let i=0;i<arr.length;i++){
+                let id = document.getElementById(arr[i]);
+                id.checked=true;
+            }
+        }
+        //세부주소 입력란 활성화
+        let detail_area = "${postDto.detail_area}";
+        if(detail_area!=''){
+            document.getElementById("address3").readOnly = false;
+        }
+
+        let area_info="${postDto.area_info}";
+        if(area_info!=""){
+            $('#address2').val(area_info);
+        }
+
+        $("#modifyBtn").on("click", function(){
             $('#area_info').val($('#address2').val());
             $('#detail_area').val($('#address3').val());
+
 
             if(!formCheck()){return false;}
 
             let form = $("#form");
-            form.attr("action", "<c:url value='/post/write'/>");
+            form.attr("action", "<c:url value='/post/modify'/>");
             form.attr("method", "post");
             /*if(formCheck())
                 form.submit();*/
@@ -220,12 +152,9 @@
         });
     }
 
-    /* 이미지 업로드 */
+    //이미지 업로드
     $("input[type='file']").on("change",function(e){
-        /*//이미지 존재시 삭제
-        if($(".imgDeleteBtn").length>0){
-            deleteFile();
-        }*/
+
         let formData = new FormData();
         let fileInput = $('input[name="uploadFile"]');
         let fileList = fileInput[0].files; //파일리스트 접근
@@ -262,7 +191,7 @@
 
     });
 
-    /*이미지 출력*/
+    //이미지 출력
     function showUploadImage(uploadResultArr){
         //데이터 검증
         if(!uploadResultArr || uploadResultArr.length==0) return;
@@ -279,6 +208,9 @@
             str+="<div id='result_card"+"_"+fileFullName+"'>";
             str+="<div id='result_card'>";
             str+="<img src='/display?filePath="+obj.uploadPath+'&fileUuid='+obj.uuid+'&fileName='+obj.fileName+"'>";
+            //str+="<div class='imgDeleteBtn' onclick='deleteFile("+fileCallPath+")'>X</div>";
+            //str+="<div class='imgDeleteBtn' data-file='"+fileCallPath+"'>X</div>";
+            //str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick='deleteFile();' data-file='"+fileCallPath+"'>X</a>";
             str+= "<a class='imgDeleteBtn' href='javascript:void(0);' onclick=\"deleteFile(\'"+obj.uploadPath+"\',\'"+fileFullName+"\');\">X</a>";
 
             str += "<input type='hidden' name='imageList["+i+"].fileName' value='"+ obj.fileName +"'>";
@@ -331,7 +263,7 @@
         return true
     }
 
-    /*가격 입력받기*/
+    //가격 입력받기
     function commas(t) {
         // 콤마 빼고
         var x = t.value;
@@ -349,7 +281,7 @@
 
     }
 
-    /*다음 주소 연동*/
+    //다음 주소 연동
     function execution_daum_address() {
         new daum.Postcode({
             oncomplete: function (data) {

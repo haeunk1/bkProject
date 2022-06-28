@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/member/join.css">
 
-    <title>Register</title>
+    <title>여기다!</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script
             src="https://code.jquery.com/jquery-3.4.1.js"
@@ -19,7 +19,7 @@
 
 </head>
 <body>
-<%--action="<c:url value="/member/join"/>"--%>
+
 <form  id="join_form" method="post" onsubmit="return formCheck(this)">
     <div class="title">회원가입</div>
     <div id="msg" class="msg">
@@ -57,13 +57,10 @@
     <span class="mail_input_box_warn"></span>
 
 
-    <div class="join_button_wrap">
-        <input type="button" class="join_button" value="가입하기">
-    </div>
-<%--    <button>회원 가입</button>--%>
+    <button type="button" id="join_button">가입하기</button>
 </form>
 <script>
-    /* 유효성 검사 통과유무 변수 */
+    //유효성 검사 통과유무 변수
     var idCheck = false;            // 아이디
     var idckCheck = false;            // 아이디 중복 검사
     var pwdCheck = false;            // 비번
@@ -74,9 +71,8 @@
     var mailCheck = false;            // 이메일
 
     $(document).ready(function(){
-        $(".join_button").click(function(){
-
-            /* 입력값 변수 */
+        $("#join_button").on("click", function(){
+            /!* 입력값 변수 *!/
             var id = $('#id_input').val();                 // id 입력란
             var pwd = $('#pwd_input').val();                // 비밀번호 입력란
             var pwd2 = $('#pwd2_input').val();            // 비밀번호 확인 입력란
@@ -147,9 +143,9 @@
             }
             return false;
 
-
         });
     });
+
     $('#pwd2_input').on("propertychange change keyup paste input",function(){
         //입력할 때마다 초기화
         var pwd=$('#pwd_input').val();
@@ -201,6 +197,7 @@
 
     email.style.display = 'none';
     emaillabel.style.display = 'none';
+
     function formCheck(frm) {
         let msg ='';
         if(frm.id.value.length<3) {
@@ -245,14 +242,6 @@
             formCss.style.height=700+"px";
         }
     }
-
-    // //이메일 형식 유효성 검사
-    // function mailFormCheck(email){
-    //     var form = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    //     return form.test(email);
-    // }
-
-
 </script>
 </body>
 </html>

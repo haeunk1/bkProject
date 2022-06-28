@@ -10,114 +10,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/resources/css/menu.css" type="text/css">
-    <title>Welcome BookingSite</title>
-    <style>
-        *{
-            margin: 0;
-            padding:0;
-        }
-        /* 화면 전체 렙 */
-        .wrapper{
-            width: 100%;
-        }
-        /* content 랩 */
-        .wrap{
-            width : 1080px;
-            margin: auto;
-            height: auto;
-        }
-        .login_area>span{
-            margin-top: 10px;
-            font-weight: 900;
-            display: inline-block;
-        }
-        .main_wrapper{
-            background-color: rgb(253, 253, 250);
-            width: 100%;
-            height: 110px;
-            border: 1px solid #ddd;
-            margin-top : 10px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .content_area{
-            width: 100%;
-            /*background-color: #97ef97;*/
-            height: 3000px;
+    <link rel="stylesheet" href="/resources/css/main.css" type="text/css">
+    <title>Welcome 여기다!</title>
 
-        }
-        .space_list{
-
-            margin:10px 20px 10px 20px;
-            border-radius: 15px;
-            /*background-color: pink;*/
-            height: 80%;
-
-        }
-
-        .parent{
-            border-radius: 15px;
-            border: 5px solid beige;
-            padding: 10px;
-            background-color: white;
-            width: 97%;
-            height: 200px;
-            display:grid;
-            grid-template-columns:10fr 0.5fr 10fr;
-            margin-bottom: 10px;
-
-        }
-        .child{
-            flex:1;
-            background: #2E9AFE;
-            padding-left:10px;
-        }
-
-        #result_card img{
-            max-width: 100%;
-            height: auto;
-            display: block;
-            padding: 5px;
-            margin-top: 10px;
-            margin: auto;
-        }
-        .page_handler{
-            color: black;
-            width: 100%;
-            align-items: center;
-            margin-top: 20px;
-            text-align:center;
-
-
-        }
-        .page {
-            color: black;
-            padding: 6px;
-            margin-right: 10px;
-        }
-        .arrange{
-            float:left;
-            /*margin-left:20px;*/
-        }
-        .search{
-            float:right;
-        }
-
-        #uploadResult img{
-            max-width: 30%;
-            height: auto;
-            display: block;
-            padding: 5px;
-            margin-top: 10px;
-            margin: auto;
-            background-position:center;
-        }
-
-
-
-    </style>
 </head>
 <body>
 <script>
@@ -133,7 +28,6 @@
     <div class="nav_wrapper">
         <nav>
             <div class="content">
-
                 <div class="logo">
                     <a href="/main">
                         <img alt="brand" src="/resources/img/logo1.png"/>
@@ -183,9 +77,7 @@
                         </select>
 
                         <input type="text" name="keyword" class="search-input" type="text" value="${ph.searchCondition.keyword}"placeholder="검색어를 입력해주세요">
-                        <input type="submit" class="search-button" value="검색">
-
-
+                        <button type="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
 
             </div>
@@ -197,11 +89,16 @@
                         <div class="parent">
                             <div class="child">
                                 <div id="uploadResult">
+                                    <c:if test="${postDto.imgOne eq null}">
+                                        <img src='/resources/img/noImg.png'>
+                                    </c:if>
+                                    <c:if test="${postDto.imgOne ne null}">
                                         <img src="/display?filePath=${postDto.imgOne.uploadPath}&fileUuid=${postDto.imgOne.uuid}&fileName=${postDto.imgOne.fileName}">
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="blank"></div>
-                            <div class="child" style="background: #FA5858;">
+                            <div class="child" >
                                 <br><td class="title"><h2>${postDto.title}</h2></td>
                                 <br><td class="category"> #${postDto.category}</td>
                                 <br><td class="hourly_cost"> <i class="fa-solid fa-won-sign"></i> 시간당 금액 : ${postDto.hourly_cost}</td>
@@ -212,11 +109,8 @@
                         </div>
                     </a>
                 </c:forEach>
-
             </div>
-
             <div class="page_handler">
-
                 <c:if test="${totalCnt eq null || totalCnt eq 0}">
                     <div> 게시물이 없습니다.</div>
                 </c:if>
@@ -225,14 +119,11 @@
                         <a class="page" href="<c:url value="/main${ph.searchCondition.getQueryString(ph.beginPage-1)}"/>">&lt;</a>
                     </c:if>
                     <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-
                             <a class="page ${i==ph.searchCondition.page? "paging-active" : ""}" style="color:${ph.searchCondition.page eq i ? 'red;' : 'black;'} " href="<c:url value="/main${ph.searchCondition.getQueryString(i)}"/>">${i}</a>
-
                     </c:forEach>
                     <c:if test="${ph.showNext}">
                         <a class="page" href="<c:url value="/main${ph.searchCondition.getQueryString(ph.endPage+1)}"/>">&gt;</a>
                     </c:if>
-
                 </c:if>
             </div>
         </div>

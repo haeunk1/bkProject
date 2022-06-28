@@ -42,18 +42,6 @@
             font-size: 30px;
             margin: 40px 0 30px 0;
         }
-        .join_button_wrap{
-            margin-top: 40px;
-            text-align: center;
-        }
-        .join_button {
-            width: 100%;
-            height: 40px;
-            background-color: #6AAFE6;
-            font-size: 20px;
-            font-weight: 900;
-            color: white;
-        }
         .back_btn{
             width: 100%;
             height: 100px;
@@ -69,7 +57,7 @@
 
     </style>
 
-    <title>Register</title>
+    <title>여기다!</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script
             src="https://code.jquery.com/jquery-3.4.1.js"
@@ -80,7 +68,6 @@
 </head>
 <body>
 <c:if test="${mode=='pay'}">
-<%--    <button type="button"><a href="/detail?pno=${scheduleDto.pno}">◀ 돌아가기</a></button>--%>
     <div class="back_btn">
         <a href="/detail?pno=${scheduleDto.pno}" class="btn"></a>
     </div>
@@ -89,7 +76,6 @@
     <div class="back_btn">
         <a href="/user/bookingList" class="btn"></a>
     </div>
-<%--    <button type="button"><a href="/user/bookingList">◀ 돌아가기</a></button>--%>
 </c:if>
 <form  id="pay_form" method="post" action="<c:url value='/pay'/>">
 
@@ -114,7 +100,7 @@
     ● 최종 비용 : ${scheduleDto.totCost}<br>
     <br>
     <br>
-    <div id="payBtm"> <%--style=${mode=="check"?"display:none;":""}--%>
+    <div id="payBtm">
         <c:if test="${mode=='check'}">
             <button type="button" ><a href="/user/bookingList">확인</a></button>
             <button type="button" onclick="delBook()">예약 취소</button>
@@ -122,13 +108,12 @@
         <c:if test="${mode!='check'}">
             <button type="button" onclick="go()">결제하기</button>
         </c:if>
-
-
     </div>
     <br>
     <br>
 </form>
 <script>
+    //예약 취소
     function delBook(){
         let check = confirm("예약을 취소하시겠습니까?");
         if(check){
@@ -150,7 +135,7 @@
         }
     }
 
-
+    //예약하기
     function go(){
         let pno=${scheduleDto.pno};
         let year=${scheduleDto.year};

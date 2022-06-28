@@ -122,9 +122,11 @@
     <div class="plus_btn">
         <a href="/post/form" class="plusBtn"></a>
     </div>
-<div style="text-align:center">
-    <%--<button type="button"><a href="<c:url value="/post/form"/>">공간 등록하기</a></button>--%>
 
+<div style="text-align:center">
+
+    <%--<button type="button"><a href="<c:url value="/post/form"/>">공간 등록하기</a></button>--%>
+        <h1>게시글 관리</h1><br>
 
         <table>
             <tr>
@@ -135,7 +137,7 @@
             </tr>
             <c:forEach var="dto" items="${list}">
                 <tr>
-                    <td class="title">${dto.title}</td>
+                    <td class="title"><a href="<c:url value="/detail?pno=${dto.pno}"/>">${dto.title}</a></td>
                     <td class="main_content">${dto.main_content}</td>
                     <td class="hourly_cost">${dto.hourly_cost}</td>
                     <td class="btn"><button type="button"><a href="<c:url value="/post/modifyForm?pno=${dto.pno}"/>">수정</a></button> <button type="button" onclick="postDelete(${dto.pno})">삭제</button></td>
@@ -182,24 +184,6 @@
 
             document.body.appendChild(form);
             form.submit();
-            /*$.ajax({
-                url:'/post/delete',
-                type:'GET',
-                data:{pno:pno},
-                dataType:'json',
-                success:function(result){
-                    if(result){
-                        alert("게시글을 삭제했습니다.")
-                    }else{
-                        alert("넘어온 데이터 없음")
-                    }
-
-                },
-                error:function(result){
-                    alert("삭제 실패");
-                }
-
-            })*/
         }
     }
 </script>

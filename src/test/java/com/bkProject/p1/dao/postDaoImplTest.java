@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class postDaoImplTest {
     @Autowired
     PostDao postDao;
-
+/*
     @Test
     public void searchSelectPageTest() throws Exception{
 //        SearchCondition sc = new SearchCondition(1,10,"party","category","pno");
@@ -76,5 +76,5 @@ public class postDaoImplTest {
     @Test
     public void testtt() throws Exception{
         postDao.deletePost(700);
-    }
+    }*/
 }

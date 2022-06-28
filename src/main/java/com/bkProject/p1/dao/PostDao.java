@@ -16,6 +16,7 @@ public interface PostDao {
     List<PostDto> selectPage(Map map) throws Exception;
 
     List<AttachImageDto> getImageList(int pno) throws Exception;
+    List<Integer> getLikeList(String id) throws Exception;
 
     int count() throws Exception;
 

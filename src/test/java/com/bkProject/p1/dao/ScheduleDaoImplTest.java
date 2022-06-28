@@ -14,10 +14,4 @@ import static org.junit.Assert.*;
 public class ScheduleDaoImplTest {
     @Autowired
     ScheduleDao scheduleDao;
-    @Test
-    public void test() throws Exception{
-        String id="asdf";
-        List<Integer> list = scheduleDao.lSelectList(id);
-        System.out.println(list);
-    }
 }

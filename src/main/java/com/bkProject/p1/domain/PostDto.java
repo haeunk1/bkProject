@@ -30,11 +30,12 @@ public class PostDto {
         this.imgOne = imgOne;
     }
 
-    public PostDto(String title, String main_content, String detail_content, String start_time, String end_time, String area_info, String hourly_cost, String category) {
+    public PostDto(String title, String main_content, String detail_content, String area_info,String detail_area, String hourly_cost, String category) {
         this.title = title;
         this.main_content = main_content;
         this.detail_content = detail_content;
         this.area_info = area_info;
+        this.detail_area=detail_area;
         this.hourly_cost = hourly_cost;
         this.category = category;
 
