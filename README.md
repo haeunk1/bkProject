@@ -15,16 +15,17 @@
 
 🛠️개발 소개
 --
- &nbsp;<h5>✔️개발 기간</h5><br>
+ ▶ 개발 기간<br>
  2022.04 ~ 2022.06 (2개월)<br><br>
- ✔️기술 스택<br>
+ ▶ 기술 스택<br>
    ● Front<br>
     - HTML5, CSS3, Javascript, JQuery<br>
    ● Back<br>
     - Java11, Spring, MySQL, Junit4, Tomcat9<br><br>
- ✔️ERD<br>
+ ▶ ERD<br>
  <img width="641" alt="image" src="https://user-images.githubusercontent.com/53562331/176169199-2f534319-9d4f-42fe-a038-8de4c15bc31a.png">
 <br>
+
 🖥️화면요약
 --
 <img width="897" alt="image" src="https://user-images.githubusercontent.com/53562331/176169527-43f44672-7462-4b14-9ff3-f80faf484fc9.png">
@@ -33,11 +34,11 @@
 
 📌주요 기능
 --
-● 회원가입<br>
-● 로그인<br>
+● 회원가입/로그인<br>
 ● 검색(검색조건, 정렬조건)<br>
 ● 공간 등록,수정,삭제<br>
 ● 댓글 등록,수정,삭제<br>
+● 예약기능<br>
 
 
 📑자세한 내용
