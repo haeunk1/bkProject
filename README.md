@@ -43,5 +43,6 @@
 
 📑자세한 내용
 --
-https://drive.google.com/file/d/1XzMi-jPRb-u2IwK_Ilk4OkH2A4LNcpXn/view?usp=sharing
+[상세 내용](bkProject.pdf)
+
 
